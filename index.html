@@ -22,7 +22,7 @@
     background: #fff;
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    max-width: 800px;
+    max-width: 850px;
     width: 100%;
     padding: 30px;
     animation: slideIn 0.5s ease;
@@ -36,7 +36,7 @@
   h1 {
     text-align: center;
     color: #1a4d8f;
-    font-size: 26px;
+    font-size: 24px;
     margin-bottom: 10px;
   }
 
@@ -47,7 +47,6 @@
     font-size: 15px;
   }
 
-  /* شاشة البداية */
   .start-screen { text-align: center; }
 
   .start-screen input {
@@ -89,17 +88,10 @@
     box-shadow: 0 8px 20px rgba(26,77,143,0.5);
   }
 
-  .btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-
+  .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
   .btn.green { background: linear-gradient(135deg, #2e9e4a, #5cb85c); }
   .btn.red   { background: linear-gradient(135deg, #c9302c, #d9534f); }
 
-  /* شاشة الاختبار */
   .quiz-screen { display: none; }
 
   .student-info {
@@ -178,18 +170,6 @@
     font-weight: bold;
   }
 
-  .option.correct-answer {
-    background: #d4f7d4;
-    border-color: #2e9e4a;
-    color: #1a5f1a;
-  }
-
-  .option.wrong-answer {
-    background: #fddddd;
-    border-color: #d9534f;
-    color: #8a1a1a;
-  }
-
   .nav-buttons {
     display: flex;
     justify-content: space-between;
@@ -197,7 +177,6 @@
     margin-top: 20px;
   }
 
-  /* شاشة النتيجة */
   .result-screen { display: none; text-align: center; }
 
   .result-circle {
@@ -221,15 +200,8 @@
     100% { transform: scale(1); }
   }
 
-  .result-circle .score {
-    font-size: 48px;
-    line-height: 1;
-  }
-
-  .result-circle .total {
-    font-size: 20px;
-    opacity: 0.9;
-  }
+  .result-circle .score { font-size: 48px; line-height: 1; }
+  .result-circle .total { font-size: 20px; opacity: 0.9; }
 
   .result-message {
     font-size: 22px;
@@ -261,7 +233,6 @@
   }
 
   .detail-row:last-child { border-bottom: none; }
-
   .detail-row .ok { color: #2e9e4a; font-weight: bold; white-space: nowrap; }
   .detail-row .no { color: #c9302c; font-weight: bold; white-space: nowrap; }
 
@@ -291,7 +262,7 @@
 
   @media (max-width: 600px) {
     .container { padding: 20px; }
-    h1 { font-size: 20px; }
+    h1 { font-size: 19px; }
     .result-circle { width: 140px; height: 140px; }
     .result-circle .score { font-size: 38px; }
     .student-info { flex-direction: column; text-align: center; }
@@ -307,9 +278,9 @@
     <h1>🎓 اختبار: الخوارزميات وحلقات التكرار والجمل الشرطية</h1>
     <p class="subtitle">الصف السابع – مادة الحاسوب</p>
     <p style="margin: 20px 0; color: #667;">
-      📝 عدد الأسئلة: ١٠<br>
+      📝 عدد الأسئلة: ١٥<br>
       ⏰ الزمن المقترح: ٢٠ دقيقة<br>
-      📊 العلامة الكاملة: ٢٠
+      📊 العلامة الكاملة: ٣٠
     </p>
     <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50">
     <br>
@@ -320,7 +291,7 @@
   <div id="quizScreen" class="quiz-screen">
     <div class="student-info">
       <span>👤 <span id="displayName"></span></span>
-      <span>📋 سؤال <span id="currentNum">١</span> من <span id="totalNum">١٠</span></span>
+      <span>📋 سؤال <span id="currentNum">١</span> من <span id="totalNum">١٥</span></span>
     </div>
     <div class="progress-wrapper">
       <div class="progress-fill" id="progressFill"></div>
@@ -337,7 +308,7 @@
     <h1>🎉 انتهى الاختبار!</h1>
     <div class="result-circle" id="resultCircle">
       <div class="score" id="scoreDisplay">0</div>
-      <div class="total">من ٢٠</div>
+      <div class="total">من ٣٠</div>
     </div>
     <div class="result-message" id="resultMessage"></div>
 
@@ -346,7 +317,7 @@
       <p>تشهد هذه الشهادة بأن الطالب/ة</p>
       <div class="name" id="certName"></div>
       <p>قد أكمل اختبار "الخوارزميات وحلقات التكرار والجمل الشرطية"</p>
-      <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من ٢٠</p>
+      <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من ٣٠</p>
       <p style="margin-top: 10px; color: #8a6d00;" id="certDate"></p>
     </div>
 
@@ -366,17 +337,17 @@
 /* ====== الأسئلة ====== */
 const questions = [
   {
-    q: "الخوارزمية هي:",
+    q: "ما تعريف الخوارزمية؟",
     options: [
-      "لغة برمجة متقدمة",
-      "عدد منتهٍ من الخطوات المتسلسلة لتحقيق هدف محدد",
+      "لغة برمجة",
+      "عدد منته من الخطوات المتسلسلة لتحقيق هدف محدد",
       "جهاز إلكتروني",
       "برنامج معالجة نصوص"
     ],
     correct: 1
   },
   {
-    q: "أي من الخصائص التالية ليست من خصائص الخوارزمية؟",
+    q: "أي من هذه ليست من خصائص الخوارزمية؟",
     options: [
       "الخطوات منتهية",
       "الخطوات متسلسلة",
@@ -396,27 +367,27 @@ const questions = [
     correct: 1
   },
   {
-    q: "الفائدة الرئيسية من استخدام حلقات التكرار هي:",
+    q: "ما الفائدة الرئيسية من حلقات التكرار؟",
     options: [
       "تعقيد البرنامج",
-      "زيادة عدد الأسطر البرمجية",
+      "زيادة عدد الأسطر",
       "اختصار خطوات العمل",
-      "إبطاء تنفيذ البرنامج"
+      "إبطاء التنفيذ"
     ],
     correct: 2
   },
   {
-    q: "أي من الحلقات التالية عدد مرات تنفيذها معروف مسبقاً؟",
+    q: "أي حلقة تكرار عدد مرات تنفيذها معروف مسبقاً؟",
     options: [
       "طالما I < 10",
       "كرر 5 مرات",
       "طالما X ≠ 0",
-      "كرر حتى تصل إلى الهدف"
+      "كرر حتى تصل"
     ],
     correct: 1
   },
   {
-    q: "في المثال: (طالما X ≠ 0: اطبع X)، متى تتوقف الحلقة؟",
+    q: "في المثال: طالما X ≠ 0: اطبع X، متى تتوقف الحلقة؟",
     options: [
       "بعد 10 مرات",
       "عند إدخال الرقم صفر",
@@ -446,7 +417,7 @@ const questions = [
     correct: 1
   },
   {
-    q: "ما ناتج تنفيذ الخوارزمية التالية؟ (I = 1، طالما I <= 5: اطبع I، I = I + 1)",
+    q: "ما ناتج تنفيذ: I=1, طالما I<=5: اطبع I, I=I+1؟",
     options: [
       "1 2 3 4",
       "1 2 3 4 5",
@@ -456,7 +427,7 @@ const questions = [
     correct: 1
   },
   {
-    q: "اكتب خوارزمية تحدد إذا كان العدد زوجياً أم فردياً، الشرط المناسب هو:",
+    q: "لتحديد إذا كان العدد X زوجياً أم فردياً، الشرط المناسب:",
     options: [
       "إذا X > 0",
       "إذا X < 0",
@@ -464,6 +435,56 @@ const questions = [
       "إذا X = 0"
     ],
     correct: 2
+  },
+  {
+    q: "كم مرة سيطبع البرنامج كلمة (مرحبا)؟ I=0, طالما I<3: اطبع (مرحبا), I=I+1",
+    options: [
+      "مرة واحدة",
+      "مرتان",
+      "3 مرات",
+      "4 مرات"
+    ],
+    correct: 2
+  },
+  {
+    q: "ما نوع التكرار في: كرر حتى تصل إلى الزهرة؟",
+    options: [
+      "تكرار محدد",
+      "تكرار شرطي",
+      "تكرار لا نهائي",
+      "لا يوجد تكرار"
+    ],
+    correct: 1
+  },
+  {
+    q: "ما نوع التكرار في: كرر 5 مرات؟",
+    options: [
+      "تكرار محدد",
+      "تكرار شرطي",
+      "تكرار لا نهائي",
+      "لا يوجد تكرار"
+    ],
+    correct: 0
+  },
+  {
+    q: "في خوارزمية حساب مساحة مستطيل، ما المخرجات؟",
+    options: [
+      "الطول والعرض",
+      "المساحة",
+      "العملية الحسابية",
+      "البداية"
+    ],
+    correct: 1
+  },
+  {
+    q: "أي مما يلي يعتبر خوارزمية؟",
+    options: [
+      "رسم لوحة",
+      "وصفة طبخ",
+      "أغنية عشوائية",
+      "حلم"
+    ],
+    correct: 1
   }
 ];
 
@@ -471,7 +492,7 @@ const questions = [
 let studentName = "";
 let currentIndex = 0;
 let userAnswers = new Array(questions.length).fill(null);
-const scorePerQuestion = 2;
+const scorePerQuestion = 2; // 30 ÷ 15
 
 /* ====== بدء الاختبار ====== */
 function startQuiz() {
@@ -552,9 +573,7 @@ function prevQuestion() {
 function finishQuiz() {
   const unanswered = userAnswers.findIndex(a => a === null);
   if (unanswered !== -1) {
-    if (confirm(`⚠️ لم تجب على السؤال رقم ${unanswered + 1}. هل تريد المتابعة؟`)) {
-      // المتابعة
-    } else {
+    if (!confirm(`⚠️ لم تجب على السؤال رقم ${unanswered + 1}. هل تريد المتابعة؟`)) {
       currentIndex = unanswered;
       renderQuestion();
       return;
@@ -569,11 +588,9 @@ function finishQuiz() {
   document.getElementById('quizScreen').style.display = 'none';
   document.getElementById('resultScreen').style.display = 'block';
 
-  const finalScore = score;
-  const percent = (finalScore / 20) * 100;
+  document.getElementById('scoreDisplay').textContent = score;
 
-  document.getElementById('scoreDisplay').textContent = finalScore;
-
+  const percent = (score / 30) * 100;
   const circle = document.getElementById('resultCircle');
   let color, message;
   if (percent >= 90) {
@@ -596,14 +613,13 @@ function finishQuiz() {
   document.getElementById('resultMessage').textContent = message;
 
   document.getElementById('certName').textContent = studentName;
-  document.getElementById('certScore').textContent = finalScore;
+  document.getElementById('certScore').textContent = score;
   const today = new Date().toLocaleDateString('ar-SY');
   document.getElementById('certDate').textContent = '📅 ' + today;
 
   let detailsHTML = '';
   questions.forEach((q, i) => {
-    const userAns = userAnswers[i];
-    const isCorrect = userAns === q.correct;
+    const isCorrect = userAnswers[i] === q.correct;
     detailsHTML += `<div class="detail-row">
       <span>س ${i + 1}: ${q.q}</span>
       <span class="${isCorrect ? 'ok' : 'no'}">
