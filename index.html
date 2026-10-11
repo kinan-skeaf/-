@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>اختبار: الخوارزميات وحلقات التكرار والجمل الشرطية</title>
+<title>الخوارزميات - حلقات التكرار - الجمل الشرطية</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -11,92 +11,186 @@
     font-family: "Tahoma", "Segoe UI", sans-serif;
     background: linear-gradient(135deg, #1a4d8f 0%, #2c7be5 100%);
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 20px;
     color: #1f2d3d;
+    line-height: 1.8;
   }
 
   .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .header {
     background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    max-width: 850px;
-    width: 100%;
-    padding: 30px;
-    animation: slideIn 0.5s ease;
-  }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  h1 {
+    border-radius: 20px 20px 0 0;
+    padding: 25px;
     text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .header h1 {
     color: #1a4d8f;
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 26px;
+    margin-bottom: 8px;
   }
 
-  .subtitle {
-    text-align: center;
+  .header p {
     color: #667;
-    margin-bottom: 25px;
     font-size: 15px;
   }
 
-  .start-screen { text-align: center; }
-
-  .start-screen input {
-    width: 100%;
-    max-width: 400px;
+  .nav {
+    background: #f0f6ff;
     padding: 15px;
-    font-size: 17px;
-    border: 2px solid #c9d6e5;
-    border-radius: 10px;
-    text-align: center;
-    margin: 15px 0;
-    font-family: inherit;
-    transition: 0.3s;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    border-bottom: 3px solid #1a4d8f;
   }
 
-  .start-screen input:focus {
-    outline: none;
-    border-color: #1a4d8f;
-    box-shadow: 0 0 0 4px rgba(26,77,143,0.15);
+  .nav button {
+    background: #fff;
+    color: #1a4d8f;
+    border: 2px solid #1a4d8f;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+  }
+
+  .nav button:hover, .nav button.active {
+    background: #1a4d8f;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .content {
+    background: #fff;
+    border-radius: 0 0 20px 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section h2 {
+    color: #1a4d8f;
+    font-size: 22px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 3px dashed #2c7be5;
+  }
+
+  .section h3 {
+    color: #2c5aa0;
+    font-size: 18px;
+    margin: 20px 0 10px;
+  }
+
+  .card {
+    background: #f9fbff;
+    border-right: 5px solid #2c7be5;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+  }
+
+  .card.highlight {
+    background: #fffbe6;
+    border-right-color: #f0ad4e;
+  }
+
+  .card.success {
+    background: #eaf7ea;
+    border-right-color: #2e9e4a;
+  }
+
+  .card.info {
+    background: #e8f4ff;
+    border-right-color: #337ab7;
+  }
+
+  ul, ol {
+    padding-right: 25px;
+    margin: 10px 0;
+  }
+
+  li { margin: 6px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+  }
+
+  th, td {
+    border: 1px solid #d0d7e0;
+    padding: 10px 12px;
+    text-align: center;
+  }
+
+  th {
+    background: #1a4d8f;
+    color: #fff;
+  }
+
+  tr:nth-child(even) td { background: #f7f9fc; }
+
+  pre {
+    background: #0f172a;
+    color: #7dd3fc;
+    padding: 15px;
+    border-radius: 10px;
+    overflow-x: auto;
+    direction: rtl;
+    text-align: right;
+    font-family: "Consolas", "Tahoma", monospace;
+    font-size: 15px;
+    line-height: 1.8;
   }
 
   .btn {
     display: inline-block;
     background: linear-gradient(135deg, #1a4d8f, #2c7be5);
     color: #fff;
-    padding: 14px 35px;
+    padding: 12px 25px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: bold;
     font-family: inherit;
+    margin: 5px;
     transition: all 0.3s;
-    box-shadow: 0 4px 12px rgba(26,77,143,0.3);
+    box-shadow: 0 4px 10px rgba(26,77,143,0.25);
   }
 
   .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(26,77,143,0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(26,77,143,0.4);
   }
 
-  .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
   .btn.green { background: linear-gradient(135deg, #2e9e4a, #5cb85c); }
-  .btn.red   { background: linear-gradient(135deg, #c9302c, #d9534f); }
+  .btn.red { background: linear-gradient(135deg, #c9302c, #d9534f); }
 
-  .quiz-screen { display: none; }
+  /* الاختبار */
+  .quiz-area { display: none; }
+  .quiz-area.active { display: block; }
 
-  .student-info {
+  .quiz-header {
     background: #eaf2ff;
-    padding: 12px 20px;
+    padding: 15px 20px;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
@@ -121,7 +215,6 @@
     background: linear-gradient(90deg, #5cb85c, #2e9e4a);
     width: 0%;
     transition: width 0.5s ease;
-    border-radius: 10px;
   }
 
   .question-box {
@@ -130,12 +223,6 @@
     padding: 20px;
     border-radius: 12px;
     margin-bottom: 20px;
-    animation: fadeQ 0.4s ease;
-  }
-
-  @keyframes fadeQ {
-    from { opacity: 0; transform: translateX(-15px); }
-    to { opacity: 1; transform: translateX(0); }
   }
 
   .question-box h3 {
@@ -178,6 +265,7 @@
   }
 
   .result-screen { display: none; text-align: center; }
+  .result-screen.active { display: block; }
 
   .result-circle {
     width: 180px;
@@ -209,33 +297,6 @@
     margin: 20px 0;
   }
 
-  .result-details {
-    background: #f9fbff;
-    border-radius: 12px;
-    padding: 20px;
-    margin-top: 20px;
-    text-align: right;
-  }
-
-  .result-details h3 {
-    color: #1a4d8f;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  .detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #e0e7f0;
-    font-size: 14px;
-    gap: 10px;
-  }
-
-  .detail-row:last-child { border-bottom: none; }
-  .detail-row .ok { color: #2e9e4a; font-weight: bold; white-space: nowrap; }
-  .detail-row .no { color: #c9302c; font-weight: bold; white-space: nowrap; }
-
   .certificate {
     background: linear-gradient(135deg, #fffbe6, #fff5cc);
     border: 3px dashed #f0ad4e;
@@ -260,12 +321,32 @@
     padding-bottom: 5px;
   }
 
+  .details-box {
+    background: #f9fbff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: right;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #e0e7f0;
+    font-size: 14px;
+    gap: 10px;
+  }
+
+  .detail-row .ok { color: #2e9e4a; font-weight: bold; white-space: nowrap; }
+  .detail-row .no { color: #c9302c; font-weight: bold; white-space: nowrap; }
+
   @media (max-width: 600px) {
-    .container { padding: 20px; }
-    h1 { font-size: 19px; }
+    .header h1 { font-size: 19px; }
+    .nav button { padding: 8px 12px; font-size: 12px; }
+    .content { padding: 20px; }
     .result-circle { width: 140px; height: 140px; }
     .result-circle .score { font-size: 38px; }
-    .student-info { flex-direction: column; text-align: center; }
   }
 </style>
 </head>
@@ -273,67 +354,381 @@
 
 <div class="container">
 
-  <!-- شاشة البداية -->
-  <div id="startScreen" class="start-screen">
-    <h1>🎓 اختبار: الخوارزميات وحلقات التكرار والجمل الشرطية</h1>
-    <p class="subtitle">الصف السابع – مادة الحاسوب</p>
-    <p style="margin: 20px 0; color: #667;">
-      📝 عدد الأسئلة: ١٥<br>
-      ⏰ الزمن المقترح: ٢٠ دقيقة<br>
-      📊 العلامة الكاملة: ٣٠
-    </p>
-    <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50">
-    <br>
-    <button class="btn" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+  <div class="header">
+    <h1>📚 الخوارزميات – حلقات التكرار – الجمل الشرطية</h1>
+    <p>الصف السابع – مادة الحاسوب</p>
   </div>
 
-  <!-- شاشة الاختبار -->
-  <div id="quizScreen" class="quiz-screen">
-    <div class="student-info">
-      <span>👤 <span id="displayName"></span></span>
-      <span>📋 سؤال <span id="currentNum">١</span> من <span id="totalNum">١٥</span></span>
-    </div>
-    <div class="progress-wrapper">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-    <div id="questionArea"></div>
-    <div class="nav-buttons">
-      <button class="btn red" id="prevBtn" onclick="prevQuestion()" disabled>⬅️ السابق</button>
-      <button class="btn green" id="nextBtn" onclick="nextQuestion()">التالي ➡️</button>
-    </div>
+  <div class="nav">
+    <button onclick="showSection('sec1', this)" class="active">📖 الخوارزميات</button>
+    <button onclick="showSection('sec2', this)">🔁 حلقات التكرار</button>
+    <button onclick="showSection('sec3', this)">🔀 الجمل الشرطية</button>
+    <button onclick="showSection('sec4', this)">🎯 الاختبار</button>
   </div>
 
-  <!-- شاشة النتيجة -->
-  <div id="resultScreen" class="result-screen">
-    <h1>🎉 انتهى الاختبار!</h1>
-    <div class="result-circle" id="resultCircle">
-      <div class="score" id="scoreDisplay">0</div>
-      <div class="total">من ٣٠</div>
-    </div>
-    <div class="result-message" id="resultMessage"></div>
+  <div class="content">
 
-    <div class="certificate" id="certificate">
-      <h2>🏆 شهادة إتمام الاختبار</h2>
-      <p>تشهد هذه الشهادة بأن الطالب/ة</p>
-      <div class="name" id="certName"></div>
-      <p>قد أكمل اختبار "الخوارزميات وحلقات التكرار والجمل الشرطية"</p>
-      <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من ٣٠</p>
-      <p style="margin-top: 10px; color: #8a6d00;" id="certDate"></p>
+    <!-- ===== القسم ١: الخوارزميات ===== -->
+    <div id="sec1" class="section active">
+      <h2>📖 الدرس الأول: الخوارزميات</h2>
+
+      <div class="card highlight">
+        <strong>تعريف الخوارزمية:</strong> هي عدد منته من الخطوات المتسلسلة لتحقيق هدف محدد في زمن منته يمكن التعبير عنها باللغة التي نريد.
+      </div>
+
+      <h3>يمكن أن تكون الخوارزمية:</h3>
+      <ol>
+        <li><strong>حسابية:</strong> تحتوي على عمليات حسابية مثل جمع أعداد.</li>
+        <li><strong>غير حسابية:</strong> مثل خطوات الاستيقاظ الصباحي والذهاب إلى المدرسة.</li>
+      </ol>
+
+      <h3>خصائص الخوارزمية:</h3>
+      <ol>
+        <li>منتهية: عدد خطواتها محدود.</li>
+        <li>متسلسلة: ذات ترتيب منطقي.</li>
+        <li>محددة الهدف.</li>
+        <li>زمن تنفيذها محدد.</li>
+        <li>قابلة للفهم والتعبير.</li>
+      </ol>
+
+      <h3>مكونات أي خوارزمية:</h3>
+      <div class="card info">
+        <ul>
+          <li><strong>المدخلات (الدخل):</strong> المعطيات التي تُجرى عليها العمليات.</li>
+          <li><strong>المعالجة:</strong> العمليات التي تُجرى على المدخلات (جمع، طرح، ضرب، قسمة، مقارنة...).</li>
+          <li><strong>المخرجات (الخرج):</strong> النتيجة النهائية.</li>
+        </ul>
+      </div>
+
+      <h3>📝 تطبيق: خوارزمية جمع عددين</h3>
+      <div class="card">
+        <p><strong>تحليل المسألة:</strong></p>
+        <ul>
+          <li><strong>المدخلات:</strong> عددان A و B</li>
+          <li><strong>المعالجة:</strong> C = A + B</li>
+          <li><strong>المخرجات:</strong> C (مجموع العددين)</li>
+        </ul>
+      </div>
+
+      <h3>خطوات العمل:</h3>
+      <pre>
+1. البداية
+2. أدخل قيمة A, B
+3. احسب C = A + B
+4. اطبع C
+5. النهاية
+      </pre>
+
+      <h3>📝 تطبيق: خوارزمية مساحة مستطيل</h3>
+      <div class="card">
+        <p><strong>تحليل المسألة:</strong></p>
+        <ul>
+          <li><strong>المدخلات:</strong> الطول L والعرض W</li>
+          <li><strong>المعالجة:</strong> S = L × W</li>
+          <li><strong>المخرجات:</strong> S (المساحة)</li>
+        </ul>
+      </div>
+
+      <h3>خطوات العمل:</h3>
+      <pre>
+1. البداية
+2. أدخل الطول L والعرض W
+3. احسب المساحة = الطول × العرض
+   S = L × W
+4. اطبع المساحة S
+5. النهاية
+      </pre>
+
+      <h3>🎯 وظيفة منزلية:</h3>
+      <div class="card success">
+        <p><strong>١.</strong> اكتب خوارزمية لحساب المتوسط الحسابي لثلاثة أعداد A, B, C</p>
+        <p><strong>٢.</strong> اكتب خوارزمية لحساب مساحة الدائرة</p>
+      </div>
+
+      <h3>✅ حل الوظيفة:</h3>
+      <p><strong>حل ١ – المتوسط الحسابي:</strong></p>
+      <pre>
+1. البداية
+2. أدخل A, B, C
+3. احسب M = (A + B + C) / 3
+4. اطبع M
+5. النهاية
+      </pre>
+
+      <p><strong>حل ٢ – مساحة الدائرة:</strong></p>
+      <pre>
+1. البداية
+2. أدخل نصف القطر R
+3. احسب S = 3.14 × R × R
+4. اطبع S
+5. النهاية
+      </pre>
     </div>
 
-    <div class="result-details">
-      <h3>📊 تفاصيل الإجابات</h3>
-      <div id="detailsArea"></div>
+    <!-- ===== القسم ٢: حلقات التكرار ===== -->
+    <div id="sec2" class="section">
+      <h2>🔁 الدرس الثاني: بنى التحكم (حلقات التكرار)</h2>
+
+      <div class="card highlight">
+        <strong>ما حلقات التكرار؟</strong> هي تنفيذ تعليمة برمجية معينة أو عدة تعليمات عدد محدد من المرات.
+      </div>
+
+      <div class="card info">
+        <strong>الفائدة منها:</strong> هي اختصار خطوات العمل.
+      </div>
+
+      <p><strong>مثال من الواقع:</strong> صعود الدرج يتطلب تكرار في الحركة للصعود درجة درجة.</p>
+
+      <h3>📝 مثال ١: طباعة كلمة "مرحباً" عشر مرات</h3>
+      <pre>
+1. البداية
+2. I = 0    (شرط لتكرار الحلقة)
+3. طالما I < 10
+4.   اطبع "مرحباً"
+5.   I = I + 1
+6. النهاية
+      </pre>
+
+      <p><strong>بطريقة أخرى:</strong></p>
+      <pre>
+1. البداية
+2. I = 0
+3. هل I < 10 ؟
+   نعم:
+      اطبع "مرحباً"
+      I = I + 1
+      أعد الخطوة رقم 3
+   لا:
+      اذهب إلى النهاية
+4. النهاية
+      </pre>
+
+      <h3>📝 مثال ٢: تكرار قراءة عدد حتى إدخال الرقم صفر</h3>
+      <pre>
+1. البداية
+2. أدخل عدد X
+3. طالما العدد X ≠ 0
+4.   اطبع العدد X
+5. النهاية
+      </pre>
+
+      <p><strong>بطريقة أخرى:</strong></p>
+      <pre>
+1. البداية
+2. أدخل عدد X
+3. هل العدد X = 0 ؟
+   لا:
+      اطبع العدد X
+      أعد الخطوة رقم 2
+   نعم:
+      اذهب إلى النهاية
+4. النهاية
+      </pre>
+
+      <div class="card success">
+        <strong>سؤال مهم:</strong> ما الفرق بين الحلقتين في المثالين السابقين؟
+        <br><br>
+        <strong>الجواب:</strong>
+        <ul>
+          <li>في المثال الأول: تم تحديد عدد مرات التكرار (10 مرات).</li>
+          <li>في المثال الثاني: لم يتم تحديد عدد مرات التكرار.</li>
+        </ul>
+      </div>
+
+      <h3>📊 جدول المقارنة:</h3>
+      <table>
+        <tr>
+          <th>المقارنة</th>
+          <th>تكرار محدد</th>
+          <th>تكرار شرطي</th>
+        </tr>
+        <tr>
+          <td>عدد المرات</td>
+          <td>معروف مسبقاً</td>
+          <td>غير معروف</td>
+        </tr>
+        <tr>
+          <td>متى يتوقف؟</td>
+          <td>بعد عدد محدد</td>
+          <td>عند تحقق شرط</td>
+        </tr>
+        <tr>
+          <td>مثال</td>
+          <td>كرر 10 مرات</td>
+          <td>كرر حتى X = 0</td>
+        </tr>
+      </table>
+
+      <h3>🎯 وظيفة منزلية:</h3>
+      <div class="card">
+        <p>اكتب خوارزمية تقوم بقراءة عدد ثم تختبره إذا كان هذا العدد أولياً أم لا.</p>
+      </div>
     </div>
 
-    <div style="margin-top: 25px;">
-      <button class="btn" onclick="location.reload()">🔄 إعادة الاختبار</button>
+    <!-- ===== القسم ٣: الجمل الشرطية ===== -->
+    <div id="sec3" class="section">
+      <h2>🔀 الدرس الثالث: بنى التحكم (الجمل الشرطية)</h2>
+
+      <div class="card highlight">
+        <strong>تعريف الجمل الشرطية:</strong> هي أدوات تستخدم لاتخاذ قرارات مختلفة وتنفيذ مجموعة تعليمات وذلك اعتماداً على شرط معين.
+      </div>
+
+      <h3>📝 مثال: التحقق من علامة الطالب</h3>
+      <p>اكتب خوارزمية تقوم بقراءة علامة الطالب ثم تختبر العلامة، إذا كانت أكبر أو تساوي 60 اطبع "ناجح" وإلا اطبع "راسب":</p>
+
+      <div class="card info">
+        <p><strong>تحليل المسألة:</strong></p>
+        <ul>
+          <li><strong>المدخلات:</strong> علامة الطالب A</li>
+          <li><strong>المعالجة:</strong> مقارنة علامة الطالب A >= 60</li>
+          <li><strong>المخرجات:</strong> طباعة "ناجح" أو "راسب"</li>
+        </ul>
+      </div>
+
+      <h3>خطوات العمل:</h3>
+      <pre>
+1. البداية
+2. أدخل علامة الطالب A
+3. إذا A >= 60 عندها
+      اطبع "ناجح"
+   وإلا
+      اطبع "راسب"
+4. النهاية
+      </pre>
+
+      <h3>📝 مثال ٢: تحديد إذا كان العدد زوجياً أم فردياً</h3>
+      <pre>
+1. البداية
+2. أدخل عدد X
+3. إذا كان X/2 = 0 عندها
+      اطبع "عدد زوجي"
+   وإلا
+      اطبع "عدد فردي"
+4. النهاية
+      </pre>
+
+      <h3>🎯 وظيفة منزلية:</h3>
+      <div class="card success">
+        <p>اكتب خوارزمية تقوم بقراءة عدد ثم تختبره إذا كان هذا العدد أولياً أم لا.</p>
+      </div>
+
+      <h3>✅ حل الوظيفة (العدد الأولي):</h3>
+      <pre>
+1. البداية
+2. أدخل عدد X
+3. إذا X <= 1 عندها
+      اطبع "ليس أولي"
+      اذهب إلى النهاية
+4. عيّن I = 2
+5. طالما I < X
+      إذا باقي قسمة X على I = 0 عندها
+         اطبع "ليس أولي"
+         اذهب إلى النهاية
+      I = I + 1
+6. اطبع "أولي"
+7. النهاية
+      </pre>
+
+      <h3>📊 جدول الفرق بين الجمل الشرطية وحلقات التكرار:</h3>
+      <table>
+        <tr>
+          <th>المقارنة</th>
+          <th>حلقات التكرار</th>
+          <th>الجمل الشرطية</th>
+        </tr>
+        <tr>
+          <td>الوظيفة</td>
+          <td>تنفيذ تعليمات عدة مرات</td>
+          <td>اتخاذ قرار</td>
+        </tr>
+        <tr>
+          <td>الاعتماد</td>
+          <td>على عدد أو شرط</td>
+          <td>على شرط معين</td>
+        </tr>
+        <tr>
+          <td>مثال</td>
+          <td>كرر 10 مرات</td>
+          <td>إذا A >= 60</td>
+        </tr>
+      </table>
     </div>
+
+    <!-- ===== القسم ٤: الاختبار ===== -->
+    <div id="sec4" class="section">
+      <h2>🎯 الاختبار التفاعلي</h2>
+
+      <!-- شاشة البداية -->
+      <div id="startScreen" style="text-align: center;">
+        <p style="margin: 20px 0; color: #667;">
+          📝 عدد الأسئلة: 15<br>
+          ⏰ الزمن المقترح: 20 دقيقة<br>
+          📊 العلامة الكاملة: 30
+        </p>
+        <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50"
+          style="width: 100%; max-width: 400px; padding: 15px; font-size: 17px; border: 2px solid #c9d6e5; border-radius: 10px; text-align: center; margin: 15px 0; font-family: inherit;">
+        <br>
+        <button class="btn" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+      </div>
+
+      <!-- شاشة الاختبار -->
+      <div id="quizScreen" class="quiz-area">
+        <div class="quiz-header">
+          <span>👤 <span id="displayName"></span></span>
+          <span>📋 سؤال <span id="currentNum">1</span> من <span id="totalNum">15</span></span>
+        </div>
+        <div class="progress-wrapper">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div id="questionArea"></div>
+        <div class="nav-buttons">
+          <button class="btn red" id="prevBtn" onclick="prevQuestion()" disabled>⬅️ السابق</button>
+          <button class="btn green" id="nextBtn" onclick="nextQuestion()">التالي ➡️</button>
+        </div>
+      </div>
+
+      <!-- شاشة النتيجة -->
+      <div id="resultScreen" class="result-screen">
+        <h2>🎉 انتهى الاختبار!</h2>
+        <div class="result-circle" id="resultCircle">
+          <div class="score" id="scoreDisplay">0</div>
+          <div class="total">من 30</div>
+        </div>
+        <div class="result-message" id="resultMessage"></div>
+
+        <div class="certificate">
+          <h2>🏆 شهادة إتمام الاختبار</h2>
+          <p>تشهد هذه الشهادة بأن الطالب/ة</p>
+          <div class="name" id="certName"></div>
+          <p>قد أكمل اختبار "الخوارزميات وحلقات التكرار والجمل الشرطية"</p>
+          <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من 30</p>
+          <p style="margin-top: 10px; color: #8a6d00;" id="certDate"></p>
+        </div>
+
+        <div class="details-box">
+          <h3 style="text-align:center; color:#1a4d8f; margin-bottom:15px;">📊 تفاصيل الإجابات</h3>
+          <div id="detailsArea"></div>
+        </div>
+
+        <div style="margin-top: 25px;">
+          <button class="btn" onclick="location.reload()">🔄 إعادة الاختبار</button>
+        </div>
+      </div>
+    </div>
+
   </div>
-
 </div>
 
 <script>
+/* ====== التنقل بين الأقسام ====== */
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 /* ====== الأسئلة ====== */
 const questions = [
   {
@@ -363,6 +758,16 @@ const questions = [
       "C = A + B",
       "ناتج الجمع C",
       "البداية والنهاية"
+    ],
+    correct: 1
+  },
+  {
+    q: "في خوارزمية حساب مساحة مستطيل، ما المخرجات؟",
+    options: [
+      "الطول والعرض",
+      "المساحة",
+      "العملية الحسابية",
+      "البداية"
     ],
     correct: 1
   },
@@ -397,6 +802,16 @@ const questions = [
     correct: 1
   },
   {
+    q: "ما نوع التكرار في: كرر حتى تصل إلى الزهرة؟",
+    options: [
+      "تكرار محدد",
+      "تكرار شرطي",
+      "تكرار لا نهائي",
+      "لا يوجد تكرار"
+    ],
+    correct: 1
+  },
+  {
     q: "الجملة الشرطية تبدأ بكلمة:",
     options: [
       "كرر",
@@ -417,16 +832,6 @@ const questions = [
     correct: 1
   },
   {
-    q: "ما ناتج تنفيذ: I=1, طالما I<=5: اطبع I, I=I+1؟",
-    options: [
-      "1 2 3 4",
-      "1 2 3 4 5",
-      "2 3 4 5",
-      "1 2 3 4 5 6"
-    ],
-    correct: 1
-  },
-  {
     q: "لتحديد إذا كان العدد X زوجياً أم فردياً، الشرط المناسب:",
     options: [
       "إذا X > 0",
@@ -435,6 +840,16 @@ const questions = [
       "إذا X = 0"
     ],
     correct: 2
+  },
+  {
+    q: "ما ناتج تنفيذ: I=1, طالما I<=5: اطبع I, I=I+1؟",
+    options: [
+      "1 2 3 4",
+      "1 2 3 4 5",
+      "2 3 4 5",
+      "1 2 3 4 5 6"
+    ],
+    correct: 1
   },
   {
     q: "كم مرة سيطبع البرنامج كلمة (مرحبا)؟ I=0, طالما I<3: اطبع (مرحبا), I=I+1",
@@ -447,32 +862,12 @@ const questions = [
     correct: 2
   },
   {
-    q: "ما نوع التكرار في: كرر حتى تصل إلى الزهرة؟",
+    q: "في خوارزمية التحقق من علامة الطالب: إذا A >= 60 اطبع (ناجح) وإلا اطبع (راسب)، ما نوع الأداة المستخدمة؟",
     options: [
-      "تكرار محدد",
-      "تكرار شرطي",
-      "تكرار لا نهائي",
-      "لا يوجد تكرار"
-    ],
-    correct: 1
-  },
-  {
-    q: "ما نوع التكرار في: كرر 5 مرات؟",
-    options: [
-      "تكرار محدد",
-      "تكرار شرطي",
-      "تكرار لا نهائي",
-      "لا يوجد تكرار"
-    ],
-    correct: 0
-  },
-  {
-    q: "في خوارزمية حساب مساحة مستطيل، ما المخرجات؟",
-    options: [
-      "الطول والعرض",
-      "المساحة",
-      "العملية الحسابية",
-      "البداية"
+      "حلقة تكرار",
+      "جملة شرطية",
+      "عملية حسابية",
+      "لا شيء"
     ],
     correct: 1
   },
@@ -492,7 +887,7 @@ const questions = [
 let studentName = "";
 let currentIndex = 0;
 let userAnswers = new Array(questions.length).fill(null);
-const scorePerQuestion = 2; // 30 ÷ 15
+const scorePerQuestion = 2;
 
 /* ====== بدء الاختبار ====== */
 function startQuiz() {
@@ -544,13 +939,11 @@ function renderQuestion() {
   document.getElementById('progressFill').style.width = progress + '%';
 }
 
-/* ====== اختيار إجابة ====== */
 function selectOption(index) {
   userAnswers[currentIndex] = index;
   renderQuestion();
 }
 
-/* ====== التنقل ====== */
 function nextQuestion() {
   if (userAnswers[currentIndex] === null) {
     alert("⚠️ الرجاء اختيار إجابة قبل المتابعة");
@@ -587,6 +980,7 @@ function finishQuiz() {
 
   document.getElementById('quizScreen').style.display = 'none';
   document.getElementById('resultScreen').style.display = 'block';
+  document.getElementById('resultScreen').classList.add('active');
 
   document.getElementById('scoreDisplay').textContent = score;
 
