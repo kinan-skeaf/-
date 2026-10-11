@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار: الخوارزميات وحلقات التكرار والجمل الشرطية</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Tahoma", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #1a4d8f 0%, #2c7be5 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #1f2d3d;
+  }
+
+  .container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    max-width: 800px;
+    width: 100%;
+    padding: 30px;
+    animation: slideIn 0.5s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    text-align: center;
+    color: #1a4d8f;
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #667;
+    margin-bottom: 25px;
+    font-size: 15px;
+  }
+
+  /* شاشة البداية */
+  .start-screen { text-align: center; }
+
+  .start-screen input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    font-size: 17px;
+    border: 2px solid #c9d6e5;
+    border-radius: 10px;
+    text-align: center;
+    margin: 15px 0;
+    font-family: inherit;
+    transition: 0.3s;
+  }
+
+  .start-screen input:focus {
+    outline: none;
+    border-color: #1a4d8f;
+    box-shadow: 0 0 0 4px rgba(26,77,143,0.15);
+  }
+
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    color: #fff;
+    padding: 14px 35px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(26,77,143,0.3);
+  }
+
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(26,77,143,0.5);
+  }
+
+  .btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn.green { background: linear-gradient(135deg, #2e9e4a, #5cb85c); }
+  .btn.red   { background: linear-gradient(135deg, #c9302c, #d9534f); }
+
+  /* شاشة الاختبار */
+  .quiz-screen { display: none; }
+
+  .student-info {
+    background: #eaf2ff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #1a4d8f;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .progress-wrapper {
+    background: #e0e7f0;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #5cb85c, #2e9e4a);
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 10px;
+  }
+
+  .question-box {
+    background: #f9fbff;
+    border-right: 6px solid #2c7be5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    animation: fadeQ 0.4s ease;
+  }
+
+  @keyframes fadeQ {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .question-box h3 {
+    color: #1a4d8f;
+    margin-bottom: 15px;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .option {
+    display: block;
+    background: #fff;
+    border: 2px solid #d0d7e0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-size: 16px;
+  }
+
+  .option:hover {
+    border-color: #2c7be5;
+    background: #eaf2ff;
+    transform: translateX(-5px);
+  }
+
+  .option.selected {
+    background: #2c7be5;
+    color: #fff;
+    border-color: #1a4d8f;
+    font-weight: bold;
+  }
+
+  .option.correct-answer {
+    background: #d4f7d4;
+    border-color: #2e9e4a;
+    color: #1a5f1a;
+  }
+
+  .option.wrong-answer {
+    background: #fddddd;
+    border-color: #d9534f;
+    color: #8a1a1a;
+  }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  /* شاشة النتيجة */
+  .result-screen { display: none; text-align: center; }
+
+  .result-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: pop 0.6s ease;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .result-circle .score {
+    font-size: 48px;
+    line-height: 1;
+  }
+
+  .result-circle .total {
+    font-size: 20px;
+    opacity: 0.9;
+  }
+
+  .result-message {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+
+  .result-details {
+    background: #f9fbff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: right;
+  }
+
+  .result-details h3 {
+    color: #1a4d8f;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #e0e7f0;
+    font-size: 14px;
+    gap: 10px;
+  }
+
+  .detail-row:last-child { border-bottom: none; }
+
+  .detail-row .ok { color: #2e9e4a; font-weight: bold; white-space: nowrap; }
+  .detail-row .no { color: #c9302c; font-weight: bold; white-space: nowrap; }
+
+  .certificate {
+    background: linear-gradient(135deg, #fffbe6, #fff5cc);
+    border: 3px dashed #f0ad4e;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+  }
+
+  .certificate h2 {
+    color: #8a6d00;
+    margin-bottom: 15px;
+    font-size: 22px;
+  }
+
+  .certificate .name {
+    font-size: 28px;
+    color: #1a4d8f;
+    font-weight: bold;
+    margin: 15px 0;
+    border-bottom: 2px dotted #1a4d8f;
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 20px; }
+    h1 { font-size: 20px; }
+    .result-circle { width: 140px; height: 140px; }
+    .result-circle .score { font-size: 38px; }
+    .student-info { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- شاشة البداية -->
+  <div id="startScreen" class="start-screen">
+    <h1>🎓 اختبار: الخوارزميات وحلقات التكرار والجمل الشرطية</h1>
+    <p class="subtitle">الصف السابع – مادة الحاسوب</p>
+    <p style="margin: 20px 0; color: #667;">
+      📝 عدد الأسئلة: ١٠<br>
+      ⏰ الزمن المقترح: ٢٠ دقيقة<br>
+      📊 العلامة الكاملة: ٢٠
+    </p>
+    <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50">
+    <br>
+    <button class="btn" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+  </div>
+
+  <!-- شاشة الاختبار -->
+  <div id="quizScreen" class="quiz-screen">
+    <div class="student-info">
+      <span>👤 <span id="displayName"></span></span>
+      <span>📋 سؤال <span id="currentNum">١</span> من <span id="totalNum">١٠</span></span>
+    </div>
+    <div class="progress-wrapper">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div id="questionArea"></div>
+    <div class="nav-buttons">
+      <button class="btn red" id="prevBtn" onclick="prevQuestion()" disabled>⬅️ السابق</button>
+      <button class="btn green" id="nextBtn" onclick="nextQuestion()">التالي ➡️</button>
+    </div>
+  </div>
+
+  <!-- شاشة النتيجة -->
+  <div id="resultScreen" class="result-screen">
+    <h1>🎉 انتهى الاختبار!</h1>
+    <div class="result-circle" id="resultCircle">
+      <div class="score" id="scoreDisplay">0</div>
+      <div class="total">من ٢٠</div>
+    </div>
+    <div class="result-message" id="resultMessage"></div>
+
+    <div class="certificate" id="certificate">
+      <h2>🏆 شهادة إتمام الاختبار</h2>
+      <p>تشهد هذه الشهادة بأن الطالب/ة</p>
+      <div class="name" id="certName"></div>
+      <p>قد أكمل اختبار "الخوارزميات وحلقات التكرار والجمل الشرطية"</p>
+      <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من ٢٠</p>
+      <p style="margin-top: 10px; color: #8a6d00;" id="certDate"></p>
+    </div>
+
+    <div class="result-details">
+      <h3>📊 تفاصيل الإجابات</h3>
+      <div id="detailsArea"></div>
+    </div>
+
+    <div style="margin-top: 25px;">
+      <button class="btn" onclick="location.reload()">🔄 إعادة الاختبار</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ====== الأسئلة ====== */
+const questions = [
+  {
+    q: "الخوارزمية هي:",
+    options: [
+      "لغة برمجة متقدمة",
+      "عدد منتهٍ من الخطوات المتسلسلة لتحقيق هدف محدد",
+      "جهاز إلكتروني",
+      "برنامج معالجة نصوص"
+    ],
+    correct: 1
+  },
+  {
+    q: "أي من الخصائص التالية ليست من خصائص الخوارزمية؟",
+    options: [
+      "الخطوات منتهية",
+      "الخطوات متسلسلة",
+      "الخطوات عشوائية",
+      "لها هدف محدد"
+    ],
+    correct: 2
+  },
+  {
+    q: "في خوارزمية جمع عددين A و B، ما هي المعالجة؟",
+    options: [
+      "A و B",
+      "C = A + B",
+      "ناتج الجمع C",
+      "البداية والنهاية"
+    ],
+    correct: 1
+  },
+  {
+    q: "الفائدة الرئيسية من استخدام حلقات التكرار هي:",
+    options: [
+      "تعقيد البرنامج",
+      "زيادة عدد الأسطر البرمجية",
+      "اختصار خطوات العمل",
+      "إبطاء تنفيذ البرنامج"
+    ],
+    correct: 2
+  },
+  {
+    q: "أي من الحلقات التالية عدد مرات تنفيذها معروف مسبقاً؟",
+    options: [
+      "طالما I < 10",
+      "كرر 5 مرات",
+      "طالما X ≠ 0",
+      "كرر حتى تصل إلى الهدف"
+    ],
+    correct: 1
+  },
+  {
+    q: "في المثال: (طالما X ≠ 0: اطبع X)، متى تتوقف الحلقة؟",
+    options: [
+      "بعد 10 مرات",
+      "عند إدخال الرقم صفر",
+      "لا تتوقف أبداً",
+      "عند إدخال الرقم 1"
+    ],
+    correct: 1
+  },
+  {
+    q: "الجملة الشرطية تبدأ بكلمة:",
+    options: [
+      "كرر",
+      "إذا",
+      "اطبع",
+      "أدخل"
+    ],
+    correct: 1
+  },
+  {
+    q: "في الجملة الشرطية، كلمة (وإلا) تستخدم:",
+    options: [
+      "عندما يتحقق الشرط",
+      "عندما لا يتحقق الشرط",
+      "لتكرار الأمر",
+      "لإنهاء البرنامج"
+    ],
+    correct: 1
+  },
+  {
+    q: "ما ناتج تنفيذ الخوارزمية التالية؟ (I = 1، طالما I <= 5: اطبع I، I = I + 1)",
+    options: [
+      "1 2 3 4",
+      "1 2 3 4 5",
+      "2 3 4 5",
+      "1 2 3 4 5 6"
+    ],
+    correct: 1
+  },
+  {
+    q: "اكتب خوارزمية تحدد إذا كان العدد زوجياً أم فردياً، الشرط المناسب هو:",
+    options: [
+      "إذا X > 0",
+      "إذا X < 0",
+      "إذا باقي قسمة X على 2 = 0",
+      "إذا X = 0"
+    ],
+    correct: 2
+  }
+];
+
+/* ====== المتغيرات ====== */
+let studentName = "";
+let currentIndex = 0;
+let userAnswers = new Array(questions.length).fill(null);
+const scorePerQuestion = 2;
+
+/* ====== بدء الاختبار ====== */
+function startQuiz() {
+  const nameInput = document.getElementById('studentName').value.trim();
+  if (!nameInput) {
+    alert("⚠️ الرجاء إدخال اسمك أولاً");
+    return;
+  }
+  if (nameInput.length < 3) {
+    alert("⚠️ الرجاء إدخال اسمك كاملاً");
+    return;
+  }
+  studentName = nameInput;
+  document.getElementById('displayName').textContent = studentName;
+  document.getElementById('totalNum').textContent = questions.length;
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('quizScreen').style.display = 'block';
+  renderQuestion();
+}
+
+/* ====== عرض السؤال ====== */
+function renderQuestion() {
+  const q = questions[currentIndex];
+  const area = document.getElementById('questionArea');
+  document.getElementById('currentNum').textContent = currentIndex + 1;
+
+  let html = `<div class="question-box">
+    <h3>س ${currentIndex + 1}: ${q.q}</h3>`;
+
+  q.options.forEach((opt, i) => {
+    const selected = userAnswers[currentIndex] === i ? 'selected' : '';
+    html += `<div class="option ${selected}" onclick="selectOption(${i})">${opt}</div>`;
+  });
+
+  html += `</div>`;
+  area.innerHTML = html;
+
+  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  const nextBtn = document.getElementById('nextBtn');
+  if (currentIndex === questions.length - 1) {
+    nextBtn.textContent = "✅ إنهاء الاختبار";
+    nextBtn.onclick = finishQuiz;
+  } else {
+    nextBtn.textContent = "التالي ➡️";
+    nextBtn.onclick = nextQuestion;
+  }
+
+  const progress = ((currentIndex + 1) / questions.length) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+}
+
+/* ====== اختيار إجابة ====== */
+function selectOption(index) {
+  userAnswers[currentIndex] = index;
+  renderQuestion();
+}
+
+/* ====== التنقل ====== */
+function nextQuestion() {
+  if (userAnswers[currentIndex] === null) {
+    alert("⚠️ الرجاء اختيار إجابة قبل المتابعة");
+    return;
+  }
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  }
+}
+
+function prevQuestion() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderQuestion();
+  }
+}
+
+/* ====== إنهاء الاختبار ====== */
+function finishQuiz() {
+  const unanswered = userAnswers.findIndex(a => a === null);
+  if (unanswered !== -1) {
+    if (confirm(`⚠️ لم تجب على السؤال رقم ${unanswered + 1}. هل تريد المتابعة؟`)) {
+      // المتابعة
+    } else {
+      currentIndex = unanswered;
+      renderQuestion();
+      return;
+    }
+  }
+
+  let score = 0;
+  questions.forEach((q, i) => {
+    if (userAnswers[i] === q.correct) score += scorePerQuestion;
+  });
+
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'block';
+
+  const finalScore = score;
+  const percent = (finalScore / 20) * 100;
+
+  document.getElementById('scoreDisplay').textContent = finalScore;
+
+  const circle = document.getElementById('resultCircle');
+  let color, message;
+  if (percent >= 90) {
+    color = 'linear-gradient(135deg, #2e9e4a, #5cb85c)';
+    message = "🏆 ممتاز! أنت متمكن من الموضوع!";
+  } else if (percent >= 75) {
+    color = 'linear-gradient(135deg, #2c7be5, #5cb85c)';
+    message = "👍 جيد جداً! واصل التقدم!";
+  } else if (percent >= 60) {
+    color = 'linear-gradient(135deg, #f0ad4e, #ffd93b)';
+    message = "📖 جيد، لكن يحتاج مزيداً من المراجعة.";
+  } else if (percent >= 50) {
+    color = 'linear-gradient(135deg, #e67e22, #f0ad4e)';
+    message = "⚠️ مقبول، راجع القواعد الذهبية.";
+  } else {
+    color = 'linear-gradient(135deg, #c9302c, #d9534f)';
+    message = "📚 يحتاج إلى تحسين، راجع الدرس من جديد.";
+  }
+  circle.style.background = color;
+  document.getElementById('resultMessage').textContent = message;
+
+  document.getElementById('certName').textContent = studentName;
+  document.getElementById('certScore').textContent = finalScore;
+  const today = new Date().toLocaleDateString('ar-SY');
+  document.getElementById('certDate').textContent = '📅 ' + today;
+
+  let detailsHTML = '';
+  questions.forEach((q, i) => {
+    const userAns = userAnswers[i];
+    const isCorrect = userAns === q.correct;
+    detailsHTML += `<div class="detail-row">
+      <span>س ${i + 1}: ${q.q}</span>
+      <span class="${isCorrect ? 'ok' : 'no'}">
+        ${isCorrect ? '✅' : `❌ (${q.options[q.correct]})`}
+      </span>
+    </div>`;
+  });
+  document.getElementById('detailsArea').innerHTML = detailsHTML;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
