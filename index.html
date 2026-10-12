@@ -17,12 +17,8 @@
     line-height: 1.8;
   }
 
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
+  .container { max-width: 1000px; margin: 0 auto; }
 
-  /* الترويسة */
   .header {
     background: #fff;
     border-radius: 20px;
@@ -61,7 +57,6 @@
     border-radius: 20px;
   }
 
-  /* رسالة ترحيب */
   .welcome {
     background: linear-gradient(135deg, #fffbe6, #fff5cc);
     border-right: 6px solid #f0ad4e;
@@ -71,13 +66,8 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   }
 
-  .welcome p {
-    color: #8a6d00;
-    font-size: 16px;
-    margin: 5px 0;
-  }
+  .welcome p { color: #8a6d00; font-size: 16px; margin: 5px 0; }
 
-  /* عنوان القسم */
   .section-title {
     color: #fff;
     font-size: 24px;
@@ -86,7 +76,6 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
   }
 
-  /* شبكة البطاقات */
   .lessons-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -117,11 +106,7 @@
   .lesson-card.ready { border-top-color: #2e9e4a; }
   .lesson-card.ready:hover { border-top-color: #1a5f1a; }
 
-  .lesson-icon {
-    font-size: 48px;
-    text-align: center;
-    margin-bottom: 10px;
-  }
+  .lesson-icon { font-size: 48px; text-align: center; margin-bottom: 10px; }
 
   .lesson-num {
     position: absolute;
@@ -157,20 +142,13 @@
     font-weight: bold;
     padding: 6px 14px;
     border-radius: 20px;
-    display: inline-block;
-    margin: 0 auto;
-    width: 100%;
+    display: block;
+    margin: 0 auto 10px auto;
+    width: fit-content;
   }
 
-  .lesson-status.ready {
-    background: #eaf7ea;
-    color: #2e9e4a;
-  }
-
-  .lesson-status.soon {
-    background: #fff5cc;
-    color: #8a6d00;
-  }
+  .lesson-status.ready { background: #eaf7ea; color: #2e9e4a; }
+  .lesson-status.soon { background: #fff5cc; color: #8a6d00; }
 
   .lesson-btn {
     display: block;
@@ -190,7 +168,6 @@
     transform: scale(1.02);
   }
 
-  /* التذييل */
   .footer {
     background: #fff;
     border-radius: 15px;
@@ -199,18 +176,9 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   }
 
-  .footer p {
-    color: #667;
-    font-size: 14px;
-    margin: 5px 0;
-  }
+  .footer p { color: #667; font-size: 14px; margin: 5px 0; }
+  .footer .heart { color: #d9534f; font-size: 16px; }
 
-  .footer .heart {
-    color: #d9534f;
-    font-size: 16px;
-  }
-
-  /* الجوال */
   @media (max-width: 600px) {
     .header h1 { font-size: 24px; }
     .header .subtitle { font-size: 15px; }
@@ -226,7 +194,6 @@
 
 <div class="container">
 
-  <!-- الترويسة -->
   <div class="header">
     <img src="logo.png" alt="شعار المدرس كنان سكيف" class="logo" onerror="this.style.display='none'">
     <h1>📚 نتعلم سوياً</h1>
@@ -234,20 +201,16 @@
     <p class="teacher">👨‍🏫 إعداد المعلم: كنان سكيف</p>
   </div>
 
-  <!-- رسالة ترحيب -->
   <div class="welcome">
     <p>🌟 <strong>أهلاً بكم في منصة "نتعلم سوياً"</strong></p>
     <p>📖 هنا تجدون دروس مادة الحاسوب بشكل تفاعلي</p>
     <p>🎮 مع محاكيات واختبارات وشهادات إلكترونية</p>
   </div>
 
-  <!-- عنوان الدروس -->
   <h2 class="section-title">📚 دروس المقرر</h2>
 
-  <!-- شبكة البطاقات -->
   <div class="lessons-grid">
 
-    <!-- الدرس ١ -->
     <a href="lesson1.html" class="lesson-card ready">
       <span class="lesson-num">الدرس ١</span>
       <div class="lesson-icon">📖</div>
@@ -257,7 +220,6 @@
       <div class="lesson-btn">🚀 ابدأ الدرس</div>
     </a>
 
-    <!-- الدرس ٢ -->
     <a href="lesson2.html" class="lesson-card ready">
       <span class="lesson-num">الدرس ٢</span>
       <div class="lesson-icon">🔁</div>
@@ -267,7 +229,6 @@
       <div class="lesson-btn">🚀 ابدأ الدرس</div>
     </a>
 
-    <!-- الدرس ٣ -->
     <a href="lesson3.html" class="lesson-card ready">
       <span class="lesson-num">الدرس ٣</span>
       <div class="lesson-icon">🔀</div>
@@ -277,7 +238,6 @@
       <div class="lesson-btn">🚀 ابدأ الدرس</div>
     </a>
 
-    <!-- الدرس ٤ -->
     <a href="lesson4.html" class="lesson-card">
       <span class="lesson-num">الدرس ٤</span>
       <div class="lesson-icon">🔢</div>
@@ -287,7 +247,6 @@
       <div class="lesson-btn">🚀 ابدأ الدرس</div>
     </a>
 
-    <!-- الدرس ٥ -->
     <a href="lesson5.html" class="lesson-card">
       <span class="lesson-num">الدرس ٥</span>
       <div class="lesson-icon">🔄</div>
@@ -297,7 +256,6 @@
       <div class="lesson-btn">🚀 ابدأ الدرس</div>
     </a>
 
-    <!-- الدرس ٦ -->
     <a href="lesson6.html" class="lesson-card">
       <span class="lesson-num">الدرس ٦</span>
       <div class="lesson-icon">🦠</div>
@@ -307,7 +265,6 @@
       <div class="lesson-btn">🚀 ابدأ الدرس</div>
     </a>
 
-    <!-- الدرس ٧ -->
     <a href="lesson7.html" class="lesson-card">
       <span class="lesson-num">الدرس ٧</span>
       <div class="lesson-icon">🔐</div>
@@ -317,7 +274,6 @@
       <div class="lesson-btn">🚀 ابدأ الدرس</div>
     </a>
 
-    <!-- الدرس ٨ -->
     <a href="lesson8.html" class="lesson-card">
       <span class="lesson-num">الدرس ٨</span>
       <div class="lesson-icon">🛡️</div>
@@ -327,7 +283,6 @@
       <div class="lesson-btn">🚀 ابدأ الدرس</div>
     </a>
 
-    <!-- الدرس ٩ -->
     <a href="lesson9.html" class="lesson-card">
       <span class="lesson-num">الدرس ٩</span>
       <div class="lesson-icon">💉</div>
@@ -339,7 +294,6 @@
 
   </div>
 
-  <!-- التذييل -->
   <div class="footer">
     <p>© 2025 – منصة <strong>نتعلم سوياً</strong></p>
     <p>إعداد المعلم: <strong>كنان سكيف</strong></p>
