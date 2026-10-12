@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدرس التاسع: مضاد الفيروسات – نتعلم سوياً</title>
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Tahoma", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #1a4d8f 0%, #2c7be5 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #1f2d3d;
+    line-height: 1.8;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .top-nav {
+    background: #fff;
+    border-radius: 15px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .top-nav a {
+    color: #1a4d8f;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s;
+    background: #eaf2ff;
+  }
+  .top-nav a:hover { background: #1a4d8f; color: #fff; }
+  .header {
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    margin-bottom: 20px;
+  }
+  .header .lesson-badge {
+    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    color: #fff;
+    display: inline-block;
+    padding: 5px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .header h1 { color: #1a4d8f; font-size: 28px; margin-bottom: 8px; }
+  .header .subtitle { color: #667; font-size: 15px; }
+  .tabs {
+    background: #fff;
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tabs button {
+    background: #f0f6ff;
+    color: #1a4d8f;
+    border: 2px solid transparent;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+  }
+  .tabs button:hover { background: #d9e7ff; }
+  .tabs button.active {
+    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    color: #fff;
+  }
+  .content {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .section h2 {
+    color: #1a4d8f;
+    font-size: 22px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 3px dashed #2c7be5;
+  }
+  .section h3 { color: #2c5aa0; font-size: 18px; margin: 20px 0 10px; }
+  .card {
+    background: #f9fbff;
+    border-right: 5px solid #2c7be5;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+  }
+  .card.highlight { background: #fffbe6; border-right-color: #f0ad4e; }
+  .card.success { background: #eaf7ea; border-right-color: #2e9e4a; }
+  .card.info { background: #e8f4ff; border-right-color: #337ab7; }
+  .card.danger { background: #fdecec; border-right-color: #c9302c; }
+  ul, ol { padding-right: 25px; margin: 10px 0; }
+  li { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+  th, td { border: 1px solid #d0d7e0; padding: 10px 12px; text-align: center; }
+  th { background: #1a4d8f; color: #fff; }
+  tr:nth-child(even) td { background: #f7f9fc; }
+  pre {
+    background: #0f172a;
+    color: #7dd3fc;
+    padding: 15px;
+    border-radius: 10px;
+    overflow-x: auto;
+    direction: rtl;
+    text-align: right;
+    font-family: "Consolas", "Tahoma", monospace;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: inherit;
+    margin: 5px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(26,77,143,0.25);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(26,77,143,0.4); }
+  .btn.green { background: linear-gradient(135deg, #2e9e4a, #5cb85c); }
+  .btn.red { background: linear-gradient(135deg, #c9302c, #d9534f); }
+  .btn.orange { background: linear-gradient(135deg, #e67e22, #f0ad4e); }
+
+  .simulator {
+    background: linear-gradient(135deg, #f0f7ff, #e0efff);
+    border: 2px solid #2c7be5;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .simulator h4 { color: #1a4d8f; font-size: 17px; margin-bottom: 15px; }
+  .simulator h4::before { content: "🎮 "; }
+
+  .sim-output {
+    background: #0f172a;
+    color: #7dd3fc;
+    padding: 18px;
+    border-radius: 10px;
+    font-family: "Consolas", monospace;
+    font-size: 15px;
+    min-height: 120px;
+    margin-top: 15px;
+    line-height: 2;
+    direction: rtl;
+    text-align: right;
+  }
+  .sim-step {
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 6px;
+    animation: slideStep 0.4s ease;
+    background: rgba(44,123,229,0.15);
+    border-right: 3px solid #2c7be5;
+  }
+  .sim-step.success {
+    background: rgba(46,158,74,0.2);
+    border-right-color: #2e9e4a;
+    color: #b5f7b5;
+  }
+  .sim-step.danger {
+    background: rgba(201,48,44,0.2);
+    border-right-color: #c9302c;
+    color: #fdd;
+  }
+  .sim-step.warning {
+    background: rgba(240,173,78,0.2);
+    border-right-color: #f0ad4e;
+    color: #ffe5b5;
+  }
+  @keyframes slideStep {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* محاكي الفحص */
+  .scan-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    margin: 15px 0;
+    min-height: 200px;
+  }
+  .file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #f9fbff;
+    border-radius: 8px;
+    border-right: 4px solid #2c7be5;
+    transition: all 0.5s;
+    font-size: 15px;
+  }
+  .file-item.scanning {
+    background: #fff5cc;
+    border-right-color: #f0ad4e;
+  }
+  .file-item.clean {
+    background: #eaf7ea;
+    border-right-color: #2e9e4a;
+  }
+  .file-item.infected {
+    background: #fdecec;
+    border-right-color: #c9302c;
+    text-decoration: line-through;
+  }
+  .file-status {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  /* شريط التقدم */
+  .scan-progress {
+    background: #e0e7f0;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 15px 0;
+  }
+  .scan-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #5cb85c, #2e9e4a);
+    width: 0%;
+    transition: width 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  /* خطوات التثبيت */
+  .steps-list {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+  }
+  .steps-list li {
+    counter-increment: step;
+    background: #f0f6ff;
+    padding: 14px 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border-right: 4px solid #2c7be5;
+    position: relative;
+    padding-right: 60px;
+    transition: all 0.3s;
+  }
+  .steps-list li:hover { background: #e0efff; transform: translateX(-5px); }
+  .steps-list li::before {
+    content: counter(step);
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  /* الاختبار */
+  .quiz-header {
+    background: #eaf2ff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #1a4d8f;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .progress-wrapper {
+    background: #e0e7f0;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #5cb85c, #2e9e4a);
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  .question-box {
+    background: #f9fbff;
+    border-right: 6px solid #2c7be5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  .question-box h3 { color: #1a4d8f; margin-bottom: 15px; font-size: 18px; line-height: 1.6; }
+  .option {
+    display: block;
+    background: #fff;
+    border: 2px solid #d0d7e0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-size: 16px;
+  }
+  .option:hover { border-color: #2c7be5; background: #eaf2ff; transform: translateX(-5px); }
+  .option.selected { background: #2c7be5; color: #fff; border-color: #1a4d8f; font-weight: bold; }
+  .nav-buttons { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+  .result-screen { display: none; text-align: center; }
+  .result-screen.active { display: block; }
+  .result-circle {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: pop 0.6s ease;
+  }
+  @keyframes pop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  .result-circle .score { font-size: 48px; line-height: 1; }
+  .result-circle .total { font-size: 20px; opacity: 0.9; }
+  .result-message { font-size: 22px; font-weight: bold; margin: 20px 0; }
+  .certificate {
+    background: linear-gradient(135deg, #fffbe6, #fff5cc);
+    border: 3px dashed #f0ad4e;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+  }
+  .certificate h2 { color: #8a6d00; margin-bottom: 15px; font-size: 22px; }
+  .certificate .name {
+    font-size: 28px;
+    color: #1a4d8f;
+    font-weight: bold;
+    margin: 15px 0;
+    border-bottom: 2px dotted #1a4d8f;
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+  .details-box {
+    background: #f9fbff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: right;
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #e0e7f0;
+    font-size: 14px;
+    gap: 10px;
+  }
+  .detail-row .ok { color: #2e9e4a; font-weight: bold; }
+  .detail-row .no { color: #c9302c; font-weight: bold; }
+  .bottom-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .bottom-nav a {
+    flex: 1;
+    min-width: 120px;
+    background: #fff;
+    color: #1a4d8f;
+    text-align: center;
+    padding: 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+  }
+  .bottom-nav a:hover { background: #1a4d8f; color: #fff; transform: translateY(-3px); }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 22px; }
+    .tabs button { padding: 8px 12px; font-size: 12px; }
+    .content { padding: 20px; }
+    .result-circle { width: 140px; height: 140px; }
+    .result-circle .score { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-nav">
+    <a href="index.html">🏠 الرئيسية</a>
+    <span style="color: #1a4d8f; font-weight: bold;">💉 الدرس التاسع: مضاد الفيروسات</span>
+  </div>
+
+  <div class="header">
+    <span class="lesson-badge">الدرس ٩</span>
+    <h1>💉 مضاد الفيروسات</h1>
+    <p class="subtitle">التحميل – التثبيت – التحديث – الفحص</p>
+  </div>
+
+  <div class="tabs">
+    <button onclick="showTab('tab1', this)" class="active">📖 الشرح</button>
+    <button onclick="showTab('tab2', this)">📝 الخطوات</button>
+    <button onclick="showTab('tab3', this)">🎮 المحاكي</button>
+    <button onclick="showTab('tab4', this)">🎯 الاختبار</button>
+  </div>
+
+  <div class="content">
+
+    <!-- ===== تبويب ١: الشرح ===== -->
+    <div id="tab1" class="section active">
+      <h2>📖 مفهوم مضاد الفيروسات</h2>
+
+      <div class="card highlight">
+        <strong>ما هو مضاد الفيروسات (Antivirus)؟</strong><br>
+        هو برنامج متخصص يهدف إلى حماية الحاسوب من الفيروسات والبرامج الضارة، من خلال اكتشافها وإزالتها أو عزلها.
+      </div>
+
+      <h3>🔹 التشبيه المبسط:</h3>
+      <div class="card info">
+        <p><strong>مضاد الفيروسات = طبيب الحاسوب</strong></p>
+        <ul>
+          <li>🩺 الفحص = الكشف الطبي</li>
+          <li>🦠 الفيروس = المرض</li>
+          <li>💊 العلاج = إزالة الفيروس</li>
+          <li>💉 التحديث = التحصين</li>
+        </ul>
+      </div>
+
+      <h3>🔹 وظائف مضاد الفيروسات:</h3>
+      <div class="card success">
+        <ul>
+          <li>✅ فحص الملفات والبرامج باستمرار</li>
+          <li>✅ اكتشاف الفيروسات والبرامج الضارة</li>
+          <li>✅ إزالة الفيروسات أو عزلها</li>
+          <li>✅ تحديث قاعدة بيانات الفيروسات</li>
+          <li>✅ فحص وسائط التخزين قبل استخدامها</li>
+          <li>✅ فحص البريد الإلكتروني والمواقع</li>
+        </ul>
+      </div>
+
+      <h3>🔹 أشهر برامج مضاد الفيروسات:</h3>
+      <table>
+        <tr>
+          <th>البرنامج</th>
+          <th>المميزات</th>
+        </tr>
+        <tr>
+          <td><strong>Microsoft Security Essentials</strong></td>
+          <td>مجاني من مايكروسوفت</td>
+        </tr>
+        <tr>
+          <td><strong>Kaspersky Antivirus</strong></td>
+          <td>قوي وموثوق</td>
+        </tr>
+        <tr>
+          <td><strong>Norton Antivirus</strong></td>
+          <td>حماية شاملة</td>
+        </tr>
+        <tr>
+          <td><strong>Avast / AVG</strong></td>
+          <td>نسخ مجانية متاحة</td>
+        </tr>
+      </table>
+
+      <h3>🔹 متى نفحص الحاسوب؟</h3>
+      <div class="card danger">
+        <ul>
+          <li>⚠️ أسبوعياً على الأقل</li>
+          <li>⚠️ بعد استخدام فلاش ميموري من جهاز آخر</li>
+          <li>⚠️ بعد تحميل برامج جديدة</li>
+          <li>⚠️ عند ملاحظة بطء مفاجئ</li>
+          <li>⚠️ بعد فتح مرفقات مجهولة (بغير قصد)</li>
+        </ul>
+      </div>
+
+      <div class="card highlight">
+        <strong>💡 تذكر:</strong> مضاد الفيروسات + جدار الحماية = حماية متكاملة.
+      </div>
+    </div>
+
+    <!-- ===== تبويب ٢: الخطوات ===== -->
+    <div id="tab2" class="section">
+      <h2>📝 خطوات تثبيت مضاد الفيروسات</h2>
+
+      <h3>🔹 خطوات التحميل والتثبيت (Microsoft Security Essentials):</h3>
+      <ol class="steps-list">
+        <li>حمّل أحدث إصدار من موقع مايكروسوفت أو مصدر موثوق.</li>
+        <li>اختر النسخة المناسبة (32 Bit أو 64 Bit).</li>
+        <li>انقر نقراً مزدوجاً على أيقونة البرنامج.</li>
+        <li>انقر "Next" في نافذة الترحيب.</li>
+        <li>اقبل اتفاقية الاستخدام بالنقر على "I accept".</li>
+        <li>استمر بالنقر على "Next" حتى تظهر شاشة البدء، ثم انقر "Install".</li>
+        <li>انتظر انتهاء التثبيت، ثم انقر "Finish".</li>
+        <li>حدّث قاعدة البيانات بالنقر على "Update".</li>
+        <li>ابدأ الفحص بالنقر على "Scan Now".</li>
+      </ol>
+
+      <h3>🔹 خيارات مضاد الفيروسات عند اكتشاف تهديد:</h3>
+      <table>
+        <tr>
+          <th>الخيار</th>
+          <th>الوظيفة</th>
+        </tr>
+        <tr>
+          <td><strong>تجاهل (Ignore)</strong></td>
+          <td>تجاهل الفيروس (غير مُنصح به)</td>
+        </tr>
+        <tr>
+          <td><strong>حذف (Delete)</strong></td>
+          <td>حذف الفيروس نهائياً</td>
+        </tr>
+        <tr>
+          <td><strong>نقل إلى الحجر (Quarantine)</strong></td>
+          <td>عزل الفيروس في مكان آمن</td>
+        </tr>
+        <tr>
+          <td><strong>إعادة تسمية (Rename)</strong></td>
+          <td>إعادة تسمية الملف المصاب</td>
+        </tr>
+      </table>
+
+      <div class="card success">
+        <strong>✅ الأفضل:</strong> "حذف" أو "نقل إلى الحجر" حسب نوع الملف.
+      </div>
+
+      <h3>🔹 تحديث مضاد الفيروسات:</h3>
+      <div class="card info">
+        <ul>
+          <li>📅 التحديث الدوري مهم جداً</li>
+          <li>🌐 يحتاج اتصالاً بالإنترنت</li>
+          <li>💾 يحمّل أحدث قاعدة بيانات للفيروسات</li>
+          <li>🔴 اللون الأحمر يعني: غير محدّث</li>
+          <li>🟢 اللون الأخضر يعني: محدّث</li>
+        </ul>
+      </div>
+
+      <h3>🔹 مضاد الفيروسات على الهاتف:</h3>
+      <div class="card">
+        <ol>
+          <li>افتح متجر التطبيقات (Google Play).</li>
+          <li>ابحث عن برنامج مضاد للفيروسات.</li>
+          <li>اختر البرنامج الموثوق.</li>
+          <li>انقر "تثبيت".</li>
+          <li>افتح البرنامج وابدأ الفحص.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- ===== تبويب ٣: المحاكي ===== -->
+    <div id="tab3" class="section">
+      <h2>🎮 المحاكي التفاعلي</h2>
+
+      <div class="simulator">
+        <h4>محاكي: فحص الحاسوب</h4>
+        <p style="color:#2c5aa0; font-size:14px; margin-bottom:10px;">
+          اضغط "ابدأ الفحص" لمشاهدة مضاد الفيروسات يفحص الملفات ويكتشف التهديدات.
+        </p>
+
+        <div style="text-align: center; margin: 15px 0;">
+          <button class="btn green" onclick="runScan()">🔍 ابدأ الفحص</button>
+          <button class="btn orange" onclick="resetScan()">🔄 إعادة</button>
+        </div>
+
+        <div class="scan-progress">
+          <div class="scan-fill" id="scanFill">0%</div>
+        </div>
+
+        <div class="scan-area" id="scanArea">
+          <div class="file-item" data-status="clean">
+            <span>📄 مستنداتي.docx</span>
+            <span class="file-status">⏳ في الانتظار</span>
+          </div>
+          <div class="file-item" data-status="infected">
+            <span>🖼️ صورة.jpg</span>
+            <span class="file-status">⏳ في الانتظار</span>
+          </div>
+          <div class="file-item" data-status="clean">
+            <span>🎵 أغنية.mp3</span>
+            <span class="file-status">⏳ في الانتظار</span>
+          </div>
+          <div class="file-item" data-status="infected">
+            <span>⚙️ setup.exe</span>
+            <span class="file-status">⏳ في الانتظار</span>
+          </div>
+          <div class="file-item" data-status="clean">
+            <span>📊 عرض.pptx</span>
+            <span class="file-status">⏳ في الانتظار</span>
+          </div>
+          <div class="file-item" data-status="infected">
+            <span>🦠 virus.dll</span>
+            <span class="file-status">⏳ في الانتظار</span>
+          </div>
+        </div>
+
+        <div class="sim-output" id="simScanOutput">👆 اضغط "ابدأ الفحص" لمشاهدة المحاكاة</div>
+      </div>
+    </div>
+
+    <!-- ===== تبويب ٤: الاختبار ===== -->
+    <div id="tab4" class="section">
+      <h2>🎯 اختبار الدرس التاسع</h2>
+
+      <div id="startScreen" style="text-align: center;">
+        <p style="margin: 20px 0; color: #667;">
+          📝 عدد الأسئلة: 10<br>
+          ⏰ الزمن المقترح: 15 دقيقة<br>
+          📊 العلامة الكاملة: 20
+        </p>
+        <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50"
+          style="width: 100%; max-width: 400px; padding: 15px; font-size: 17px; border: 2px solid #c9d6e5; border-radius: 10px; text-align: center; margin: 15px 0; font-family: inherit;">
+        <br>
+        <button class="btn" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+      </div>
+
+      <div id="quizScreen" style="display: none;">
+        <div class="quiz-header">
+          <span>👤 <span id="displayName"></span></span>
+          <span>📋 سؤال <span id="currentNum">1</span> من <span id="totalNum">10</span></span>
+        </div>
+        <div class="progress-wrapper">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div id="questionArea"></div>
+        <div class="nav-buttons">
+          <button class="btn red" id="prevBtn" onclick="prevQuestion()" disabled>⬅️ السابق</button>
+          <button class="btn green" id="nextBtn" onclick="nextQuestion()">التالي ➡️</button>
+        </div>
+      </div>
+
+      <div id="resultScreen" class="result-screen">
+        <h2>🎉 انتهى الاختبار!</h2>
+        <div class="result-circle" id="resultCircle">
+          <div class="score" id="scoreDisplay">0</div>
+          <div class="total">من 20</div>
+        </div>
+        <div class="result-message" id="resultMessage"></div>
+
+        <div class="certificate">
+          <h2>🏆 شهادة إتمام الاختبار</h2>
+          <p>تشهد هذه الشهادة بأن الطالب/ة</p>
+          <div class="name" id="certName"></div>
+          <p>قد أكمل اختبار الدرس التاسع: <strong>مضاد الفيروسات</strong></p>
+          <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من 20</p>
+          <p style="margin-top: 10px; color: #8a6d00;" id="certDate"></p>
+        </div>
+
+        <div class="details-box">
+          <h3 style="text-align:center; color:#1a4d8f; margin-bottom:15px;">📊 تفاصيل الإجابات</h3>
+          <div id="detailsArea"></div>
+        </div>
+
+        <div style="margin-top: 25px;">
+          <button class="btn" onclick="location.reload()">🔄 إعادة الاختبار</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottom-nav">
+    <a href="lesson8.html">⬅️ الدرس السابق</a>
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="index.html" style="background: linear-gradient(135deg, #2e9e4a, #5cb85c); color: #fff;">🎓 أكملت المقرر</a>
+  </div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* محاكي الفحص */
+function runScan() {
+  const out = document.getElementById('simScanOutput');
+  const files = document.querySelectorAll('#scanArea .file-item');
+  const fill = document.getElementById('scanFill');
+
+  out.innerHTML = '';
+  resetScan(true);
+
+  const totalFiles = files.length;
+  let cleanCount = 0;
+  let infectedCount = 0;
+
+  out.innerHTML += '<div class="sim-step">🔍 بدأ الفحص...</div>';
+
+  files.forEach((file, i) => {
+    setTimeout(() => {
+      file.classList.add('scanning');
+      file.querySelector('.file-status').textContent = '🔍 يفحص...';
+    }, i * 700);
+
+    setTimeout(() => {
+      const status = file.dataset.status;
+      file.classList.remove('scanning');
+
+      if (status === 'clean') {
+        file.classList.add('clean');
+        file.querySelector('.file-status').textContent = '✅ نظيف';
+        cleanCount++;
+        const div = document.createElement('div');
+        div.className = 'sim-step success';
+        div.textContent = `✅ ${file.querySelector('span').textContent} — نظيف`;
+        out.appendChild(div);
+      } else {
+        file.classList.add('infected');
+        file.querySelector('.file-status').textContent = '🚫 مصاب';
+        infectedCount++;
+        const div = document.createElement('div');
+        div.className = 'sim-step danger';
+        div.textContent = `🦠 ${file.querySelector('span').textContent} — تم اكتشاف فيروس!`;
+        out.appendChild(div);
+      }
+      out.scrollTop = out.scrollHeight;
+
+      // تحديث شريط التقدم
+      const percent = Math.round(((i + 1) / totalFiles) * 100);
+      fill.style.width = percent + '%';
+      fill.textContent = percent + '%';
+    }, (i * 700) + 700);
+  });
+
+  // الخاتمة
+  setTimeout(() => {
+    const div = document.createElement('div');
+    div.className = 'sim-step success';
+    div.style.fontWeight = 'bold';
+    div.style.fontSize = '17px';
+    div.textContent = `🏁 اكتمل الفحص: ${cleanCount} ملف نظيف، ${infectedCount} فيروس تم اكتشافه`;
+    out.appendChild(div);
+
+    const div2 = document.createElement('div');
+    div2.className = 'sim-step warning';
+    div2.textContent = '💊 يُنصح بالحذف أو نقل الفيروسات إلى الحجر';
+    out.appendChild(div2);
+  }, (totalFiles * 700) + 1500);
+}
+
+function resetScan(silent) {
+  document.querySelectorAll('#scanArea .file-item').forEach(f => {
+    f.classList.remove('scanning', 'clean', 'infected');
+    f.querySelector('.file-status').textContent = '⏳ في الانتظار';
+  });
+  document.getElementById('scanFill').style.width = '0%';
+  document.getElementById('scanFill').textContent = '0%';
+  if (!silent) document.getElementById('simScanOutput').innerHTML = '👆 اضغط "ابدأ الفحص" لمشاهدة المحاكاة';
+}
+
+/* الاختبار */
+const questions = [
+  { q: "ما هو مضاد الفيروسات؟", options: ["لعبة", "برنامج لحماية الحاسوب من الفيروسات", "برنامج رسم", "متصفح إنترنت"], correct: 1 },
+  { q: "ما التشبيه المناسب لمضاد الفيروسات؟", options: ["سور القلعة", "طبيب الحاسوب", "شاشة العرض", "لوحة المفاتيح"], correct: 1 },
+  { q: "من وظائف مضاد الفيروسات:", options: ["زيادة السرعة", "اكتشاف وإزالة الفيروسات", "حذف الملفات المهمة", "تصغير الشاشة"], correct: 1 },
+  { q: "أي من هذه برامج مضاد فيروسات؟", options: ["Word", "Excel", "Kaspersky", "Photoshop"], correct: 2 },
+  { q: "كم مرة يُنصح بفحص الحاسوب؟", options: ["مرة في العمر", "أسبوعياً على الأقل", "لا داعي للفحص", "كل سنة"], correct: 1 },
+  { q: "عند اكتشاف فيروس، ما الأفضل؟", options: ["تجاهله", "حذفه أو عزله", "نسخه", "تركه"], correct: 1 },
+  { q: "لماذا يجب تحديث مضاد الفيروسات؟", options: ["لزيادة السرعة", "لاكتشاف الفيروسات الجديدة", "لتصغير الحجم", "لا داعي"], correct: 1 },
+  { q: "ما اللون الذي يعني أن البرنامج محدّث؟", options: ["الأحمر", "الأصفر", "الأخضر", "الأزرق"], correct: 2 },
+  { q: "ماذا يعني خيار (Quarantine)؟", options: ["حذف نهائي", "عزل الفيروس في مكان آمن", "تجاهل", "نسخ"], correct: 1 },
+  { q: "أين نجد مضاد الفيروسات للهاتف؟", options: ["في المتصفح", "في متجر التطبيقات", "في الكاميرا", "في الرسائل"], correct: 1 }
+];
+
+let studentName = "";
+let currentIndex = 0;
+let userAnswers = new Array(questions.length).fill(null);
+const scorePerQuestion = 2;
+
+function startQuiz() {
+  const nameInput = document.getElementById('studentName').value.trim();
+  if (!nameInput) { alert("⚠️ الرجاء إدخال اسمك أولاً"); return; }
+  if (nameInput.length < 3) { alert("⚠️ الرجاء إدخال اسمك كاملاً"); return; }
+  studentName = nameInput;
+  document.getElementById('displayName').textContent = studentName;
+  document.getElementById('totalNum').textContent = questions.length;
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('quizScreen').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentIndex];
+  const area = document.getElementById('questionArea');
+  document.getElementById('currentNum').textContent = currentIndex + 1;
+  let html = `<div class="question-box"><h3>س ${currentIndex + 1}: ${q.q}</h3>`;
+  q.options.forEach((opt, i) => {
+    const selected = userAnswers[currentIndex] === i ? 'selected' : '';
+    html += `<div class="option ${selected}" onclick="selectOption(${i})">${opt}</div>`;
+  });
+  html += `</div>`;
+  area.innerHTML = html;
+  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  const nextBtn = document.getElementById('nextBtn');
+  if (currentIndex === questions.length - 1) {
+    nextBtn.textContent = "✅ إنهاء الاختبار";
+    nextBtn.onclick = finishQuiz;
+  } else {
+    nextBtn.textContent = "التالي ➡️";
+    nextBtn.onclick = nextQuestion;
+  }
+  const progress = ((currentIndex + 1) / questions.length) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+}
+
+function selectOption(index) {
+  userAnswers[currentIndex] = index;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (userAnswers[currentIndex] === null) { alert("⚠️ الرجاء اختيار إجابة قبل المتابعة"); return; }
+  if (currentIndex < questions.length - 1) { currentIndex++; renderQuestion(); }
+}
+
+function prevQuestion() {
+  if (currentIndex > 0) { currentIndex--; renderQuestion(); }
+}
+
+function finishQuiz() {
+  const unanswered = userAnswers.findIndex(a => a === null);
+  if (unanswered !== -1) {
+    if (!confirm(`⚠️ لم تجب على السؤال رقم ${unanswered + 1}. هل تريد المتابعة؟`)) {
+      currentIndex = unanswered;
+      renderQuestion();
+      return;
+    }
+  }
+  let score = 0;
+  questions.forEach((q, i) => { if (userAnswers[i] === q.correct) score += scorePerQuestion; });
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'block';
+  document.getElementById('resultScreen').classList.add('active');
+  document.getElementById('scoreDisplay').textContent = score;
+  const percent = (score / 20) * 100;
+  const circle = document.getElementById('resultCircle');
+  let color, message;
+  if (percent >= 90) { color = 'linear-gradient(135deg, #2e9e4a, #5cb85c)'; message = "🏆 ممتاز! أنت متمكن من الموضوع!"; }
+  else if (percent >= 75) { color = 'linear-gradient(135deg, #2c7be5, #5cb85c)'; message = "👍 جيد جداً! واصل التقدم!"; }
+  else if (percent >= 60) { color = 'linear-gradient(135deg, #f0ad4e, #ffd93b)'; message = "📖 جيد، لكن يحتاج مزيداً من المراجعة."; }
+  else if (percent >= 50) { color = 'linear-gradient(135deg, #e67e22, #f0ad4e)'; message = "⚠️ مقبول، راجع القواعد الذهبية."; }
+  else { color = 'linear-gradient(135deg, #c9302c, #d9534f)'; message = "📚 يحتاج إلى تحسين، راجع الدرس من جديد."; }
+  circle.style.background = color;
+  document.getElementById('resultMessage').textContent = message;
+  document.getElementById('certName').textContent = studentName;
+  document.getElementById('certScore').textContent = score;
+  document.getElementById('certDate').textContent = '📅 ' + new Date().toLocaleDateString('ar-SY');
+  let detailsHTML = '';
+  questions.forEach((q, i) => {
+    const isCorrect = userAnswers[i] === q.correct;
+    detailsHTML += `<div class="detail-row"><span>س ${i + 1}: ${q.q}</span><span class="${isCorrect ? 'ok' : 'no'}">${isCorrect ? '✅' : `❌ (${q.options[q.correct]})`}</span></div>`;
+  });
+  document.getElementById('detailsArea').innerHTML = detailsHTML;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
