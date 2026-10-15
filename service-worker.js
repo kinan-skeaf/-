@@ -11,26 +11,27 @@ const CACHE_NAME = 'manhaj-v1.0.0';
 
 /* الملفات التي تُحفظ للعمل بدون إنترنت */
 const FILES_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/lesson1.html',
-  '/lesson2.html',
-  '/lesson3.html',
-  '/lesson4.html',
-  '/lesson5.html',
-  '/lesson6.html',
-  '/lesson7.html',
-  '/lesson8.html',
-  '/lesson9.html',
-  '/simulator.html',
-  '/numbers.html',
-  '/journey.html',
-  '/quiz3.html',
-  '/worksheet.html',
-  '/logo.png'
+  './',
+  './index.html',
+  './lesson1.html',
+  './lesson2.html',
+  './lesson3.html',
+  './lesson4.html',
+  './lesson5.html',
+  './lesson6.html',
+  './lesson7.html',
+  './lesson8.html',
+  './lesson9.html',
+  './simulator.html',
+  './numbers.html',
+  './journey.html',
+  './quiz3.html',
+  './worksheet.html',
+  './logo.png',
+  './manifest.json'
 ];
 
-/* تثبيت Service Worker وتحميل الملفات */
+/* تثبيت Service Worker */
 self.addEventListener('install', (event) => {
   console.log('✅ جاري تثبيت Service Worker...');
   event.waitUntil(
@@ -49,7 +50,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-/* تفعيل Service Worker وحذف النسخ القديمة */
+/* تفعيل Service Worker */
 self.addEventListener('activate', (event) => {
   console.log('🚀 جاري تفعيل Service Worker...');
   event.waitUntil(
@@ -69,37 +70,34 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-/* اعتراض الطلبات وتقديم الملفات من الذاكرة */
+/* اعتراض الطلبات */
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // إذا كان الملف موجودًا في الذاكرة، قدّمه
         if (response) {
           return response;
         }
-        
-        // وإلا، اطلبه من الإنترنت
+
         return fetch(event.request)
           .then((response) => {
-            // تحقق من صلاحية الاستجابة
             if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
-            
-            // احفظ نسخة من الاستجابة
+
             const responseToCache = response.clone();
             caches.open(CACHE_NAME)
               .then((cache) => {
                 cache.put(event.request, responseToCache);
               });
-            
+
             return response;
           })
           .catch(() => {
-            // إذا فشل الاتصال، اعرض صفحة الأوفلاين
             if (event.request.mode === 'navigate') {
-              return caches.match('/index.html');
+              return caches.match('./index.html');
             }
           });
       })

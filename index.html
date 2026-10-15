@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>نتعلم سوياً – منصة الصف السابع</title>
 <link rel="icon" type="image/png" href="logo.png">
+
 <!-- ========== إعدادات PWA ========== -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1a4d8f">
@@ -12,6 +13,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="نتعلم سوياً">
 <link rel="apple-touch-icon" href="logo.png">
+
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -55,7 +57,7 @@
     margin-bottom: 15px;
   }
 
-  .header .teacher {
+  .header .teachers {
     color: #667;
     font-size: 15px;
     background: #f0f6ff;
@@ -113,6 +115,9 @@
   .lesson-card.ready { border-top-color: #2e9e4a; }
   .lesson-card.ready:hover { border-top-color: #1a5f1a; }
 
+  .lesson-card.extra { border-top-color: #f0ad4e; }
+  .lesson-card.extra:hover { border-top-color: #e67e22; }
+
   .lesson-icon { font-size: 48px; text-align: center; margin-bottom: 10px; }
 
   .lesson-num {
@@ -156,6 +161,7 @@
 
   .lesson-status.ready { background: #eaf7ea; color: #2e9e4a; }
   .lesson-status.soon { background: #fff5cc; color: #8a6d00; }
+  .lesson-status.extra { background: #fff0d9; color: #e67e22; }
 
   .lesson-btn {
     display: block;
@@ -173,6 +179,10 @@
   .lesson-card:hover .lesson-btn {
     background: linear-gradient(135deg, #123a6b, #1a4d8f);
     transform: scale(1.02);
+  }
+
+  .lesson-card.extra .lesson-btn {
+    background: linear-gradient(135deg, #e67e22, #f0ad4e);
   }
 
   .footer {
@@ -205,7 +215,7 @@
     <img src="logo.png" alt="شعار المدرس كنان سكيف" class="logo" onerror="this.style.display='none'">
     <h1>📚 نتعلم سوياً</h1>
     <p class="subtitle">منصة الصف السابع – مادة الحاسوب</p>
-    <p class="teacher">👨‍🏫 إعداد المعلم: كنان سكيف</p>
+    <p class="teachers">👨‍🏫 المعلم: كنان سكيف &nbsp;|&nbsp; 👩‍🏫 المعلمة: أحلام الشيخ حسن</p>
   </div>
 
   <div class="welcome">
@@ -301,20 +311,67 @@
 
   </div>
 
+  <h2 class="section-title">🎮 أدوات تفاعلية إضافية</h2>
+
+  <div class="lessons-grid">
+
+    <a href="simulator.html" class="lesson-card extra">
+      <div class="lesson-icon">🧠</div>
+      <div class="lesson-title">محاكي الخوارزميات</div>
+      <div class="lesson-desc">شاهد كيف يفكر الحاسوب خطوة بخطوة</div>
+      <div class="lesson-status extra">🎬 محاكي</div>
+      <div class="lesson-btn">🚀 جرّب المحاكي</div>
+    </a>
+
+    <a href="numbers.html" class="lesson-card extra">
+      <div class="lesson-icon">🔢</div>
+      <div class="lesson-title">محاكي أنظمة العد</div>
+      <div class="lesson-desc">تعلّم النظام الثنائي بشكل تفاعلي</div>
+      <div class="lesson-status extra">🎬 محاكي</div>
+      <div class="lesson-btn">🚀 جرّب المحاكي</div>
+    </a>
+
+    <a href="journey.html" class="lesson-card extra">
+      <div class="lesson-icon">🚀</div>
+      <div class="lesson-title">رحلة داخل الحاسوب</div>
+      <div class="lesson-desc">كيف يفهم الحاسوب الصور والأصوات؟</div>
+      <div class="lesson-status extra">🎬 رحلة</div>
+      <div class="lesson-btn">🚀 ابدأ الرحلة</div>
+    </a>
+
+    <a href="quiz3.html" class="lesson-card extra">
+      <div class="lesson-icon">📝</div>
+      <div class="lesson-title">اختبار الدروس الثلاثة</div>
+      <div class="lesson-desc">اختبر نفسك في الخوارزميات والتكرار والشروط</div>
+      <div class="lesson-status extra">📝 اختبار</div>
+      <div class="lesson-btn">🚀 ابدأ الاختبار</div>
+    </a>
+
+    <a href="worksheet.html" class="lesson-card extra">
+      <div class="lesson-icon">📄</div>
+      <div class="lesson-title">ورقة عمل شاملة</div>
+      <div class="lesson-desc">ورقة قابلة للطباعة على A4</div>
+      <div class="lesson-status extra">📄 ورقة</div>
+      <div class="lesson-btn">🚀 افتح الورقة</div>
+    </a>
+
+  </div>
+
   <div class="footer">
     <p>© 2025 – منصة <strong>نتعلم سوياً</strong></p>
-    <p>إعداد المعلم: <strong>كنان سكيف</strong></p>
+    <p>إعداد: <strong>المعلم كنان سكيف &amp; المعلمة أحلام الشيخ حسن</strong></p>
     <p>صُنع بـ <span class="heart">❤️</span> لطلاب الصف السابع</p>
   </div>
 
 </div>
+
 <!-- ========== تسجيل Service Worker ========== -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
+      navigator.serviceWorker.register('service-worker.js')
         .then((registration) => {
-          console.log('✅ Service Worker مسجل:', registration.scope);
+          console.log('✅ Service Worker مسجل بنجاح:', registration.scope);
         })
         .catch((error) => {
           console.log('❌ فشل تسجيل Service Worker:', error);

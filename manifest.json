@@ -2,7 +2,8 @@
   "name": "نتعلم سوياً – منصة الصف السابع",
   "short_name": "نتعلم سوياً",
   "description": "منصة تعليمية تفاعلية لمادة الحاسوب – الصف السابع",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#1a4d8f",
@@ -11,13 +12,13 @@
   "dir": "rtl",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "./logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "logo.png",
+      "src": "./logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
