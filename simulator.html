@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="google" content="notranslate">
+<title>محاكي الخوارزميات – نتعلم سوياً</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e27">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="logo.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Tahoma", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f172a 100%);
+    min-height: 100vh;
+    padding: 15px;
+    color: #fff;
+    line-height: 1.8;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .top-nav {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
+    border-radius: 15px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .top-nav a {
+    color: #7dd3fc;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    transition: all 0.3s;
+    background: rgba(125,211,252,0.1);
+  }
+  .top-nav a:hover { background: #7dd3fc; color: #0a0e27; }
+  .top-nav .title { color: #fbbf24; font-weight: bold; font-size: 14px; }
+
+  .hero {
+    text-align: center;
+    padding: 30px 20px;
+    background: radial-gradient(circle at center, rgba(59,130,246,0.25) 0%, transparent 70%);
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero .badge {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    color: #fff;
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+  }
+  .hero h1 { color: #fff; font-size: 32px; margin-bottom: 10px; text-shadow: 0 0 30px rgba(125,211,252,0.6); }
+  .hero p { color: #94a3b8; font-size: 15px; }
+
+  /* لوحة التحكم */
+  .control-panel {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(59,130,246,0.4);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(59,130,246,0.6); }
+  .btn:disabled { background: #475569; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn.green { background: linear-gradient(135deg, #10b981, #059669); }
+  .btn.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+  /* المدخلات */
+  .inputs-panel {
+    background: rgba(0,0,0,0.4);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .input-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .input-item label {
+    color: #7dd3fc;
+    font-weight: bold;
+    font-family: "Consolas", monospace;
+    font-size: 15px;
+  }
+  .input-item input {
+    padding: 10px 15px;
+    border: 2px solid rgba(125,211,252,0.3);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: "Consolas", monospace;
+    width: 110px;
+    text-align: center;
+    font-weight: bold;
+    background: rgba(0,0,0,0.5);
+    color: #fbbf24;
+  }
+  .input-item input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+  }
+
+  /* لوحة العرض */
+  .display-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  /* المخطط التدفقي */
+  .flowchart-panel {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 450px;
+  }
+  .flowchart-panel h3 {
+    color: #7dd3fc;
+    font-size: 16px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(125,211,252,0.3);
+    text-align: center;
+  }
+  .flowchart-canvas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 0;
+  }
+  .fc-node {
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    min-width: 200px;
+    transition: all 0.5s ease;
+    opacity: 0.35;
+    font-family: "Consolas", monospace;
+  }
+  .fc-node.start, .fc-node.end {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    border-radius: 30px;
+  }
+  .fc-node.process {
+    background: rgba(125,211,252,0.15);
+    color: #7dd3fc;
+    border: 2px solid #3b82f6;
+  }
+  .fc-node.io {
+    background: rgba(251,191,36,0.15);
+    color: #fbbf24;
+    border: 2px solid #fbbf24;
+    transform: skewX(-10deg);
+  }
+  .fc-node.io span { display: inline-block; transform: skewX(10deg); }
+  .fc-node.active {
+    opacity: 1;
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(251,191,36,0.8);
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1.08); }
+    50% { transform: scale(1.12); }
+  }
+  .fc-node.done {
+    opacity: 1;
+    background: rgba(16,185,129,0.25);
+    border-color: #10b981;
+    color: #6ee7b7;
+  }
+  .fc-arrow {
+    color: rgba(125,211,252,0.3);
+    font-size: 18px;
+    transition: all 0.3s;
+  }
+  .fc-arrow.active {
+    color: #fbbf24;
+    animation: bounceDown 0.6s infinite;
+  }
+  @keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+
+  /* داخل الحاسوب */
+  .computer-panel {
+    background: linear-gradient(135deg, #1f2937, #111827);
+    border: 2px solid #374151;
+    border-radius: 15px;
+    padding: 20px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .computer-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #7dd3fc, transparent);
+    animation: scanline 3s linear infinite;
+  }
+  @keyframes scanline {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  .computer-panel h3 {
+    color: #7dd3fc;
+    font-size: 16px;
+    text-align: center;
+  }
+  .cpu-panel {
+    background: linear-gradient(135deg, #1e40af, #1e3a8a);
+    border: 2px solid #3b82f6;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+  }
+  .cpu-panel.active {
+    box-shadow: 0 0 25px rgba(59,130,246,0.8);
+    animation: cpuWork 0.5s infinite alternate;
+  }
+  @keyframes cpuWork {
+    from { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+    to { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+  }
+  .cpu-panel .cpu-label {
+    color: #93c5fd;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .cpu-panel .cpu-op {
+    color: #fbbf24;
+    font-family: "Consolas", monospace;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .memory-panel {
+    background: linear-gradient(135deg, #065f46, #064e3b);
+    border: 2px solid #10b981;
+    border-radius: 10px;
+    padding: 12px;
+    min-height: 90px;
+  }
+  .memory-panel .mem-label {
+    color: #6ee7b7;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .memory-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+    gap: 8px;
+  }
+  .mem-slot {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #10b981;
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .mem-slot.changed {
+    background: #10b981;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(16,185,129,0.8);
+  }
+  .mem-slot .mem-name {
+    color: #6ee7b7;
+    font-size: 10px;
+    font-weight: bold;
+  }
+  .mem-slot .mem-value {
+    color: #fbbf24;
+    font-family: "Consolas", monospace;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 3px;
+  }
+  .mem-slot.changed .mem-name,
+  .mem-slot.changed .mem-value { color: #fff; }
+  .screen-panel {
+    background: #000;
+    border: 2px solid #374151;
+    border-radius: 10px;
+    padding: 12px;
+    min-height: 90px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .screen-panel .screen-label {
+    color: #6ee7b7;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .screen-output {
+    color: #00ff00;
+    font-family: "Consolas", monospace;
+    font-size: 15px;
+    text-align: center;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .screen-line { animation: typeIn 0.5s ease; }
+  @keyframes typeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* لوحة الشرح */
+  .explanation-panel {
+    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(240,173,78,0.1));
+    border-right: 5px solid #fbbf24;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    min-height: 70px;
+  }
+  .explanation-panel .exp-title {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .explanation-panel .exp-text {
+    color: #f1f5f9;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* شريط التقدم */
+  .progress-rail {
+    background: rgba(0,0,0,0.4);
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  .progress-glow {
+    height: 100%;
+    background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+    width: 0%;
+    transition: width 0.6s ease;
+    box-shadow: 0 0 15px rgba(59,130,246,0.8);
+    border-radius: 10px;
+  }
+
+  /* أزرار التنقل */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+  }
+  .nav-buttons a {
+    flex: 1;
+    min-width: 130px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    color: #fff;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(59,130,246,0.3);
+  }
+  .nav-buttons a:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59,130,246,0.5); }
+
+  /* التذييل */
+  .footer {
+    background: linear-gradient(135deg, rgba(26,77,143,0.3), rgba(15,23,42,0.5));
+    border: 1px solid rgba(125,211,252,0.15);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 25px;
+  }
+  .footer .designer { color: #fbbf24; font-weight: bold; margin: 8px 0; }
+
+  @media (max-width: 900px) {
+    .display-board { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+    .fc-node { min-width: 150px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-nav">
+    <a href="index.html">🏠 الرئيسية</a>
+    <span class="title">🧠 محاكي الخوارزميات</span>
+  </div>
+
+  <div class="hero">
+    <span class="badge">🧠 محاكي تفاعلي</span>
+    <h1>محاكي الخوارزميات</h1>
+    <p>شاهد كيف يفكر الحاسوب خطوة بخطوة – مثال جمع عددين</p>
+  </div>
+
+  <!-- لوحة التحكم -->
+  <div class="control-panel">
+    <button class="btn green" id="playBtn" onclick="playSimulation()">▶️ شغّل</button>
+    <button class="btn orange" onclick="pauseSimulation()">⏸️ إيقاف مؤقت</button>
+    <button class="btn" onclick="resetSimulation()">🔄 إعادة</button>
+    <div style="display: flex; align-items: center; gap: 8px; background: rgba(125,211,252,0.1); padding: 8px 15px; border-radius: 10px; border: 1px solid rgba(125,211,252,0.2);">
+      <label style="color: #7dd3fc; font-size: 13px; font-weight: bold;">⚡ السرعة:</label>
+      <input type="range" id="speedSlider" min="300" max="2500" value="1200" step="100" style="width: 100px; accent-color: #3b82f6;">
+      <span id="speedValue" style="color:#7dd3fc; font-size:12px; min-width:70px;">عادية</span>
+    </div>
+  </div>
+
+  <!-- المدخلات -->
+  <div class="inputs-panel">
+    <div class="input-item"><label>A =</label><input type="number" id="inputA" value="8" min="0"></div>
+    <div class="input-item"><label>B =</label><input type="number" id="inputB" value="5" min="0"></div>
+    <span style="color:#94a3b8;font-size:13px;">← جرّب تغيير القيم!</span>
+  </div>
+
+  <!-- شريط التقدم -->
+  <div class="progress-rail">
+    <div class="progress-glow" id="progressGlow"></div>
+  </div>
+
+  <!-- لوحة العرض -->
+  <div class="display-board">
+
+    <!-- المخطط التدفقي -->
+    <div class="flowchart-panel">
+      <h3>📊 المخطط التدفقي</h3>
+      <div class="flowchart-canvas">
+        <div class="fc-node start" id="fc-start">⬤ البداية</div>
+        <div class="fc-arrow" id="arrow-1">▼</div>
+        <div class="fc-node io" id="fc-readA"><span>📥 أدخل A</span></div>
+        <div class="fc-arrow" id="arrow-2">▼</div>
+        <div class="fc-node io" id="fc-readB"><span>📥 أدخل B</span></div>
+        <div class="fc-arrow" id="arrow-3">▼</div>
+        <div class="fc-node process" id="fc-calc">⚙️ C = A + B</div>
+        <div class="fc-arrow" id="arrow-4">▼</div>
+        <div class="fc-node io" id="fc-output"><span>📤 اطبع C</span></div>
+        <div class="fc-arrow" id="arrow-5">▼</div>
+        <div class="fc-node end" id="fc-end">⬤ النهاية</div>
+      </div>
+    </div>
+
+    <!-- داخل الحاسوب -->
+    <div class="computer-panel">
+      <h3>💻 داخل الحاسوب</h3>
+
+      <div class="cpu-panel" id="cpuPanel">
+        <div class="cpu-label">🧠 المعالج (CPU)</div>
+        <div class="cpu-op" id="cpuOp">في انتظار الأمر...</div>
+      </div>
+
+      <div class="memory-panel">
+        <div class="mem-label">💾 الذاكرة (RAM)</div>
+        <div class="memory-slots" id="memorySlots"></div>
+      </div>
+
+      <div class="screen-panel">
+        <div class="screen-label">📺 الشاشة</div>
+        <div class="screen-output" id="screenOutput">
+          <span style="color:#475569; font-size:13px;">(النتيجة ستظهر هنا)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- الشرح -->
+  <div class="explanation-panel">
+    <div class="exp-title">💡 الشرح:</div>
+    <div class="exp-text" id="explanationText">
+      اكتب قيمتي A و B، ثم اضغط "شغّل" لمشاهدة الحاسوب ينفذ خطوة بخطوة.
+    </div>
+  </div>
+
+  <!-- أزرار التنقل -->
+  <div class="nav-buttons">
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="lesson1.html">📖 الدرس الأول</a>
+  </div>
+
+  <!-- التذييل -->
+  <div class="footer">
+    <p>📚 <strong style="color: #7dd3fc;">نتعلم سوياً</strong> – تكنولوجيا المعلومات والاتصالات – الصف السابع</p>
+    <p class="designer">🎨 تصميم: المعلم كنان سكيف &amp; المعلمة أحلام الشيخ حسن</p>
+    <p>© 2025 – جميع الحقوق محفوظة</p>
+  </div>
+
+</div>
+
+<script>
+let isPlaying = false;
+let isPaused = false;
+let currentStep = 0;
+let generatedSteps = [];
+
+window.addEventListener('load', () => {
+  updateSpeedLabel();
+  document.getElementById('speedSlider').addEventListener('input', updateSpeedLabel);
+});
+
+function updateSpeedLabel() {
+  const speed = parseInt(document.getElementById('speedSlider').value);
+  const label = document.getElementById('speedValue');
+  if (speed <= 500) label.textContent = 'سريعة جدًا';
+  else if (speed <= 900) label.textContent = 'سريعة';
+  else if (speed <= 1400) label.textContent = 'عادية';
+  else if (speed <= 1900) label.textContent = 'بطيئة';
+  else label.textContent = 'بطيئة جدًا';
+}
+
+async function playSimulation() {
+  if (isPlaying && isPaused) {
+    isPaused = false;
+    document.getElementById('playBtn').textContent = '▶️ شغّل';
+    return;
+  }
+  if (isPlaying) return;
+
+  isPlaying = true;
+  isPaused = false;
+  document.getElementById('playBtn').disabled = true;
+  document.getElementById('playBtn').textContent = '⏳ يعمل...';
+
+  generatedSteps = generateSteps();
+  resetDisplay();
+
+  for (let i = 0; i < generatedSteps.length; i++) {
+    if (!isPlaying) break;
+    while (isPaused && isPlaying) await sleep(100);
+    currentStep = i;
+    await executeStep(generatedSteps[i]);
+  }
+
+  if (currentStep === generatedSteps.length - 1) {
+    document.getElementById('playBtn').textContent = '✅ انتهى';
+    document.getElementById('playBtn').disabled = false;
+    isPlaying = false;
+  }
+}
+
+function generateSteps() {
+  const a = document.getElementById('inputA')?.value || '0';
+  const b = document.getElementById('inputB')?.value || '0';
+  const c = parseInt(a) + parseInt(b);
+
+  return [
+    { flowchart: 'fc-start', arrow: null, cpu: '▶️ بدء التنفيذ', memory: {}, screen: null,
+      explanation: 'بداية الخوارزمية. سنقوم بجمع عددين.' },
+    { flowchart: 'fc-readA', arrow: 'arrow-1', cpu: '📥 قراءة A', memory: { A: String(a) }, screen: null,
+      explanation: `الحاسوب يقرأ قيمة A = ${a}.` },
+    { flowchart: 'fc-readB', arrow: 'arrow-2', cpu: '📥 قراءة B', memory: { B: String(b) }, screen: null,
+      explanation: `الحاسوب يقرأ قيمة B = ${b}.` },
+    { flowchart: 'fc-calc', arrow: 'arrow-3', cpu: `⚙️ C = ${a} + ${b}`, memory: { C: String(c) }, screen: null,
+      explanation: `المعالج يجمع: ${a} + ${b} = ${c}.` },
+    { flowchart: 'fc-output', arrow: 'arrow-4', cpu: '📤 إرسال C للشاشة', memory: {}, screen: String(c),
+      explanation: `الحاسوب يعرض النتيجة ${c} على الشاشة.` },
+    { flowchart: 'fc-end', arrow: 'arrow-5', cpu: '✅ انتهى', memory: {}, screen: 'DONE',
+      explanation: `اكتملت الخوارزمية! النتيجة: ${c}` }
+  ];
+}
+
+async function executeStep(step) {
+  const speed = parseInt(document.getElementById('speedSlider').value);
+
+  document.querySelectorAll('.fc-node').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.fc-arrow').forEach(ar => ar.classList.remove('active'));
+  document.getElementById('cpuPanel').classList.remove('active');
+
+  const fcNode = document.getElementById(step.flowchart);
+  if (fcNode) fcNode.classList.add('active');
+
+  if (step.arrow) {
+    const arrowEl = document.getElementById(step.arrow);
+    if (arrowEl) arrowEl.classList.add('active');
+  }
+
+  const cpuPanel = document.getElementById('cpuPanel');
+  cpuPanel.classList.add('active');
+  document.getElementById('cpuOp').textContent = step.cpu;
+
+  if (step.memory) {
+    for (const [key, val] of Object.entries(step.memory)) {
+      updateMemory(key, val);
+    }
+  }
+
+  if (step.screen && step.screen !== 'DONE') {
+    const screen = document.getElementById('screenOutput');
+    const line = document.createElement('div');
+    line.className = 'screen-line';
+    line.style.fontSize = '22px';
+    line.style.fontWeight = 'bold';
+    line.textContent = step.screen;
+    screen.appendChild(line);
+  }
+  if (step.screen === 'DONE') {
+    const screen = document.getElementById('screenOutput');
+    const line = document.createElement('div');
+    line.className = 'screen-line';
+    line.style.color = '#fbbf24';
+    line.style.fontWeight = 'bold';
+    line.textContent = '✅ اكتمل';
+    screen.appendChild(line);
+  }
+
+  document.getElementById('explanationText').textContent = step.explanation;
+
+  const progress = ((currentStep + 1) / generatedSteps.length) * 100;
+  document.getElementById('progressGlow').style.width = progress + '%';
+
+  await sleep(speed);
+
+  if (fcNode) {
+    fcNode.classList.remove('active');
+    fcNode.classList.add('done');
+  }
+  cpuPanel.classList.remove('active');
+
+  currentStep++;
+}
+
+function updateMemory(name, value) {
+  let slot = document.getElementById('mem-' + name);
+  if (!slot) {
+    const container = document.getElementById('memorySlots');
+    slot = document.createElement('div');
+    slot.className = 'mem-slot';
+    slot.id = 'mem-' + name;
+    slot.innerHTML = `<div class="mem-name">${name}</div><div class="mem-value" id="memval-${name}">---</div>`;
+    container.appendChild(slot);
+  }
+  const valEl = document.getElementById('memval-' + name);
+  if (valEl) {
+    valEl.textContent = value;
+    slot.classList.add('changed');
+    setTimeout(() => slot.classList.remove('changed'), 800);
+  }
+}
+
+function resetSimulation() {
+  isPlaying = false;
+  isPaused = false;
+  currentStep = 0;
+  document.getElementById('playBtn').disabled = false;
+  document.getElementById('playBtn').textContent = '▶️ شغّل';
+  resetDisplay();
+}
+
+function resetDisplay() {
+  document.querySelectorAll('.fc-node').forEach(n => n.classList.remove('active', 'done'));
+  document.querySelectorAll('.fc-arrow').forEach(ar => ar.classList.remove('active'));
+  document.getElementById('cpuOp').textContent = 'في انتظار الأمر...';
+  document.getElementById('cpuPanel').classList.remove('active');
+  document.getElementById('memorySlots').innerHTML = '';
+  document.getElementById('screenOutput').innerHTML = '<span style="color:#475569;font-size:13px;">(النتيجة ستظهر هنا)</span>';
+  document.getElementById('explanationText').textContent = 'اكتب قيمتي A و B، ثم اضغط "شغّل".';
+  document.getElementById('progressGlow').style.width = '0%';
+}
+
+function pauseSimulation() {
+  if (!isPlaying) return;
+  isPaused = !isPaused;
+  const btn = document.querySelectorAll('.control-panel .btn')[1];
+  if (isPaused) {
+    btn.textContent = '▶️ استئناف';
+  } else {
+    btn.textContent = '⏸️ إيقاف مؤقت';
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+</script>
+
+</body>
+</html>

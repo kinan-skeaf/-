@@ -1,105 +1,124 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" translate="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="google" content="notranslate">
 <title>الدرس الأول: الخوارزميات – نتعلم سوياً</title>
 <link rel="icon" type="image/png" href="logo.png">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e27">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="logo.png">
+
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: "Tahoma", "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #1a4d8f 0%, #2c7be5 100%);
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f172a 100%);
     min-height: 100vh;
-    padding: 20px;
-    color: #1f2d3d;
+    padding: 15px;
+    color: #fff;
     line-height: 1.8;
+    -webkit-text-size-adjust: 100%;
   }
 
-  .container { max-width: 900px; margin: 0 auto; }
+  .container { max-width: 1200px; margin: 0 auto; }
 
-  /* شريط التنقل العلوي */
+  /* ====== شريط التنقل العلوي ====== */
   .top-nav {
-    background: #fff;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
     border-radius: 15px;
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
     flex-wrap: wrap;
     gap: 10px;
   }
 
   .top-nav a {
-    color: #1a4d8f;
+    color: #7dd3fc;
     text-decoration: none;
     font-weight: bold;
-    font-size: 15px;
-    padding: 8px 16px;
+    font-size: 14px;
+    padding: 8px 14px;
     border-radius: 20px;
     transition: all 0.3s;
-    background: #eaf2ff;
+    background: rgba(125,211,252,0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
   }
 
   .top-nav a:hover {
-    background: #1a4d8f;
-    color: #fff;
+    background: #7dd3fc;
+    color: #0a0e27;
+    transform: translateY(-2px);
   }
 
-  /* الترويسة */
-  .header {
-    background: #fff;
-    border-radius: 20px;
-    padding: 25px;
+  .top-nav .title {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  /* ====== الترويسة ====== */
+  .hero {
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 30px 20px;
+    background: radial-gradient(circle at center, rgba(59,130,246,0.25) 0%, transparent 70%);
+    border-radius: 20px;
     margin-bottom: 20px;
   }
 
-  .header .lesson-badge {
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+  .hero .badge {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
     color: #fff;
     display: inline-block;
-    padding: 5px 18px;
-    border-radius: 20px;
+    padding: 6px 20px;
+    border-radius: 25px;
     font-size: 13px;
     font-weight: bold;
+    margin-bottom: 12px;
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+  }
+
+  .hero h1 {
+    color: #fff;
+    font-size: 32px;
     margin-bottom: 10px;
+    text-shadow: 0 0 30px rgba(125,211,252,0.6);
   }
 
-  .header h1 {
-    color: #1a4d8f;
-    font-size: 28px;
-    margin-bottom: 8px;
-  }
-
-  .header .subtitle {
-    color: #667;
+  .hero p {
+    color: #94a3b8;
     font-size: 15px;
   }
 
-  /* شريط تبويبات */
+  /* ====== التبويبات ====== */
   .tabs {
-    background: #fff;
+    background: rgba(0,0,0,0.3);
     border-radius: 15px;
     padding: 10px;
+    margin-bottom: 20px;
     display: flex;
     gap: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .tabs button {
-    background: #f0f6ff;
-    color: #1a4d8f;
+    background: rgba(255,255,255,0.05);
+    color: #cbd5e1;
     border: 2px solid transparent;
-    padding: 10px 18px;
-    border-radius: 25px;
+    padding: 12px 22px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
@@ -108,239 +127,322 @@
   }
 
   .tabs button:hover {
-    background: #d9e7ff;
+    background: rgba(125,211,252,0.15);
+    border-color: rgba(125,211,252,0.3);
   }
 
   .tabs button.active {
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
     color: #fff;
+    border-color: #7dd3fc;
+    box-shadow: 0 0 25px rgba(59,130,246,0.6);
+    transform: scale(1.05);
   }
 
-  /* المحتوى */
+  /* ====== المحتوى ====== */
   .content {
-    background: #fff;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.15);
     border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 25px;
+    margin-bottom: 20px;
+    min-height: 400px;
   }
 
-  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
   .section.active { display: block; }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .section h2 {
-    color: #1a4d8f;
-    font-size: 22px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 3px dashed #2c7be5;
+    color: #7dd3fc;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px dashed rgba(125,211,252,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .section h3 {
-    color: #2c5aa0;
+    color: #fbbf24;
     font-size: 18px;
-    margin: 20px 0 10px;
+    margin: 20px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
+  /* ====== البطاقات ====== */
   .card {
-    background: #f9fbff;
-    border-right: 5px solid #2c7be5;
-    padding: 15px 20px;
-    border-radius: 10px;
+    background: rgba(0,0,0,0.4);
+    border-right: 5px solid #3b82f6;
+    border-radius: 12px;
+    padding: 18px 22px;
     margin: 15px 0;
+    transition: all 0.3s;
+  }
+
+  .card:hover {
+    transform: translateX(-5px);
+    background: rgba(0,0,0,0.5);
   }
 
   .card.highlight {
-    background: #fffbe6;
-    border-right-color: #f0ad4e;
+    border-right-color: #fbbf24;
+    background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(0,0,0,0.4));
   }
 
   .card.success {
-    background: #eaf7ea;
-    border-right-color: #2e9e4a;
+    border-right-color: #10b981;
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(0,0,0,0.4));
   }
 
   .card.info {
-    background: #e8f4ff;
-    border-right-color: #337ab7;
+    border-right-color: #06b6d4;
+    background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(0,0,0,0.4));
   }
 
-  ul, ol {
+  .card.danger {
+    border-right-color: #ef4444;
+    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(0,0,0,0.4));
+  }
+
+  .card strong {
+    color: #7dd3fc;
+  }
+
+  /* ====== الكود ====== */
+  .code-box {
+    background: #0f172a;
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 15px;
+    line-height: 2;
+    direction: rtl;
+    text-align: right;
+    margin: 15px 0;
+    overflow-x: auto;
+    color: #7dd3fc;
+    box-shadow: 0 4px 20px rgba(59,130,246,0.2);
+  }
+
+  .code-box .key {
+    color: #fbbf24;
+    font-weight: bold;
+  }
+
+  .code-box .str {
+    color: #6ee7b7;
+  }
+
+  .code-box .comment {
+    color: #64748b;
+    font-style: italic;
+  }
+
+  /* ====== الجداول ====== */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .table th {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid rgba(125,211,252,0.2);
+  }
+
+  .table td {
+    border: 1px solid rgba(125,211,252,0.15);
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #e2e8f0;
+    font-size: 14px;
+  }
+
+  .table tr:nth-child(even) td {
+    background: rgba(0,0,0,0.2);
+  }
+
+  /* ====== القوائم ====== */
+  .content ul, .content ol {
     padding-right: 25px;
+    margin: 10px 0;
+    color: #e2e8f0;
+  }
+
+  .content li {
+    margin: 8px 0;
+    font-size: 15px;
+  }
+
+  .content p {
+    color: #e2e8f0;
+    font-size: 15px;
     margin: 10px 0;
   }
 
-  li { margin: 6px 0; }
+  /* ====== زر الانتقال ====== */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+  }
 
-  pre {
-    background: #0f172a;
-    color: #7dd3fc;
-    padding: 15px;
+  .nav-buttons a {
+    flex: 1;
+    min-width: 130px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    color: #fff;
+    text-align: center;
+    padding: 12px 20px;
     border-radius: 10px;
-    overflow-x: auto;
-    direction: rtl;
-    text-align: right;
-    font-family: "Consolas", "Tahoma", monospace;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(59,130,246,0.3);
+  }
+
+  .nav-buttons a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(59,130,246,0.5);
+  }
+
+  .nav-buttons a.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .nav-buttons a.green {
+    background: linear-gradient(135deg, #10b981, #059669);
+  }
+
+  .nav-buttons a.green:hover {
+    box-shadow: 0 8px 25px rgba(16,185,129,0.5);
+  }
+
+  /* ====== الاختبار ====== */
+  #startScreen {
+    text-align: center;
+    padding: 30px 15px;
+  }
+
+  #startScreen .info-box {
+    background: rgba(59,130,246,0.1);
+    border: 2px solid rgba(59,130,246,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    color: #7dd3fc;
     font-size: 15px;
-    line-height: 1.8;
+    line-height: 2;
+  }
+
+  #startScreen input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    font-size: 17px;
+    border: 2px solid rgba(125,211,252,0.3);
+    border-radius: 10px;
+    text-align: center;
+    margin: 15px 0;
+    font-family: inherit;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+  }
+
+  #startScreen input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.2);
   }
 
   .btn {
     display: inline-block;
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
     color: #fff;
-    padding: 12px 25px;
+    padding: 14px 35px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: bold;
     font-family: inherit;
-    margin: 5px;
     transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(26,77,143,0.25);
+    box-shadow: 0 4px 15px rgba(59,130,246,0.4);
   }
 
   .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(26,77,143,0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(59,130,246,0.6);
   }
 
-  .btn.green { background: linear-gradient(135deg, #2e9e4a, #5cb85c); }
-  .btn.red { background: linear-gradient(135deg, #c9302c, #d9534f); }
-  .btn.orange { background: linear-gradient(135deg, #e67e22, #f0ad4e); }
-
-  /* المحاكي */
-  .simulator {
-    background: linear-gradient(135deg, #f0f7ff, #e0efff);
-    border: 2px solid #2c7be5;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 20px 0;
+  .btn:disabled {
+    background: #475569;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
-  .simulator h4 {
-    color: #1a4d8f;
-    font-size: 17px;
-    margin-bottom: 15px;
+  .btn.green {
+    background: linear-gradient(135deg, #10b981, #059669);
   }
 
-  .simulator h4::before {
-    content: "🎮 ";
+  .btn.red {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
   }
 
-  .sim-inputs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 15px 0;
-    align-items: center;
+  .btn.gold {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
   }
 
-  .sim-inputs label {
-    font-weight: bold;
-    color: #1a4d8f;
-    font-size: 15px;
+  /* ====== الاختبار ====== */
+  #quizScreen {
+    display: none;
   }
 
-  .sim-inputs input {
-    padding: 10px 14px;
-    border: 2px solid #c9d6e5;
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: inherit;
-    width: 120px;
-    text-align: center;
-  }
-
-  .sim-inputs input:focus {
-    outline: none;
-    border-color: #2c7be5;
-    box-shadow: 0 0 0 3px rgba(44,123,229,0.15);
-  }
-
-  .sim-output {
-    background: #0f172a;
-    color: #7dd3fc;
-    padding: 15px;
-    border-radius: 10px;
-    font-family: "Consolas", monospace;
-    font-size: 15px;
-    min-height: 80px;
-    margin-top: 15px;
-    line-height: 2;
-    direction: rtl;
-    text-align: right;
-  }
-
-  .sim-step {
-    padding: 6px 10px;
-    margin: 4px 0;
-    border-radius: 6px;
-    animation: slideStep 0.4s ease;
-    background: rgba(44,123,229,0.15);
-    border-right: 3px solid #2c7be5;
-  }
-
-  .sim-step.result {
-    background: rgba(46,158,74,0.2);
-    border-right-color: #2e9e4a;
-    color: #b5f7b5;
-    font-weight: bold;
-    font-size: 17px;
-  }
-
-  @keyframes slideStep {
-    from { opacity: 0; transform: translateX(-15px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  /* محاكي المستطيل */
-  .rect-visual {
-    display: flex;
-    justify-content: center;
-    margin: 15px 0;
-    min-height: 120px;
-    align-items: center;
-  }
-
-  .rect-shape {
-    background: linear-gradient(135deg, #5cb85c, #2e9e4a);
-    border: 3px solid #1a5f1a;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-weight: bold;
-    font-size: 20px;
-    transition: all 0.5s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    max-width: 100%;
-  }
-
-  /* الاختبار */
   .quiz-header {
-    background: #eaf2ff;
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 12px;
     padding: 15px 20px;
-    border-radius: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     font-weight: bold;
-    color: #1a4d8f;
+    color: #7dd3fc;
     flex-wrap: wrap;
     gap: 10px;
   }
 
   .progress-wrapper {
-    background: #e0e7f0;
-    height: 10px;
+    background: rgba(0,0,0,0.4);
+    height: 8px;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 20px;
@@ -348,60 +450,66 @@
 
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #5cb85c, #2e9e4a);
+    background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
     width: 0%;
     transition: width 0.5s ease;
+    box-shadow: 0 0 15px rgba(59,130,246,0.8);
   }
 
   .question-box {
-    background: #f9fbff;
-    border-right: 6px solid #2c7be5;
-    padding: 20px;
+    background: rgba(0,0,0,0.4);
+    border-right: 5px solid #3b82f6;
+    padding: 20px 25px;
     border-radius: 12px;
     margin-bottom: 20px;
   }
 
   .question-box h3 {
-    color: #1a4d8f;
+    color: #7dd3fc;
     margin-bottom: 15px;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.6;
   }
 
   .option {
     display: block;
-    background: #fff;
-    border: 2px solid #d0d7e0;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(125,211,252,0.2);
     padding: 14px 18px;
     margin: 10px 0;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.25s;
-    font-size: 16px;
+    font-size: 15px;
+    color: #e2e8f0;
   }
 
   .option:hover {
-    border-color: #2c7be5;
-    background: #eaf2ff;
+    border-color: #3b82f6;
+    background: rgba(59,130,246,0.15);
     transform: translateX(-5px);
   }
 
   .option.selected {
-    background: #2c7be5;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
     color: #fff;
-    border-color: #1a4d8f;
+    border-color: #7dd3fc;
     font-weight: bold;
+    box-shadow: 0 0 20px rgba(59,130,246,0.5);
   }
 
-  .nav-buttons {
+  .quiz-nav {
     display: flex;
     justify-content: space-between;
     gap: 10px;
     margin-top: 20px;
   }
 
-  .result-screen { display: none; text-align: center; }
-  .result-screen.active { display: block; }
+  /* ====== النتيجة ====== */
+  #resultScreen {
+    display: none;
+    text-align: center;
+  }
 
   .result-circle {
     width: 180px;
@@ -414,7 +522,7 @@
     justify-content: center;
     color: #fff;
     font-weight: bold;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     animation: pop 0.6s ease;
   }
 
@@ -424,91 +532,78 @@
     100% { transform: scale(1); }
   }
 
-  .result-circle .score { font-size: 48px; line-height: 1; }
-  .result-circle .total { font-size: 20px; opacity: 0.9; }
+  .result-circle .score {
+    font-size: 48px;
+    line-height: 1;
+  }
 
-  .result-message { font-size: 22px; font-weight: bold; margin: 20px 0; }
+  .result-circle .total {
+    font-size: 20px;
+    opacity: 0.9;
+  }
+
+  .result-message {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #7dd3fc;
+  }
 
   .certificate {
-    background: linear-gradient(135deg, #fffbe6, #fff5cc);
-    border: 3px dashed #f0ad4e;
+    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.1));
+    border: 3px dashed #fbbf24;
     border-radius: 15px;
     padding: 25px;
     margin-top: 20px;
   }
 
-  .certificate h2 { color: #8a6d00; margin-bottom: 15px; font-size: 22px; }
+  .certificate h2 {
+    color: #fbbf24;
+    margin-bottom: 15px;
+    font-size: 22px;
+  }
 
   .certificate .name {
     font-size: 28px;
-    color: #1a4d8f;
+    color: #7dd3fc;
     font-weight: bold;
     margin: 15px 0;
-    border-bottom: 2px dotted #1a4d8f;
+    border-bottom: 2px dotted #7dd3fc;
     display: inline-block;
     padding-bottom: 5px;
   }
 
-  .details-box {
-    background: #f9fbff;
-    border-radius: 12px;
+  /* ====== التذييل ====== */
+  .footer {
+    background: linear-gradient(135deg, rgba(26,77,143,0.3), rgba(15,23,42,0.5));
+    border: 1px solid rgba(125,211,252,0.15);
+    border-radius: 15px;
     padding: 20px;
-    margin-top: 20px;
-    text-align: right;
-  }
-
-  .detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #e0e7f0;
-    font-size: 14px;
-    gap: 10px;
-  }
-
-  .detail-row .ok { color: #2e9e4a; font-weight: bold; }
-  .detail-row .no { color: #c9302c; font-weight: bold; }
-
-  /* شريط التنقل السفلي */
-  .bottom-nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-  }
-
-  .bottom-nav a {
-    flex: 1;
-    min-width: 120px;
-    background: #fff;
-    color: #1a4d8f;
     text-align: center;
-    padding: 14px;
-    border-radius: 12px;
-    text-decoration: none;
+    color: #94a3b8;
+    font-size: 13px;
+  }
+
+  .footer .designer {
+    color: #fbbf24;
     font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: all 0.3s;
+    margin: 8px 0;
   }
 
-  .bottom-nav a:hover {
-    background: #1a4d8f;
-    color: #fff;
-    transform: translateY(-3px);
-  }
-
-  .bottom-nav a.disabled {
-    opacity: 0.4;
-    pointer-events: none;
-  }
-
-  @media (max-width: 600px) {
-    .header h1 { font-size: 22px; }
-    .tabs button { padding: 8px 12px; font-size: 12px; }
-    .content { padding: 20px; }
+  /* ====== الجوال ====== */
+  @media (max-width: 768px) {
+    .container { padding: 0; }
+    .hero h1 { font-size: 22px; }
+    .hero p { font-size: 13px; }
+    .tabs button { padding: 10px 14px; font-size: 12px; }
+    .content { padding: 18px; }
+    .section h2 { font-size: 19px; }
+    .section h3 { font-size: 15px; }
+    .code-box { font-size: 13px; padding: 14px; }
+    .nav-buttons a { font-size: 12px; padding: 10px 14px; }
     .result-circle { width: 140px; height: 140px; }
     .result-circle .score { font-size: 38px; }
+    .certificate .name { font-size: 22px; }
   }
 </style>
 </head>
@@ -516,47 +611,47 @@
 
 <div class="container">
 
-  <!-- شريط التنقل العلوي -->
+  <!-- ====== شريط التنقل ====== -->
   <div class="top-nav">
     <a href="index.html">🏠 الرئيسية</a>
-    <span style="color: #1a4d8f; font-weight: bold;">📖 الدرس الأول: الخوارزميات</span>
+    <span class="title">📖 الدرس الأول: الخوارزميات</span>
   </div>
 
-  <!-- الترويسة -->
-  <div class="header">
-    <span class="lesson-badge">الدرس ١</span>
-    <h1>📖 الخوارزميات</h1>
-    <p class="subtitle">مفهوم الخوارزمية – خصائصها – مكوناتها – أمثلة عملية</p>
+  <!-- ====== الترويسة ====== -->
+  <div class="hero">
+    <span class="badge">📖 الدرس الأول</span>
+    <h1>🧠 الخوارزميات</h1>
+    <p>مفهوم الخوارزمية – خصائصها – مكوناتها – أمثلة عملية</p>
   </div>
 
-  <!-- التبويبات -->
+  <!-- ====== التبويبات ====== -->
   <div class="tabs">
-    <button onclick="showTab('tab1', this)" class="active">📖 الشرح</button>
+    <button class="active" onclick="showTab('tab1', this)">📖 الشرح</button>
     <button onclick="showTab('tab2', this)">📝 الأمثلة</button>
-    <button onclick="showTab('tab3', this)">🎮 المحاكيات</button>
-    <button onclick="showTab('tab4', this)">🎯 الاختبار</button>
+    <button onclick="showTab('tab3', this)">🎯 الاختبار</button>
   </div>
 
-  <!-- المحتوى -->
+  <!-- ====== المحتوى ====== -->
   <div class="content">
 
-    <!-- ===== تبويب ١: الشرح ===== -->
+    <!-- ====== تبويب ١: الشرح ====== -->
     <div id="tab1" class="section active">
       <h2>📖 مفهوم الخوارزمية</h2>
 
       <div class="card highlight">
-        <strong>تعريف الخوارزمية:</strong><br>
-        هي عدد منته من الخطوات المتسلسلة لتحقيق هدف محدد في زمن منته، يمكن التعبير عنها باللغة التي نريد.
+        <strong>الخوارزمية:</strong> هي عدد منتهٍ من الخطوات المتسلسلة لتحقيق هدف محدد في زمن منتهٍ، يمكن التعبير عنها باللغة التي نريد.
       </div>
 
-      <h3>يمكن أن تكون الخوارزمية:</h3>
-      <ol>
-        <li><strong>حسابية:</strong> تحتوي على عمليات حسابية (مثل جمع الأعداد).</li>
-        <li><strong>غير حسابية:</strong> مثل خطوات الاستيقاظ الصباحي والذهاب إلى المدرسة.</li>
-      </ol>
-
-      <h3>خصائص الخوارزمية:</h3>
+      <h3>🌟 يمكن أن تكون الخوارزمية:</h3>
       <div class="card info">
+        <ol>
+          <li><strong>حسابية:</strong> تحتوي على عمليات حسابية (مثل جمع أعداد).</li>
+          <li><strong>غير حسابية:</strong> مثل خطوات الاستيقاظ الصباحي والذهاب إلى المدرسة.</li>
+        </ol>
+      </div>
+
+      <h3>✅ خصائص الخوارزمية:</h3>
+      <div class="card success">
         <ol>
           <li><strong>منتهية:</strong> عدد خطواتها محدود.</li>
           <li><strong>متسلسلة:</strong> ذات ترتيب منطقي.</li>
@@ -566,23 +661,23 @@
         </ol>
       </div>
 
-      <h3>مكونات أي خوارزمية:</h3>
-      <table style="width:100%; border-collapse:collapse; margin:15px 0;">
-        <tr style="background:#1a4d8f; color:#fff;">
-          <th style="border:1px solid #d0d7e0; padding:10px;">المكون</th>
-          <th style="border:1px solid #d0d7e0; padding:10px;">المعنى</th>
+      <h3>🔧 مكونات أي خوارزمية:</h3>
+      <table class="table">
+        <tr>
+          <th>المكوّن</th>
+          <th>المعنى</th>
         </tr>
         <tr>
-          <td style="border:1px solid #d0d7e0; padding:10px; text-align:center;">المدخلات (الدخل)</td>
-          <td style="border:1px solid #d0d7e0; padding:10px; text-align:center;">المعطيات التي تُجرى عليها العمليات</td>
-        </tr>
-        <tr style="background:#f7f9fc;">
-          <td style="border:1px solid #d0d7e0; padding:10px; text-align:center;">المعالجة</td>
-          <td style="border:1px solid #d0d7e0; padding:10px; text-align:center;">العمليات التي تُجرى على المدخلات (جمع، طرح، ضرب، قسمة، مقارنة...)</td>
+          <td><strong>المدخلات (الدخل)</strong></td>
+          <td>المعطيات التي تُجرى عليها العمليات</td>
         </tr>
         <tr>
-          <td style="border:1px solid #d0d7e0; padding:10px; text-align:center;">المخرجات (الخرج)</td>
-          <td style="border:1px solid #d0d7e0; padding:10px; text-align:center;">النتيجة النهائية</td>
+          <td><strong>المعالجة</strong></td>
+          <td>العمليات التي تُجرى على المدخلات</td>
+        </tr>
+        <tr>
+          <td><strong>المخرجات (الخرج)</strong></td>
+          <td>النتيجة النهائية</td>
         </tr>
       </table>
 
@@ -592,13 +687,12 @@
       </div>
     </div>
 
-    <!-- ===== تبويب ٢: الأمثلة ===== -->
+    <!-- ====== تبويب ٢: الأمثلة ====== -->
     <div id="tab2" class="section">
       <h2>📝 أمثلة عملية</h2>
 
-      <!-- مثال ١ -->
       <h3>📌 مثال ١: جمع عددين</h3>
-      <div class="card">
+      <div class="card info">
         <p><strong>تحليل المسألة:</strong></p>
         <ul>
           <li><strong>المدخلات:</strong> عددان A و B</li>
@@ -606,18 +700,18 @@
           <li><strong>المخرجات:</strong> C (مجموع العددين)</li>
         </ul>
       </div>
-      <p><strong>خطوات العمل:</strong></p>
-      <pre>
-1. البداية
-2. أدخل قيمة A, B
-3. احسب C = A + B
-4. اطبع C
-5. النهاية
-      </pre>
 
-      <!-- مثال ٢ -->
+      <p><strong>خطوات العمل:</strong></p>
+      <div class="code-box">
+        <span class="key">١.</span> البداية<br>
+        <span class="key">٢.</span> أدخل قيمة A, B<br>
+        <span class="key">٣.</span> احسب C = A + B<br>
+        <span class="key">٤.</span> اطبع C<br>
+        <span class="key">٥.</span> النهاية
+      </div>
+
       <h3>📌 مثال ٢: مساحة مستطيل</h3>
-      <div class="card">
+      <div class="card info">
         <p><strong>تحليل المسألة:</strong></p>
         <ul>
           <li><strong>المدخلات:</strong> الطول L والعرض W</li>
@@ -625,18 +719,18 @@
           <li><strong>المخرجات:</strong> S (المساحة)</li>
         </ul>
       </div>
-      <p><strong>خطوات العمل:</strong></p>
-      <pre>
-1. البداية
-2. أدخل الطول L والعرض W
-3. احسب S = L × W
-4. اطبع S
-5. النهاية
-      </pre>
 
-      <!-- مثال ٣ -->
+      <p><strong>خطوات العمل:</strong></p>
+      <div class="code-box">
+        <span class="key">١.</span> البداية<br>
+        <span class="key">٢.</span> أدخل الطول L والعرض W<br>
+        <span class="key">٣.</span> احسب S = L × W<br>
+        <span class="key">٤.</span> اطبع S<br>
+        <span class="key">٥.</span> النهاية
+      </div>
+
       <h3>📌 مثال ٣: متوسط ثلاثة أعداد</h3>
-      <div class="card">
+      <div class="card info">
         <p><strong>تحليل المسألة:</strong></p>
         <ul>
           <li><strong>المدخلات:</strong> ثلاثة أعداد A, B, C</li>
@@ -644,93 +738,35 @@
           <li><strong>المخرجات:</strong> M (المتوسط)</li>
         </ul>
       </div>
-      <p><strong>خطوات العمل:</strong></p>
-      <pre>
-1. البداية
-2. أدخل A, B, C
-3. احسب M = (A + B + C) / 3
-4. اطبع M
-5. النهاية
-      </pre>
 
-      <!-- مثال ٤ -->
-      <h3>📌 مثال ٤: مساحة ومحيط الدائرة</h3>
-      <div class="card">
-        <p><strong>تحليل المسألة:</strong></p>
-        <ul>
-          <li><strong>المدخلات:</strong> نصف القطر R</li>
-          <li><strong>المعالجة:</strong> S = 3.14 × R × R | M = 2 × 3.14 × R</li>
-          <li><strong>المخرجات:</strong> S (المساحة) و M (المحيط)</li>
-        </ul>
-      </div>
       <p><strong>خطوات العمل:</strong></p>
-      <pre>
-1. البداية
-2. أدخل نصف القطر R
-3. احسب S = 3.14 × R × R
-4. احسب M = 2 × 3.14 × R
-5. اطبع S, M
-6. النهاية
-      </pre>
+      <div class="code-box">
+        <span class="key">١.</span> البداية<br>
+        <span class="key">٢.</span> أدخل A, B, C<br>
+        <span class="key">٣.</span> احسب M = (A + B + C) / 3<br>
+        <span class="key">٤.</span> اطبع M<br>
+        <span class="key">٥.</span> النهاية
+      </div>
     </div>
 
-    <!-- ===== تبويب ٣: المحاكيات ===== -->
+    <!-- ====== تبويب ٣: الاختبار ====== -->
     <div id="tab3" class="section">
-      <h2>🎮 المحاكيات التفاعلية</h2>
-
-      <!-- محاكي ١: جمع عددين -->
-      <div class="simulator">
-        <h4>محاكي ١: جمع عددين</h4>
-        <p style="color:#2c5aa0; font-size:14px; margin-bottom:10px;">
-          أدخل قيمتي A و B، وشاهد الخوارزمية تنفذ خطوة بخطوة.
-        </p>
-        <div class="sim-inputs">
-          <label>A =</label>
-          <input type="number" id="simA" value="5" min="0">
-          <label>B =</label>
-          <input type="number" id="simB" value="3" min="0">
-          <button class="btn green" onclick="runSumSim()">▶️ شغّل</button>
-          <button class="btn orange" onclick="resetSim('simSumOutput')">🔄 مسح</button>
-        </div>
-        <div class="sim-output" id="simSumOutput">👆 أدخل القيم ثم اضغط "شغّل"</div>
-      </div>
-
-      <!-- محاكي ٢: مساحة مستطيل -->
-      <div class="simulator">
-        <h4>محاكي ٢: مساحة مستطيل</h4>
-        <p style="color:#2c5aa0; font-size:14px; margin-bottom:10px;">
-          أدخل الطول والعرض، وشاهد المستطيل يُرسم مع حساب المساحة.
-        </p>
-        <div class="sim-inputs">
-          <label>الطول L =</label>
-          <input type="number" id="simL" value="8" min="1">
-          <label>العرض W =</label>
-          <input type="number" id="simW" value="5" min="1">
-          <button class="btn green" onclick="runRectSim()">▶️ شغّل</button>
-          <button class="btn orange" onclick="resetSim('simRectOutput'); document.getElementById('rectVisual').innerHTML='';">🔄 مسح</button>
-        </div>
-        <div class="rect-visual" id="rectVisual"></div>
-        <div class="sim-output" id="simRectOutput">👆 أدخل الطول والعرض ثم اضغط "شغّل"</div>
-      </div>
-    </div>
-
-    <!-- ===== تبويب ٤: الاختبار ===== -->
-    <div id="tab4" class="section">
       <h2>🎯 اختبار الدرس الأول</h2>
 
-      <div id="startScreen" style="text-align: center;">
-        <p style="margin: 20px 0; color: #667;">
-          📝 عدد الأسئلة: 10<br>
-          ⏰ الزمن المقترح: 15 دقيقة<br>
-          📊 العلامة الكاملة: 20
-        </p>
-        <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50"
-          style="width: 100%; max-width: 400px; padding: 15px; font-size: 17px; border: 2px solid #c9d6e5; border-radius: 10px; text-align: center; margin: 15px 0; font-family: inherit;">
+      <!-- شاشة البداية -->
+      <div id="startScreen">
+        <div class="info-box">
+          📝 <strong>عدد الأسئلة:</strong> 10<br>
+          ⏰ <strong>الزمن المقترح:</strong> 15 دقيقة<br>
+          📊 <strong>العلامة الكاملة:</strong> 20
+        </div>
+        <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50">
         <br>
-        <button class="btn" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+        <button class="btn green" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
       </div>
 
-      <div id="quizScreen" style="display: none;">
+      <!-- شاشة الاختبار -->
+      <div id="quizScreen">
         <div class="quiz-header">
           <span>👤 <span id="displayName"></span></span>
           <span>📋 سؤال <span id="currentNum">1</span> من <span id="totalNum">10</span></span>
@@ -739,14 +775,15 @@
           <div class="progress-fill" id="progressFill"></div>
         </div>
         <div id="questionArea"></div>
-        <div class="nav-buttons">
+        <div class="quiz-nav">
           <button class="btn red" id="prevBtn" onclick="prevQuestion()" disabled>⬅️ السابق</button>
           <button class="btn green" id="nextBtn" onclick="nextQuestion()">التالي ➡️</button>
         </div>
       </div>
 
-      <div id="resultScreen" class="result-screen">
-        <h2>🎉 انتهى الاختبار!</h2>
+      <!-- شاشة النتيجة -->
+      <div id="resultScreen">
+        <h2 style="color: #7dd3fc; margin-bottom: 20px;">🎉 انتهى الاختبار!</h2>
         <div class="result-circle" id="resultCircle">
           <div class="score" id="scoreDisplay">0</div>
           <div class="total">من 20</div>
@@ -759,33 +796,35 @@
           <div class="name" id="certName"></div>
           <p>قد أكمل اختبار الدرس الأول: <strong>الخوارزميات</strong></p>
           <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من 20</p>
-          <p style="margin-top: 10px; color: #8a6d00;" id="certDate"></p>
-        </div>
-
-        <div class="details-box">
-          <h3 style="text-align:center; color:#1a4d8f; margin-bottom:15px;">📊 تفاصيل الإجابات</h3>
-          <div id="detailsArea"></div>
+          <p style="margin-top: 10px; color: #fbbf24;" id="certDate"></p>
         </div>
 
         <div style="margin-top: 25px;">
-          <button class="btn" onclick="location.reload()">🔄 إعادة الاختبار</button>
+          <button class="btn gold" onclick="location.reload()">🔄 إعادة الاختبار</button>
         </div>
       </div>
+
     </div>
 
   </div>
 
-  <!-- شريط التنقل السفلي -->
-  <div class="bottom-nav">
-    <a href="index.html" class="disabled">⬅️ الدرس السابق</a>
+  <!-- ====== أزرار التنقل ====== -->
+  <div class="nav-buttons">
     <a href="index.html">🏠 الرئيسية</a>
-    <a href="lesson2.html">الدرس التالي ➡️</a>
+    <a href="lesson2.html" class="green">الدرس التالي: حلقات التكرار ➡️</a>
+  </div>
+
+  <!-- ====== التذييل ====== -->
+  <div class="footer">
+    <p>📚 <strong style="color: #7dd3fc;">نتعلم سوياً</strong> – تكنولوجيا المعلومات والاتصالات – الصف السابع</p>
+    <p class="designer">🎨 تصميم: المعلم كنان سكيف &amp; المعلمة أحلام الشيخ حسن</p>
+    <p>© 2025 – جميع الحقوق محفوظة</p>
   </div>
 
 </div>
 
 <script>
-/* ====== التنقل بين التبويبات ====== */
+/* ========== التبويبات ========== */
 function showTab(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
@@ -794,91 +833,11 @@ function showTab(id, btn) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ====== المحاكي: جمع عددين ====== */
-function runSumSim() {
-  const a = parseFloat(document.getElementById('simA').value);
-  const b = parseFloat(document.getElementById('simB').value);
-  const out = document.getElementById('simSumOutput');
-
-  if (isNaN(a) || isNaN(b)) {
-    out.innerHTML = '<div class="sim-step">⚠️ الرجاء إدخال قيم صحيحة</div>';
-    return;
-  }
-
-  out.innerHTML = '';
-  const steps = [
-    { text: '▶️ 1. البداية', delay: 0 },
-    { text: `📥 2. أدخل قيمة A = ${a}, B = ${b}`, delay: 600 },
-    { text: `⚙️ 3. احسب C = A + B = ${a} + ${b}`, delay: 1200 },
-    { text: `📤 4. اطبع C = ${a + b}`, delay: 1800 },
-    { text: `🏁 5. النهاية — النتيجة: ${a + b}`, delay: 2400, result: true }
-  ];
-
-  steps.forEach(s => {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = 'sim-step' + (s.result ? ' result' : '');
-      div.textContent = s.text;
-      out.appendChild(div);
-    }, s.delay);
-  });
-}
-
-/* ====== المحاكي: مساحة مستطيل ====== */
-function runRectSim() {
-  const l = parseFloat(document.getElementById('simL').value);
-  const w = parseFloat(document.getElementById('simW').value);
-  const out = document.getElementById('simRectOutput');
-  const visual = document.getElementById('rectVisual');
-
-  if (isNaN(l) || isNaN(w) || l <= 0 || w <= 0) {
-    out.innerHTML = '<div class="sim-step">⚠️ الرجاء إدخال قيم صحيحة أكبر من صفر</div>';
-    visual.innerHTML = '';
-    return;
-  }
-
-  out.innerHTML = '';
-  visual.innerHTML = '';
-
-  const steps = [
-    { text: '▶️ 1. البداية', delay: 0 },
-    { text: `📥 2. أدخل الطول L = ${l}, العرض W = ${w}`, delay: 600 },
-    { text: `⚙️ 3. احسب S = L × W = ${l} × ${w}`, delay: 1200 },
-    { text: `📤 4. اطبع S = ${l * w}`, delay: 1800 },
-    { text: `🏁 5. النهاية — المساحة = ${l * w}`, delay: 2400, result: true }
-  ];
-
-  steps.forEach(s => {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = 'sim-step' + (s.result ? ' result' : '');
-      div.textContent = s.text;
-      out.appendChild(div);
-    }, s.delay);
-  });
-
-  setTimeout(() => {
-    const scale = 20;
-    const rectW = Math.min(w * scale, 300);
-    const rectH = Math.min(l * scale, 150);
-    const rect = document.createElement('div');
-    rect.className = 'rect-shape';
-    rect.style.width = rectW + 'px';
-    rect.style.height = rectH + 'px';
-    rect.textContent = `S = ${l * w}`;
-    visual.appendChild(rect);
-  }, 2000);
-}
-
-function resetSim(id) {
-  document.getElementById(id).innerHTML = '👆 أدخل القيم ثم اضغط "شغّل"';
-}
-
-/* ====== الاختبار ====== */
+/* ========== الأسئلة ========== */
 const questions = [
   { q: "ما تعريف الخوارزمية؟", options: ["لغة برمجة", "عدد منته من الخطوات المتسلسلة لتحقيق هدف محدد", "جهاز إلكتروني", "برنامج معالجة نصوص"], correct: 1 },
   { q: "أي من هذه ليست من خصائص الخوارزمية؟", options: ["الخطوات منتهية", "الخطوات متسلسلة", "الخطوات عشوائية", "لها هدف محدد"], correct: 2 },
-  { q: "ما هي مكونات الخوارزمية؟", options: ["المدخلات فقط", "المعالجة فقط", "المخرجات فقط", "المدخلات والمعالجة والمخرجات"], correct: 3 },
+  { q: "ما هي مكونات الخوارزمية؟", options: ["المدخلات فقط", "المعالجة فقط", "المخرجات فقط", "المدخلات + المعالجة + المخرجات"], correct: 3 },
   { q: "في خوارزمية جمع عددين A و B، ما هي المعالجة؟", options: ["A و B", "C = A + B", "ناتج الجمع C", "البداية والنهاية"], correct: 1 },
   { q: "في خوارزمية حساب مساحة مستطيل، ما المخرجات؟", options: ["الطول والعرض", "المساحة", "العملية الحسابية", "البداية"], correct: 1 },
   { q: "خوارزمية طبخ وصفة تعتبر:", options: ["خوارزمية حسابية", "خوارزمية غير حسابية", "ليست خوارزمية", "برنامج حاسوب"], correct: 1 },
@@ -893,10 +852,17 @@ let currentIndex = 0;
 let userAnswers = new Array(questions.length).fill(null);
 const scorePerQuestion = 2;
 
+/* ========== بدء الاختبار ========== */
 function startQuiz() {
   const nameInput = document.getElementById('studentName').value.trim();
-  if (!nameInput) { alert("⚠️ الرجاء إدخال اسمك أولاً"); return; }
-  if (nameInput.length < 3) { alert("⚠️ الرجاء إدخال اسمك كاملاً"); return; }
+  if (!nameInput) {
+    alert("⚠️ الرجاء إدخال اسمك أولاً");
+    return;
+  }
+  if (nameInput.length < 3) {
+    alert("⚠️ الرجاء إدخال اسمك كاملاً");
+    return;
+  }
   studentName = nameInput;
   document.getElementById('displayName').textContent = studentName;
   document.getElementById('totalNum').textContent = questions.length;
@@ -905,17 +871,22 @@ function startQuiz() {
   renderQuestion();
 }
 
+/* ========== عرض السؤال ========== */
 function renderQuestion() {
   const q = questions[currentIndex];
   const area = document.getElementById('questionArea');
   document.getElementById('currentNum').textContent = currentIndex + 1;
+
   let html = `<div class="question-box"><h3>س ${currentIndex + 1}: ${q.q}</h3>`;
+
   q.options.forEach((opt, i) => {
     const selected = userAnswers[currentIndex] === i ? 'selected' : '';
     html += `<div class="option ${selected}" onclick="selectOption(${i})">${opt}</div>`;
   });
+
   html += `</div>`;
   area.innerHTML = html;
+
   document.getElementById('prevBtn').disabled = currentIndex === 0;
   const nextBtn = document.getElementById('nextBtn');
   if (currentIndex === questions.length - 1) {
@@ -925,24 +896,37 @@ function renderQuestion() {
     nextBtn.textContent = "التالي ➡️";
     nextBtn.onclick = nextQuestion;
   }
+
   const progress = ((currentIndex + 1) / questions.length) * 100;
   document.getElementById('progressFill').style.width = progress + '%';
 }
 
+/* ========== اختيار الإجابة ========== */
 function selectOption(index) {
   userAnswers[currentIndex] = index;
   renderQuestion();
 }
 
+/* ========== التنقل ========== */
 function nextQuestion() {
-  if (userAnswers[currentIndex] === null) { alert("⚠️ الرجاء اختيار إجابة قبل المتابعة"); return; }
-  if (currentIndex < questions.length - 1) { currentIndex++; renderQuestion(); }
+  if (userAnswers[currentIndex] === null) {
+    alert("⚠️ الرجاء اختيار إجابة قبل المتابعة");
+    return;
+  }
+  if (currentIndex < questions.length - 1) {
+    currentIndex++;
+    renderQuestion();
+  }
 }
 
 function prevQuestion() {
-  if (currentIndex > 0) { currentIndex--; renderQuestion(); }
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderQuestion();
+  }
 }
 
+/* ========== إنهاء الاختبار ========== */
 function finishQuiz() {
   const unanswered = userAnswers.findIndex(a => a === null);
   if (unanswered !== -1) {
@@ -952,31 +936,45 @@ function finishQuiz() {
       return;
     }
   }
+
   let score = 0;
-  questions.forEach((q, i) => { if (userAnswers[i] === q.correct) score += scorePerQuestion; });
+  questions.forEach((q, i) => {
+    if (userAnswers[i] === q.correct) score += scorePerQuestion;
+  });
+
   document.getElementById('quizScreen').style.display = 'none';
   document.getElementById('resultScreen').style.display = 'block';
-  document.getElementById('resultScreen').classList.add('active');
+
   document.getElementById('scoreDisplay').textContent = score;
+
   const percent = (score / 20) * 100;
   const circle = document.getElementById('resultCircle');
   let color, message;
-  if (percent >= 90) { color = 'linear-gradient(135deg, #2e9e4a, #5cb85c)'; message = "🏆 ممتاز! أنت متمكن من الموضوع!"; }
-  else if (percent >= 75) { color = 'linear-gradient(135deg, #2c7be5, #5cb85c)'; message = "👍 جيد جداً! واصل التقدم!"; }
-  else if (percent >= 60) { color = 'linear-gradient(135deg, #f0ad4e, #ffd93b)'; message = "📖 جيد، لكن يحتاج مزيداً من المراجعة."; }
-  else if (percent >= 50) { color = 'linear-gradient(135deg, #e67e22, #f0ad4e)'; message = "⚠️ مقبول، راجع القواعد الذهبية."; }
-  else { color = 'linear-gradient(135deg, #c9302c, #d9534f)'; message = "📚 يحتاج إلى تحسين، راجع الدرس من جديد."; }
+
+  if (percent >= 90) {
+    color = 'linear-gradient(135deg, #10b981, #5cb85c)';
+    message = "🏆 ممتاز! أنت متمكن من الموضوع!";
+  } else if (percent >= 75) {
+    color = 'linear-gradient(135deg, #3b82f6, #5cb85c)';
+    message = "👍 جيد جداً! واصل التقدم!";
+  } else if (percent >= 60) {
+    color = 'linear-gradient(135deg, #f59e0b, #fbbf24)';
+    message = "📖 جيد، لكن يحتاج مزيداً من المراجعة.";
+  } else if (percent >= 50) {
+    color = 'linear-gradient(135deg, #f59e0b, #d97706)';
+    message = "⚠️ مقبول، راجع الدرس من جديد.";
+  } else {
+    color = 'linear-gradient(135deg, #ef4444, #dc2626)';
+    message = "📚 يحتاج إلى تحسين، راجع الدرس.";
+  }
+
   circle.style.background = color;
   document.getElementById('resultMessage').textContent = message;
+
   document.getElementById('certName').textContent = studentName;
   document.getElementById('certScore').textContent = score;
   document.getElementById('certDate').textContent = '📅 ' + new Date().toLocaleDateString('ar-SY');
-  let detailsHTML = '';
-  questions.forEach((q, i) => {
-    const isCorrect = userAnswers[i] === q.correct;
-    detailsHTML += `<div class="detail-row"><span>س ${i + 1}: ${q.q}</span><span class="${isCorrect ? 'ok' : 'no'}">${isCorrect ? '✅' : `❌ (${q.options[q.correct]})`}</span></div>`;
-  });
-  document.getElementById('detailsArea').innerHTML = detailsHTML;
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>

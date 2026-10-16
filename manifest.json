@@ -1,13 +1,13 @@
 {
-  "name": "نتعلم سوياً – منصة الصف السابع",
+  "name": "نتعلم سوياً – تكنولوجيا المعلومات والاتصالات",
   "short_name": "نتعلم سوياً",
-  "description": "منصة تعليمية تفاعلية لمادة الحاسوب – الصف السابع",
+  "description": "منصة تعليمية تفاعلية لمادة تكنولوجيا المعلومات والاتصالات – الصف السابع – المنهاج السوري",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#1a4d8f",
-  "theme_color": "#1a4d8f",
+  "background_color": "#0a0e27",
+  "theme_color": "#0a0e27",
   "lang": "ar",
   "dir": "rtl",
   "icons": [

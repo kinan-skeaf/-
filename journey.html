@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="google" content="notranslate">
+<title>رحلة داخل الحاسوب – نتعلم سوياً</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e27">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="logo.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Tahoma", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f172a 100%);
+    min-height: 100vh;
+    padding: 15px;
+    color: #fff;
+    line-height: 1.8;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .top-nav {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
+    border-radius: 15px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .top-nav a {
+    color: #7dd3fc;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    transition: all 0.3s;
+    background: rgba(125,211,252,0.1);
+  }
+  .top-nav a:hover { background: #7dd3fc; color: #0a0e27; }
+  .top-nav .title { color: #fbbf24; font-weight: bold; font-size: 14px; }
+
+  .hero {
+    text-align: center;
+    padding: 30px 20px;
+    background: radial-gradient(circle at center, rgba(139,92,246,0.25) 0%, transparent 70%);
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero .badge {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: #fff;
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    box-shadow: 0 0 25px rgba(139,92,246,0.5);
+  }
+  .hero h1 { color: #fff; font-size: 32px; margin-bottom: 10px; text-shadow: 0 0 30px rgba(139,92,246,0.6); }
+  .hero p { color: #94a3b8; font-size: 15px; }
+
+  /* اختيار الرحلة */
+  .journey-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .pick-btn {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(139,92,246,0.3);
+    border-radius: 15px;
+    padding: 20px 15px;
+    cursor: pointer;
+    color: #fff;
+    font-family: inherit;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .pick-btn:hover {
+    border-color: #a855f7;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(139,92,246,0.3);
+  }
+  .pick-btn.active {
+    background: linear-gradient(135deg, rgba(139,92,246,0.4), rgba(168,85,247,0.3));
+    border-color: #c4b5fd;
+    box-shadow: 0 0 25px rgba(139,92,246,0.6);
+  }
+  .pick-btn .pick-icon { font-size: 40px; display: block; margin-bottom: 8px; }
+  .pick-btn .pick-title { font-weight: bold; font-size: 15px; color: #fff; }
+  .pick-btn .pick-desc { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+
+  /* المسرح */
+  .stage {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stage::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #a855f7, transparent);
+    animation: scanline 3s linear infinite;
+  }
+  @keyframes scanline {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .stage-title {
+    color: #c4b5fd;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed rgba(139,92,246,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* المراحل */
+  .journey-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+    padding: 15px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    min-height: 150px;
+  }
+  .journey-step {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+    padding: 15px 10px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(139,92,246,0.2);
+    border-radius: 12px;
+    transition: all 0.5s ease;
+    opacity: 0.35;
+    position: relative;
+  }
+  .journey-step.active {
+    opacity: 1;
+    background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(168,85,247,0.2));
+    border-color: #a855f7;
+    box-shadow: 0 0 25px rgba(139,92,246,0.6);
+    transform: scale(1.08);
+  }
+  .journey-step.done {
+    opacity: 1;
+    background: rgba(16,185,129,0.2);
+    border-color: #10b981;
+  }
+  .journey-step .step-icon { font-size: 32px; display: block; margin-bottom: 5px; }
+  .journey-step .step-label { font-size: 12px; color: #cbd5e1; font-weight: bold; }
+  .journey-step.done .step-label { color: #6ee7b7; }
+  .journey-step.active .step-label { color: #c4b5fd; }
+
+  .journey-arrow {
+    color: rgba(139,92,246,0.3);
+    font-size: 24px;
+    transition: all 0.3s;
+  }
+  .journey-arrow.active {
+    color: #fbbf24;
+    animation: bounceRight 0.6s infinite;
+  }
+  @keyframes bounceRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+
+  /* العرض المرئي */
+  .visual-display {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(139,92,246,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Consolas", monospace;
+    position: relative;
+    overflow: hidden;
+  }
+  .visual-display .big-emoji {
+    font-size: 80px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* شريط التقدم */
+  .progress-rail {
+    background: rgba(0,0,0,0.4);
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  .progress-glow {
+    height: 100%;
+    background: linear-gradient(90deg, #8b5cf6, #a855f7, #c4b5fd);
+    width: 0%;
+    transition: width 0.6s ease;
+    box-shadow: 0 0 15px rgba(139,92,246,0.8);
+    border-radius: 10px;
+  }
+
+  /* الشرح */
+  .explanation-panel {
+    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(240,173,78,0.1));
+    border-right: 5px solid #fbbf24;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    min-height: 70px;
+  }
+  .explanation-panel .exp-title {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .explanation-panel .exp-text {
+    color: #f1f5f9;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* أزرار التحكم */
+  .control-panel {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(139,92,246,0.4);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(139,92,246,0.6); }
+  .btn:disabled { background: #475569; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn.green { background: linear-gradient(135deg, #10b981, #059669); }
+  .btn.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+  /* أزرار التنقل */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+  }
+  .nav-buttons a {
+    flex: 1;
+    min-width: 130px;
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: #fff;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(139,92,246,0.3);
+  }
+  .nav-buttons a:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(139,92,246,0.5); }
+
+  /* التذييل */
+  .footer {
+    background: linear-gradient(135deg, rgba(26,77,143,0.3), rgba(15,23,42,0.5));
+    border: 1px solid rgba(125,211,252,0.15);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 25px;
+  }
+  .footer .designer { color: #fbbf24; font-weight: bold; margin: 8px 0; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 22px; }
+    .journey-step { min-width: 70px; padding: 10px 5px; }
+    .journey-step .step-icon { font-size: 22px; }
+    .journey-step .step-label { font-size: 10px; }
+    .visual-display .big-emoji { font-size: 55px; }
+    .pick-btn { padding: 15px 10px; }
+    .pick-btn .pick-icon { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-nav">
+    <a href="index.html">🏠 الرئيسية</a>
+    <span class="title">🚀 رحلة داخل الحاسوب</span>
+  </div>
+
+  <div class="hero">
+    <span class="badge">🚀 رحلة تفاعلية</span>
+    <h1>🚀 رحلة داخل الحاسوب</h1>
+    <p>كيف يفهم الحاسوب الصور والأصوات والحروف؟ تعال نكتشف!</p>
+  </div>
+
+  <!-- اختيار الرحلة -->
+  <div class="journey-picker">
+    <button class="pick-btn active" onclick="pickJourney('image', this)">
+      <span class="pick-icon">📸</span>
+      <div class="pick-title">الصورة</div>
+      <div class="pick-desc">كيف تُخزَّن الصور؟</div>
+    </button>
+    <button class="pick-btn" onclick="pickJourney('letter', this)">
+      <span class="pick-icon">🔤</span>
+      <div class="pick-title">الحرف</div>
+      <div class="pick-desc">كيف يفهم الحرف؟</div>
+    </button>
+    <button class="pick-btn" onclick="pickJourney('sound', this)">
+      <span class="pick-icon">🎵</span>
+      <div class="pick-title">الصوت</div>
+      <div class="pick-desc">كيف يُخزَّن الصوت؟</div>
+    </button>
+    <button class="pick-btn" onclick="pickJourney('video', this)">
+      <span class="pick-icon">🎬</span>
+      <div class="pick-title">الفيديو</div>
+      <div class="pick-desc">كيف يُخزَّن الفيديو؟</div>
+    </button>
+  </div>
+
+  <!-- لوحة التحكم -->
+  <div class="control-panel">
+    <button class="btn green" id="playBtn" onclick="playJourney()">▶️ ابدأ الرحلة</button>
+    <button class="btn orange" onclick="resetJourney()">🔄 إعادة</button>
+  </div>
+
+  <!-- المسرح -->
+  <div class="stage">
+    <div class="stage-title" id="stageTitle">📸 رحلة الصورة داخل الحاسوب</div>
+
+    <div class="journey-steps" id="journeySteps"></div>
+
+    <div class="progress-rail">
+      <div class="progress-glow" id="progressGlow"></div>
+    </div>
+
+    <div class="visual-display" id="visualDisplay">
+      <div class="big-emoji">📸</div>
+      <p style="color:#94a3b8; margin-top:15px;">اضغط "ابدأ الرحلة" لتبدأ</p>
+    </div>
+  </div>
+
+  <!-- الشرح -->
+  <div class="explanation-panel">
+    <div class="exp-title">💡 الشرح:</div>
+    <div class="exp-text" id="explanationText">
+      اختر نوع البيانات (صورة، حرف، صوت، فيديو)، ثم اضغط "ابدأ الرحلة" لمشاهدة كيف يفهمها الحاسوب.
+    </div>
+  </div>
+
+  <!-- أزرار التنقل -->
+  <div class="nav-buttons">
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="lesson5.html">📖 الدرس الخامس</a>
+  </div>
+
+  <!-- التذييل -->
+  <div class="footer">
+    <p>📚 <strong style="color: #c4b5fd;">نتعلم سوياً</strong> – تكنولوجيا المعلومات والاتصالات – الصف السابع</p>
+    <p class="designer">🎨 تصميم: المعلم كنان سكيف &amp; المعلمة أحلام الشيخ حسن</p>
+    <p>© 2025 – جميع الحقوق محفوظة</p>
+  </div>
+
+</div>
+
+<script>
+/* ========== البيانات ========== */
+let currentJourney = 'image';
+let isPlaying = false;
+
+const journeys = {
+  image: {
+    title: '📸 رحلة الصورة داخل الحاسوب',
+    steps: [
+      { icon: '📸', label: 'الصورة' },
+      { icon: '🖼️', label: 'البكسلات' },
+      { icon: '🎨', label: 'الألوان' },
+      { icon: '🔢', label: 'الأرقام' },
+      { icon: '💻', label: 'الثنائي' },
+      { icon: '💾', label: 'التخزين' }
+    ],
+    explanations: [
+      '📸 هذه صورتك! سيقوم الحاسوب بتحليلها لكي يفهمها.',
+      '🖼️ الحاسوب يقسم الصورة إلى مربعات صغيرة تسمى "بكسلات".',
+      '🎨 كل بكسل له لون معين، واللون يتكون من 3 قيم: أحمر (R)، أخضر (G)، أزرق (B).',
+      '🔢 كل قيمة لون تتحول إلى رقم من 0 إلى 255.',
+      '💻 كل رقم يتحول إلى 8 بتات ثنائية. مثلاً: 255 = 11111111.',
+      '💾 الحاسوب يخزن كل هذه البتات في الذاكرة، ويستطيع إعادة تكوين الصورة!'
+    ]
+  },
+  letter: {
+    title: '🔤 رحلة الحرف داخل الحاسوب',
+    steps: [
+      { icon: '🔤', label: 'الحرف' },
+      { icon: '📊', label: 'ASCII' },
+      { icon: '🔢', label: 'الرقم' },
+      { icon: '💻', label: 'الثنائي' },
+      { icon: '💾', label: 'التخزين' }
+    ],
+    explanations: [
+      '🔤 عندما تكتب حرف "A"، الحاسوب لا يفهم الحروف مباشرة.',
+      '📊 الحاسوب يستخدم جدول ASCII: كل حرف له رقم خاص. A = 65.',
+      '🔢 الرقم 65 يتحول إلى 8 بتات: 01000001.',
+      '💻 الآن الحاسوب يستطيع تخزينه ومعالجته.',
+      '💾 الحرف "A" يُخزَّن في الذاكرة كـ 01000001!'
+    ]
+  },
+  sound: {
+    title: '🎵 رحلة الصوت داخل الحاسوب',
+    steps: [
+      { icon: '🎵', label: 'الصوت' },
+      { icon: '📊', label: 'العينات' },
+      { icon: '🔢', label: 'الأرقام' },
+      { icon: '💻', label: 'الثنائي' },
+      { icon: '💾', label: 'التخزين' }
+    ],
+    explanations: [
+      '🎵 الموجة الصوتية مستمرة، لكن الحاسوب يحتاج لتقطيعها.',
+      '📊 الحاسوب يأخذ "عينة" (sample) 44,100 مرة في الثانية!',
+      '🔢 كل عينة قياس لشدة الصوت في لحظة معينة، ويحوَّل إلى رقم.',
+      '💻 كل رقم يتحول إلى 16 بت من الثنائي.',
+      '💾 تُخزَّن كل هذه الأرقام لتشغيل الصوت لاحقاً!'
+    ]
+  },
+  video: {
+    title: '🎬 رحلة الفيديو داخل الحاسوب',
+    steps: [
+      { icon: '🎬', label: 'الفيديو' },
+      { icon: '📸', label: 'الصور' },
+      { icon: '🎨', label: 'البكسلات' },
+      { icon: '🔢', label: 'الأرقام' },
+      { icon: '💻', label: 'الثنائي' },
+      { icon: '💾', label: 'التخزين' }
+    ],
+    explanations: [
+      '🎬 الفيديو هو سلسلة من الصور المتحركة بسرعة!',
+      '📸 عندما تشاهد فيديو، الحاسوب يعرض 24 صورة في الثانية!',
+      '🎨 كل صورة مقسمة إلى ملايين البكسلات.',
+      '🔢 كل بكسل له 3 قيم لون.',
+      '💻 كل قيمة تتحول إلى 8 بتات.',
+      '💾 فيديو دقيقة واحدة = ملايين البتات!'
+    ]
+  }
+};
+
+/* ========== التهيئة ========== */
+window.addEventListener('load', () => {
+  buildSteps();
+});
+
+/* ========== اختيار الرحلة ========== */
+function pickJourney(type, btn) {
+  if (isPlaying) {
+    if (!confirm('⚠️ الرحلة قيد التشغيل. هل تريد تغييرها؟')) return;
+  }
+  currentJourney = type;
+  document.querySelectorAll('.pick-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  resetJourney();
+  buildSteps();
+}
+
+/* ========== بناء المراحل ========== */
+function buildSteps() {
+  const container = document.getElementById('journeySteps');
+  container.innerHTML = '';
+  const journey = journeys[currentJourney];
+
+  journey.steps.forEach((step, i) => {
+    if (i > 0) {
+      const arrow = document.createElement('div');
+      arrow.className = 'journey-arrow';
+      arrow.id = 'arrow-' + i;
+      arrow.textContent = '◀';
+      container.appendChild(arrow);
+    }
+
+    const div = document.createElement('div');
+    div.className = 'journey-step';
+    div.id = 'step-' + i;
+    div.innerHTML = `
+      <span class="step-icon">${step.icon}</span>
+      <span class="step-label">${step.label}</span>
+    `;
+    container.appendChild(div);
+  });
+
+  document.getElementById('stageTitle').textContent = journey.title;
+}
+
+/* ========== تشغيل الرحلة ========== */
+async function playJourney() {
+  if (isPlaying) return;
+  isPlaying = true;
+
+  const playBtn = document.getElementById('playBtn');
+  playBtn.disabled = true;
+  playBtn.textContent = '⏳ الرحلة جارية...';
+
+  const journey = journeys[currentJourney];
+  const steps = journey.steps;
+  const explanations = journey.explanations;
+  const display = document.getElementById('visualDisplay');
+
+  for (let i = 0; i < steps.length; i++) {
+    document.querySelectorAll('.journey-step').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.journey-arrow').forEach(a => a.classList.remove('active'));
+
+    const stepEl = document.getElementById('step-' + i);
+    if (stepEl) stepEl.classList.add('active');
+
+    const arrowEl = document.getElementById('arrow-' + i);
+    if (arrowEl) arrowEl.classList.add('active');
+
+    const progress = ((i + 1) / steps.length) * 100;
+    document.getElementById('progressGlow').style.width = progress + '%';
+
+    const exp = explanations[i] || explanations[explanations.length - 1];
+    document.getElementById('explanationText').textContent = exp;
+
+    // تأثير الانتقال
+    display.style.opacity = '0';
+    await sleep(200);
+    display.innerHTML = '';
+    display.style.opacity = '1';
+
+    await renderVisualStep(i);
+
+    await sleep(2200);
+
+    if (stepEl) {
+      stepEl.classList.remove('active');
+      stepEl.classList.add('done');
+    }
+    if (arrowEl) arrowEl.classList.remove('active');
+  }
+
+  display.innerHTML = `
+    <div class="big-emoji">🎉</div>
+    <h2 style="color:#6ee7b7; font-size:22px; margin-top:15px;">اكتملت الرحلة!</h2>
+    <p style="color:#94a3b8; margin-top:10px;">كل شيء في الحاسوب = أصفار وواحدات!</p>
+  `;
+  document.getElementById('progressGlow').style.width = '100%';
+
+  isPlaying = false;
+  playBtn.disabled = false;
+  playBtn.textContent = '▶️ رحلة أخرى';
+}
+
+/* ========== عرض المحتوى المرئي ========== */
+async function renderVisualStep(index) {
+  const display = document.getElementById('visualDisplay');
+  const journey = currentJourney;
+
+  if (journey === 'image') {
+    await renderImageStep(index, display);
+  } else if (journey === 'letter') {
+    await renderLetterStep(index, display);
+  } else if (journey === 'sound') {
+    await renderSoundStep(index, display);
+  } else if (journey === 'video') {
+    await renderVideoStep(index, display);
+  }
+}
+
+/* ====== رحلة الصورة ====== */
+async function renderImageStep(index, container) {
+  if (index === 0) {
+    container.innerHTML = '<div class="big-emoji">📸</div><p style="color:#7dd3fc; margin-top:15px;">صورة بحجم 4×4 بكسل</p>';
+  } else if (index === 1) {
+    const grid = document.createElement('div');
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    grid.style.gap = '4px';
+    grid.style.margin = '15px 0';
+
+    const colors = [
+      '#ef4444', '#f59e0b', '#10b981', '#3b82f6',
+      '#8b5cf6', '#ec4899', '#f97316', '#06b6d4',
+      '#84cc16', '#facc15', '#a855f7', '#22c55e',
+      '#e11d48', '#0891b2', '#7c3aed', '#ea580c'
+    ];
+
+    colors.forEach((color, i) => {
+      const pixel = document.createElement('div');
+      pixel.style.width = '50px';
+      pixel.style.height = '50px';
+      pixel.style.background = color;
+      pixel.style.borderRadius = '6px';
+      pixel.style.display = 'flex';
+      pixel.style.alignItems = 'center';
+      pixel.style.justifyContent = 'center';
+      pixel.style.color = 'rgba(255,255,255,0.6)';
+      pixel.style.fontSize = '11px';
+      pixel.style.opacity = '0';
+      pixel.textContent = i + 1;
+      grid.appendChild(pixel);
+
+      setTimeout(() => { pixel.style.opacity = '1'; }, i * 80);
+    });
+
+    container.appendChild(grid);
+    container.insertAdjacentHTML('beforeend', '<p style="color:#6ee7b7; font-weight:bold;">16 بكسل جاهز للتحليل</p>');
+  } else if (index === 2) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">🎨 كل بكسل = 3 قيم (R, G, B)</p>
+      <div style="font-family:Consolas,monospace; color:#fbbf24; font-size:14px; line-height:2;">
+        أحمر نقي = (255, 0, 0)<br>
+        أخضر نقي = (0, 255, 0)<br>
+        أزرق نقي = (0, 0, 255)<br>
+        أبيض = (255, 255, 255)<br>
+        أسود = (0, 0, 0)
+      </div>
+    `;
+  } else if (index === 3) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">🔢 كل قيمة لون ← رقم (0-255)</p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">255</span>
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">0</span>
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">0</span>
+      </div>
+    `;
+  } else if (index === 4) {
+    container.innerHTML = `
+      <p style="color:#6ee7b7; font-weight:bold; margin-bottom:15px;">💻 كل رقم ← 8 بتات ثنائية</p>
+      <div style="font-family:Consolas,monospace; font-size:22px; color:#fbbf24; letter-spacing:3px;">
+        255 = 11111111<br>
+        0 = 00000000
+      </div>
+    `;
+  } else if (index === 5) {
+    container.innerHTML = `
+      <p style="color:#6ee7b7; font-weight:bold; margin-bottom:15px;">💾 تخزين في الذاكرة</p>
+      <div style="background:rgba(16,185,129,0.15); border:2px solid #10b981; border-radius:10px; padding:12px; font-family:Consolas,monospace;">
+        <div style="color:#6ee7b7;">0x0000</div>
+        <div style="color:#fbbf24; font-size:18px;">11111111</div>
+      </div>
+      <p style="color:#fbbf24; margin-top:12px; font-weight:bold;">🎉 الصورة محفوظة!</p>
+    `;
+  }
+}
+
+/* ====== رحلة الحرف ====== */
+async function renderLetterStep(index, container) {
+  if (index === 0) {
+    container.innerHTML = '<div class="big-emoji">🔤</div><p style="color:#7dd3fc; margin-top:15px; font-size:24px; font-weight:bold;">الحرف: A</p>';
+  } else if (index === 1) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">📊 جدول ASCII</p>
+      <div style="background:rgba(0,0,0,0.5); padding:20px; border-radius:12px; font-family:Consolas,monospace; display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;">
+        <div style="color:#94a3b8;">A = 65</div>
+        <div style="color:#94a3b8;">B = 66</div>
+        <div style="color:#94a3b8;">C = 67</div>
+        <div style="color:#94a3b8;">D = 68</div>
+        <div style="color:#94a3b8;">a = 97</div>
+        <div style="color:#94a3b8;">b = 98</div>
+        <div style="color:#fbbf24; font-weight:bold; font-size:18px;">A = 65</div>
+        <div style="color:#94a3b8;">...</div>
+      </div>
+    `;
+  } else if (index === 2) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">الرقم المقابل للحرف A</p>
+      <div style="background:linear-gradient(135deg, #3b82f6, #06b6d4); color:#fff; font-size:48px; padding:25px 50px; border-radius:15px; font-family:Consolas,monospace; font-weight:bold; box-shadow: 0 0 30px rgba(59,130,246,0.6);">65</div>
+    `;
+  } else if (index === 3) {
+    container.innerHTML = `
+      <p style="color:#6ee7b7; font-weight:bold; margin-bottom:15px;">65 في النظام الثنائي:</p>
+      <div style="display:flex; gap:5px; justify-content:center;">
+        <span style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#6ee7b7; padding:8px 12px; border-radius:6px; font-family:Consolas,monospace; font-size:22px; font-weight:bold;">0</span>
+        <span style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#6ee7b7; padding:8px 12px; border-radius:6px; font-family:Consolas,monospace; font-size:22px; font-weight:bold;">1</span>
+        <span style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#6ee7b7; padding:8px 12px; border-radius:6px; font-family:Consolas,monospace; font-size:22px; font-weight:bold;">0</span>
+        <span style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#6ee7b7; padding:8px 12px; border-radius:6px; font-family:Consolas,monospace; font-size:22px; font-weight:bold;">0</span>
+        <span style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#6ee7b7; padding:8px 12px; border-radius:6px; font-family:Consolas,monospace; font-size:22px; font-weight:bold;">0</span>
+        <span style="background:rgba(16,185,129,0.2); border:1px solid #10b981; color:#6ee7b7; padding:8px 12px; border-radius:6px; font-family:Consolas,monospace; font-size:22px; font-weight:bold;">0</span>
+        <span style="background:rgba(251,191,36,0.3); border:1px solid #fbbf24; color:#fbbf24; padding:8px 12px; border-radius:6px; font-family:Consolas,monospace; font-size:22px; font-weight:bold;">1</span>
+        <span style="background:rgba(251,191,36,0.3); border:1px solid #fbbf24; color:#fbbf24; padding:8px 12px; border-radius:6px; font-family:Consolas,monospace; font-size:22px; font-weight:bold;">1</span>
+      </div>
+      <p style="color:#fbbf24; margin-top:15px; font-weight:bold;">= 64 + 1 = 65</p>
+    `;
+  } else if (index === 4) {
+    container.innerHTML = `
+      <p style="color:#6ee7b7; font-weight:bold; margin-bottom:15px;">💾 في الذاكرة:</p>
+      <div style="background:rgba(16,185,129,0.15); border:2px solid #10b981; border-radius:10px; padding:15px; font-family:Consolas,monospace;">
+        <div style="color:#6ee7b7;">0x0001</div>
+        <div style="color:#fbbf24; font-size:18px;">01000001</div>
+      </div>
+      <p style="color:#fbbf24; margin-top:12px; font-weight:bold;">🎉 الحرف A = 01000001!</p>
+    `;
+  }
+}
+
+/* ====== رحلة الصوت ====== */
+async function renderSoundStep(index, container) {
+  if (index === 0) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">🎵 الموجة الصوتية</p>
+      <svg width="400" height="100" viewBox="0 0 400 100" style="max-width:100%;">
+        <path d="M 0 50 Q 25 10 50 50 T 100 50 T 150 50 T 200 50 T 250 50 T 300 50 T 350 50 T 400 50" 
+              stroke="#7dd3fc" stroke-width="3" fill="none"/>
+      </svg>
+      <p style="color:#94a3b8;">موجة صوتية مستمرة</p>
+    `;
+  } else if (index === 1) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">📊 أخذ 44,100 عينة/ثانية</p>
+      <svg width="400" height="100" viewBox="0 0 400 100" style="max-width:100%;">
+        <path d="M 0 50 Q 25 10 50 50 T 100 50 T 150 50 T 200 50 T 250 50 T 300 50 T 350 50 T 400 50" 
+              stroke="#7dd3fc" stroke-width="2" fill="none" opacity="0.3"/>
+        <g fill="#fbbf24">
+          <circle cx="0" cy="50" r="4"/>
+          <circle cx="25" cy="30" r="4"/>
+          <circle cx="50" cy="50" r="4"/>
+          <circle cx="75" cy="30" r="4"/>
+          <circle cx="100" cy="50" r="4"/>
+          <circle cx="125" cy="30" r="4"/>
+          <circle cx="150" cy="50" r="4"/>
+          <circle cx="175" cy="30" r="4"/>
+          <circle cx="200" cy="50" r="4"/>
+        </g>
+      </svg>
+      <p style="color:#fbbf24;">كل نقطة = عينة (قياس)</p>
+    `;
+  } else if (index === 2) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">🔢 كل عينة = رقم</p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">128</span>
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">200</span>
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">128</span>
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">200</span>
+      </div>
+      <p style="color:#fbbf24; margin-top:15px;">قياسات شدة الصوت</p>
+    `;
+  } else if (index === 3) {
+    container.innerHTML = `
+      <p style="color:#6ee7b7; font-weight:bold; margin-bottom:15px;">💻 كل رقم = 16 بت</p>
+      <div style="font-family:Consolas,monospace; color:#6ee7b7; font-size:16px; line-height:2;">
+        128 = 10000000<br>
+        200 = 11001000
+      </div>
+    `;
+  } else if (index === 4) {
+    container.innerHTML = `
+      <p style="color:#6ee7b7; font-weight:bold; margin-bottom:15px;">💾 تخزين في الذاكرة</p>
+      <div style="background:rgba(16,185,129,0.15); border:2px solid #10b981; border-radius:10px; padding:15px; font-family:Consolas,monospace;">
+        <div style="color:#6ee7b7;">0x1000</div>
+        <div style="color:#fbbf24; font-size:18px;">10000000</div>
+      </div>
+      <p style="color:#fbbf24; margin-top:12px; font-weight:bold;">🎉 الصوت محفوظ رقمياً!</p>
+    `;
+  }
+}
+
+/* ====== رحلة الفيديو ====== */
+async function renderVideoStep(index, container) {
+  if (index === 0) {
+    container.innerHTML = '<div class="big-emoji">🎬</div><p style="color:#7dd3fc; margin-top:15px;">فيديو = صور متتابعة</p>';
+  } else if (index === 1) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">📸 24 صورة في الثانية</p>
+      <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; font-size:40px;">
+        <div>🎞️</div><div>🎞️</div><div>🎞️</div><div>🎞️</div>
+        <div>🎞️</div><div>🎞️</div><div>🎞️</div><div>🎞️</div>
+      </div>
+      <p style="color:#fbbf24; margin-top:15px;">كل إطار = صورة كاملة</p>
+    `;
+  } else if (index === 2) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">🎨 كل صورة = ملايين البكسلات</p>
+      <div style="font-size:60px;">🖼️🖼️🖼️</div>
+      <p style="color:#fbbf24; margin-top:15px;">جودة 1080p = 2,073,600 بكسل</p>
+    `;
+  } else if (index === 3) {
+    container.innerHTML = `
+      <p style="color:#7dd3fc; font-weight:bold; margin-bottom:15px;">🔢 كل بكسل = 3 أرقام</p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">255</span>
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">128</span>
+        <span style="background:rgba(59,130,246,0.3); border:1px solid #3b82f6; color:#7dd3fc; padding:8px 14px; border-radius:8px; font-family:Consolas,monospace;">64</span>
+        <span style="color:#fbbf24; font-family:Consolas,monospace; font-size:20px; align-self:center;">...</span>
+      </div>
+    `;
+  } else if (index === 4) {
+    container.innerHTML = `
+      <p style="color:#6ee7b7; font-weight:bold; margin-bottom:15px;">💻 كل رقم = 8 بتات</p>
+      <div style="font-family:Consolas,monospace; color:#6ee7b7; font-size:15px; line-height:2;">
+        11111111<br>
+        10000000<br>
+        01000000<br>
+        ...
+      </div>
+      <p style="color:#fbbf24; margin-top:15px; font-weight:bold;">149,299,200 بت لكل ثانية فيديو!</p>
+    `;
+  } else if (index === 5) {
+    container.innerHTML = `
+      <p style="color:#6ee7b7; font-weight:bold; margin-bottom:15px;">💾 تخزين الفيديو كاملاً</p>
+      <div style="background:rgba(16,185,129,0.15); border:2px solid #10b981; border-radius:10px; padding:15px; font-family:Consolas,monospace; text-align:center;">
+        <div style="color:#6ee7b7;">0x0000</div>
+        <div style="color:#fbbf24; font-size:18px;">11111111 10000000 01000000 ...</div>
+      </div>
+      <p style="color:#fbbf24; margin-top:12px; font-weight:bold;">🎉 فيديو كامل = مليارات البتات!</p>
+    `;
+  }
+}
+
+/* ========== إعادة ========== */
+function resetJourney() {
+  isPlaying = false;
+  const playBtn = document.getElementById('playBtn');
+  playBtn.disabled = false;
+  playBtn.textContent = '▶️ ابدأ الرحلة';
+
+  document.querySelectorAll('.journey-step').forEach(s => s.classList.remove('active', 'done'));
+  document.querySelectorAll('.journey-arrow').forEach(a => a.classList.remove('active'));
+
+  document.getElementById('progressGlow').style.width = '0%';
+
+  const journey = journeys[currentJourney];
+  const display = document.getElementById('visualDisplay');
+  display.innerHTML = `<div class="big-emoji">${journey.steps[0].icon}</div><p style="color:#94a3b8; margin-top:15px;">اضغط "ابدأ الرحلة" لتبدأ</p>`;
+
+  document.getElementById('explanationText').textContent = 'اختر نوع البيانات، ثم اضغط "ابدأ الرحلة".';
+  document.getElementById('stageTitle').textContent = journey.title;
+}
+
+/* ========== تأخير ========== */
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+</script>
+
+</body>
+</html>

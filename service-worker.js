@@ -1,13 +1,13 @@
 /**
  * ================================================
  * 📚 Service Worker – منصة نتعلم سوياً
- * 👨‍🏫 إعداد: كنان سكيف
+ * 👨‍🏫 إعداد: المعلم :كنان سكيف
  * 👩‍🏫 المعلمة: أحلام الشيخ حسن
- * 📅 2025
+ * 📅 2026
  * ================================================
  */
 
-const CACHE_NAME = 'manhaj-v1.0.0';
+const CACHE_NAME = 'manhaj-v4.0.0';
 
 /* الملفات التي تُحفظ للعمل بدون إنترنت */
 const FILES_TO_CACHE = [
@@ -23,9 +23,10 @@ const FILES_TO_CACHE = [
   './lesson8.html',
   './lesson9.html',
   './simulator.html',
+  './simulator-lessons.html',
   './numbers.html',
   './journey.html',
-  './quiz3.html',
+  './malware.html',
   './worksheet.html',
   './logo.png',
   './manifest.json'
@@ -50,7 +51,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-/* تفعيل Service Worker */
+/* تفعيل Service Worker وحذف النسخ القديمة */
 self.addEventListener('activate', (event) => {
   console.log('🚀 جاري تفعيل Service Worker...');
   event.waitUntil(

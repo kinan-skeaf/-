@@ -1,348 +1,306 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" translate="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="google" content="notranslate">
 <title>الدرس الثامن: جدار الحماية – نتعلم سوياً</title>
 <link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e27">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="logo.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: "Tahoma", "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #1a4d8f 0%, #2c7be5 100%);
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f172a 100%);
     min-height: 100vh;
-    padding: 20px;
-    color: #1f2d3d;
+    padding: 15px;
+    color: #fff;
     line-height: 1.8;
   }
-  .container { max-width: 900px; margin: 0 auto; }
+  .container { max-width: 1200px; margin: 0 auto; }
   .top-nav {
-    background: #fff;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
     border-radius: 15px;
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
     flex-wrap: wrap;
     gap: 10px;
   }
   .top-nav a {
-    color: #1a4d8f;
+    color: #7dd3fc;
     text-decoration: none;
     font-weight: bold;
-    font-size: 15px;
-    padding: 8px 16px;
+    font-size: 14px;
+    padding: 8px 14px;
     border-radius: 20px;
     transition: all 0.3s;
-    background: #eaf2ff;
+    background: rgba(125,211,252,0.1);
   }
-  .top-nav a:hover { background: #1a4d8f; color: #fff; }
-  .header {
-    background: #fff;
-    border-radius: 20px;
-    padding: 25px;
+  .top-nav a:hover { background: #7dd3fc; color: #0a0e27; }
+  .top-nav .title { color: #fbbf24; font-weight: bold; font-size: 14px; }
+  .hero {
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 30px 20px;
+    background: radial-gradient(circle at center, rgba(59,130,246,0.25) 0%, transparent 70%);
+    border-radius: 20px;
     margin-bottom: 20px;
   }
-  .header .lesson-badge {
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+  .hero .badge {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
     color: #fff;
     display: inline-block;
-    padding: 5px 18px;
-    border-radius: 20px;
+    padding: 6px 20px;
+    border-radius: 25px;
     font-size: 13px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
   }
-  .header h1 { color: #1a4d8f; font-size: 28px; margin-bottom: 8px; }
-  .header .subtitle { color: #667; font-size: 15px; }
+  .hero h1 { color: #fff; font-size: 32px; margin-bottom: 10px; text-shadow: 0 0 30px rgba(59,130,246,0.6); }
+  .hero p { color: #94a3b8; font-size: 15px; }
   .tabs {
-    background: #fff;
+    background: rgba(0,0,0,0.3);
     border-radius: 15px;
     padding: 10px;
+    margin-bottom: 20px;
     display: flex;
     gap: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     flex-wrap: wrap;
     justify-content: center;
   }
   .tabs button {
-    background: #f0f6ff;
-    color: #1a4d8f;
+    background: rgba(255,255,255,0.05);
+    color: #cbd5e1;
     border: 2px solid transparent;
-    padding: 10px 18px;
-    border-radius: 25px;
+    padding: 12px 22px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
     font-family: inherit;
     transition: all 0.3s;
   }
-  .tabs button:hover { background: #d9e7ff; }
+  .tabs button:hover { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.3); }
   .tabs button.active {
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
     color: #fff;
+    border-color: #93c5fd;
+    box-shadow: 0 0 25px rgba(59,130,246,0.6);
+    transform: scale(1.05);
   }
   .content {
-    background: #fff;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.15);
     border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 25px;
+    margin-bottom: 20px;
+    min-height: 400px;
   }
-  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section { display: none; animation: fadeIn 0.5s ease; }
   .section.active { display: block; }
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .section h2 {
-    color: #1a4d8f;
-    font-size: 22px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 3px dashed #2c7be5;
+    color: #93c5fd;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px dashed rgba(59,130,246,0.3);
   }
-  .section h3 { color: #2c5aa0; font-size: 18px; margin: 20px 0 10px; }
+  .section h3 { color: #fbbf24; font-size: 18px; margin: 20px 0 12px; }
   .card {
-    background: #f9fbff;
-    border-right: 5px solid #2c7be5;
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin: 15px 0;
-  }
-  .card.highlight { background: #fffbe6; border-right-color: #f0ad4e; }
-  .card.success { background: #eaf7ea; border-right-color: #2e9e4a; }
-  .card.info { background: #e8f4ff; border-right-color: #337ab7; }
-  .card.danger { background: #fdecec; border-right-color: #c9302c; }
-  ul, ol { padding-right: 25px; margin: 10px 0; }
-  li { margin: 6px 0; }
-  table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-  th, td { border: 1px solid #d0d7e0; padding: 10px 12px; text-align: center; }
-  th { background: #1a4d8f; color: #fff; }
-  tr:nth-child(even) td { background: #f7f9fc; }
-  pre {
-    background: #0f172a;
-    color: #7dd3fc;
-    padding: 15px;
-    border-radius: 10px;
-    overflow-x: auto;
-    direction: rtl;
-    text-align: right;
-    font-family: "Consolas", "Tahoma", monospace;
-    font-size: 15px;
-    line-height: 1.8;
-  }
-  .btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
-    color: #fff;
-    padding: 12px 25px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    font-family: inherit;
-    margin: 5px;
-    transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(26,77,143,0.25);
-  }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(26,77,143,0.4); }
-  .btn.green { background: linear-gradient(135deg, #2e9e4a, #5cb85c); }
-  .btn.red { background: linear-gradient(135deg, #c9302c, #d9534f); }
-  .btn.orange { background: linear-gradient(135deg, #e67e22, #f0ad4e); }
-
-  /* المحاكي */
-  .simulator {
-    background: linear-gradient(135deg, #f0f7ff, #e0efff);
-    border: 2px solid #2c7be5;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 20px 0;
-  }
-  .simulator h4 { color: #1a4d8f; font-size: 17px; margin-bottom: 15px; }
-  .simulator h4::before { content: "🎮 "; }
-
-  /* محاكي القلعة */
-  .castle-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    padding: 20px;
-    background: #fff;
+    background: rgba(0,0,0,0.4);
+    border-right: 5px solid #3b82f6;
     border-radius: 12px;
+    padding: 18px 22px;
     margin: 15px 0;
-    min-height: 200px;
-    position: relative;
+    transition: all 0.3s;
   }
-  .castle {
-    font-size: 50px;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-  }
-  .wall {
-    display: flex;
-    gap: 5px;
-    font-size: 30px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .packet {
-    font-size: 28px;
-    animation: floatPacket 2s ease-in-out infinite;
-    padding: 5px;
-  }
-  @keyframes floatPacket {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  .packet.good { color: #2e9e4a; }
-  .packet.bad { color: #c9302c; }
-  .packet.blocked {
-    opacity: 0.3;
-    text-decoration: line-through;
-    animation: shake 0.5s;
-  }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-  }
-
-  .sim-output {
+  .card:hover { transform: translateX(-5px); background: rgba(0,0,0,0.5); }
+  .card.highlight { border-right-color: #fbbf24; background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(0,0,0,0.4)); }
+  .card.success { border-right-color: #10b981; background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(0,0,0,0.4)); }
+  .card.info { border-right-color: #06b6d4; background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(0,0,0,0.4)); }
+  .card strong { color: #93c5fd; }
+  .code-box {
     background: #0f172a;
-    color: #7dd3fc;
-    padding: 18px;
-    border-radius: 10px;
-    font-family: "Consolas", monospace;
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-family: "Consolas", "Courier New", monospace;
     font-size: 15px;
-    min-height: 100px;
-    margin-top: 15px;
     line-height: 2;
     direction: rtl;
     text-align: right;
-  }
-  .sim-step {
-    padding: 8px 12px;
-    margin: 5px 0;
-    border-radius: 6px;
-    animation: slideStep 0.4s ease;
-    background: rgba(44,123,229,0.15);
-    border-right: 3px solid #2c7be5;
-  }
-  .sim-step.success {
-    background: rgba(46,158,74,0.2);
-    border-right-color: #2e9e4a;
-    color: #b5f7b5;
-  }
-  .sim-step.danger {
-    background: rgba(201,48,44,0.2);
-    border-right-color: #c9302c;
-    color: #fdd;
-  }
-  @keyframes slideStep {
-    from { opacity: 0; transform: translateX(-15px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  /* خطوات التفعيل */
-  .steps-list {
-    counter-reset: step;
-    list-style: none;
-    padding: 0;
     margin: 15px 0;
+    overflow-x: auto;
+    color: #93c5fd;
+    box-shadow: 0 4px 20px rgba(59,130,246,0.2);
   }
-  .steps-list li {
-    counter-increment: step;
-    background: #f0f6ff;
-    padding: 14px 20px;
-    margin: 10px 0;
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: rgba(0,0,0,0.3);
     border-radius: 10px;
-    border-right: 4px solid #2c7be5;
-    position: relative;
-    padding-right: 60px;
-    transition: all 0.3s;
-    cursor: pointer;
+    overflow: hidden;
   }
-  .steps-list li:hover {
-    background: #e0efff;
-    transform: translateX(-5px);
-  }
-  .steps-list li::before {
-    content: counter(step);
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+  .table th {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
     color: #fff;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 16px;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid rgba(59,130,246,0.2);
   }
-
-  /* الاختبار */
-  .quiz-header {
-    background: #eaf2ff;
-    padding: 15px 20px;
+  .table td {
+    border: 1px solid rgba(59,130,246,0.15);
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #e2e8f0;
+    font-size: 14px;
+  }
+  .table tr:nth-child(even) td { background: rgba(0,0,0,0.2); }
+  .content ul, .content ol { padding-right: 25px; margin: 10px 0; color: #e2e8f0; }
+  .content li { margin: 8px 0; font-size: 15px; }
+  .content p { color: #e2e8f0; font-size: 15px; margin: 10px 0; }
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+  }
+  .nav-buttons a {
+    flex: 1;
+    min-width: 130px;
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    color: #fff;
+    text-align: center;
+    padding: 12px 20px;
     border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(59,130,246,0.3);
+  }
+  .nav-buttons a:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59,130,246,0.5); }
+  .nav-buttons a.green { background: linear-gradient(135deg, #10b981, #059669); }
+  .nav-buttons a.green:hover { box-shadow: 0 8px 25px rgba(16,185,129,0.5); }
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    color: #fff;
+    padding: 14px 35px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(59,130,246,0.4);
+  }
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59,130,246,0.6); }
+  .btn:disabled { background: #475569; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn.green { background: linear-gradient(135deg, #10b981, #059669); }
+  .btn.red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+  .btn.gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  #startScreen { text-align: center; padding: 30px 15px; }
+  #startScreen .info-box {
+    background: rgba(59,130,246,0.1);
+    border: 2px solid rgba(59,130,246,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    color: #93c5fd;
+    font-size: 15px;
+    line-height: 2;
+  }
+  #startScreen input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    font-size: 17px;
+    border: 2px solid rgba(59,130,246,0.3);
+    border-radius: 10px;
+    text-align: center;
+    margin: 15px 0;
+    font-family: inherit;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+  }
+  #startScreen input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.2); }
+  #quizScreen { display: none; }
+  .quiz-header {
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 12px;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     font-weight: bold;
-    color: #1a4d8f;
+    color: #93c5fd;
     flex-wrap: wrap;
     gap: 10px;
   }
   .progress-wrapper {
-    background: #e0e7f0;
-    height: 10px;
+    background: rgba(0,0,0,0.4);
+    height: 8px;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 20px;
   }
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #5cb85c, #2e9e4a);
+    background: linear-gradient(90deg, #3b82f6, #1e40af, #93c5fd);
     width: 0%;
     transition: width 0.5s ease;
+    box-shadow: 0 0 15px rgba(59,130,246,0.8);
   }
   .question-box {
-    background: #f9fbff;
-    border-right: 6px solid #2c7be5;
-    padding: 20px;
+    background: rgba(0,0,0,0.4);
+    border-right: 5px solid #3b82f6;
+    padding: 20px 25px;
     border-radius: 12px;
     margin-bottom: 20px;
   }
-  .question-box h3 { color: #1a4d8f; margin-bottom: 15px; font-size: 18px; line-height: 1.6; }
+  .question-box h3 { color: #93c5fd; margin-bottom: 15px; font-size: 17px; line-height: 1.6; }
   .option {
     display: block;
-    background: #fff;
-    border: 2px solid #d0d7e0;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(59,130,246,0.2);
     padding: 14px 18px;
     margin: 10px 0;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.25s;
-    font-size: 16px;
+    font-size: 15px;
+    color: #e2e8f0;
   }
-  .option:hover { border-color: #2c7be5; background: #eaf2ff; transform: translateX(-5px); }
-  .option.selected { background: #2c7be5; color: #fff; border-color: #1a4d8f; font-weight: bold; }
-  .nav-buttons { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
-  .result-screen { display: none; text-align: center; }
-  .result-screen.active { display: block; }
+  .option:hover { border-color: #3b82f6; background: rgba(59,130,246,0.15); transform: translateX(-5px); }
+  .option.selected {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    color: #fff;
+    border-color: #93c5fd;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(59,130,246,0.5);
+  }
+  .quiz-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+  #resultScreen { display: none; text-align: center; }
   .result-circle {
     width: 180px;
     height: 180px;
@@ -354,7 +312,7 @@
     justify-content: center;
     color: #fff;
     font-weight: bold;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     animation: pop 0.6s ease;
   }
   @keyframes pop {
@@ -364,66 +322,41 @@
   }
   .result-circle .score { font-size: 48px; line-height: 1; }
   .result-circle .total { font-size: 20px; opacity: 0.9; }
-  .result-message { font-size: 22px; font-weight: bold; margin: 20px 0; }
+  .result-message { font-size: 22px; font-weight: bold; margin: 20px 0; color: #93c5fd; }
   .certificate {
-    background: linear-gradient(135deg, #fffbe6, #fff5cc);
-    border: 3px dashed #f0ad4e;
+    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.1));
+    border: 3px dashed #fbbf24;
     border-radius: 15px;
     padding: 25px;
     margin-top: 20px;
   }
-  .certificate h2 { color: #8a6d00; margin-bottom: 15px; font-size: 22px; }
+  .certificate h2 { color: #fbbf24; margin-bottom: 15px; font-size: 22px; }
   .certificate .name {
     font-size: 28px;
-    color: #1a4d8f;
+    color: #93c5fd;
     font-weight: bold;
     margin: 15px 0;
-    border-bottom: 2px dotted #1a4d8f;
+    border-bottom: 2px dotted #93c5fd;
     display: inline-block;
     padding-bottom: 5px;
   }
-  .details-box {
-    background: #f9fbff;
-    border-radius: 12px;
+  .footer {
+    background: linear-gradient(135deg, rgba(26,77,143,0.3), rgba(15,23,42,0.5));
+    border: 1px solid rgba(125,211,252,0.15);
+    border-radius: 15px;
     padding: 20px;
-    margin-top: 20px;
-    text-align: right;
-  }
-  .detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #e0e7f0;
-    font-size: 14px;
-    gap: 10px;
-  }
-  .detail-row .ok { color: #2e9e4a; font-weight: bold; }
-  .detail-row .no { color: #c9302c; font-weight: bold; }
-  .bottom-nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-  }
-  .bottom-nav a {
-    flex: 1;
-    min-width: 120px;
-    background: #fff;
-    color: #1a4d8f;
     text-align: center;
-    padding: 14px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: all 0.3s;
+    color: #94a3b8;
+    font-size: 13px;
   }
-  .bottom-nav a:hover { background: #1a4d8f; color: #fff; transform: translateY(-3px); }
-  @media (max-width: 600px) {
-    .header h1 { font-size: 22px; }
-    .tabs button { padding: 8px 12px; font-size: 12px; }
-    .content { padding: 20px; }
+  .footer .designer { color: #fbbf24; font-weight: bold; margin: 8px 0; }
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 22px; }
+    .tabs button { padding: 10px 14px; font-size: 12px; }
+    .content { padding: 18px; }
+    .section h2 { font-size: 19px; }
+    .code-box { font-size: 13px; padding: 14px; }
+    .nav-buttons a { font-size: 12px; padding: 10px 14px; }
     .result-circle { width: 140px; height: 140px; }
     .result-circle .score { font-size: 38px; }
   }
@@ -435,25 +368,23 @@
 
   <div class="top-nav">
     <a href="index.html">🏠 الرئيسية</a>
-    <span style="color: #1a4d8f; font-weight: bold;">🛡️ الدرس الثامن: جدار الحماية</span>
+    <span class="title">📖 الدرس الثامن: جدار الحماية</span>
   </div>
 
-  <div class="header">
-    <span class="lesson-badge">الدرس ٨</span>
+  <div class="hero">
+    <span class="badge">📖 الدرس الثامن</span>
     <h1>🛡️ جدار الحماية</h1>
-    <p class="subtitle">مفهوم جدار الحماية – أنواعه – طريقة تفعيله</p>
+    <p>مفهوم جدار الحماية – أنواعه – طريقة تفعيله</p>
   </div>
 
   <div class="tabs">
-    <button onclick="showTab('tab1', this)" class="active">📖 الشرح</button>
+    <button class="active" onclick="showTab('tab1', this)">📖 الشرح</button>
     <button onclick="showTab('tab2', this)">📝 الخطوات</button>
-    <button onclick="showTab('tab3', this)">🎮 المحاكي</button>
-    <button onclick="showTab('tab4', this)">🎯 الاختبار</button>
+    <button onclick="showTab('tab3', this)">🎯 الاختبار</button>
   </div>
 
   <div class="content">
 
-    <!-- ===== تبويب ١: الشرح ===== -->
     <div id="tab1" class="section active">
       <h2>📖 مفهوم جدار الحماية</h2>
 
@@ -486,7 +417,7 @@
       </div>
 
       <h3>🔹 أنواع جدار الحماية:</h3>
-      <table>
+      <table class="table">
         <tr>
           <th>النوع</th>
           <th>الوصف</th>
@@ -501,40 +432,31 @@
         </tr>
       </table>
 
-      <h3>🔹 متى يُنصح بتفعيله؟</h3>
-      <div class="card success">
-        <ul>
-          <li>✅ دائماً عند الاتصال بالإنترنت</li>
-          <li>✅ عند استخدام شبكات عامة (Wi-Fi عام)</li>
-          <li>✅ عند تبادل الملفات عبر الشبكة</li>
-          <li>✅ عند تحميل برامج جديدة</li>
-        </ul>
-      </div>
-
       <div class="card danger">
         <strong>⚠️ تحذير:</strong> إيقاف جدار الحماية يعرض حاسوبك للخطر!
       </div>
     </div>
 
-    <!-- ===== تبويب ٢: الخطوات ===== -->
     <div id="tab2" class="section">
       <h2>📝 خطوات تفعيل جدار الحماية</h2>
 
       <h3>🔹 تفعيل جدار حماية ويندوز:</h3>
-      <ol class="steps-list">
-        <li>افتح قائمة ابدأ.</li>
-        <li>اختر لوحة التحكم (Control Panel).</li>
-        <li>اختر تبويب النظام والأمان (System and Security).</li>
-        <li>اختر جدار حماية ويندوز (Windows Firewall).</li>
-        <li>من القائمة اليمنى، اختر "تشغيل جدار حماية ويندوز" أو "إيقاف تشغيله".</li>
-        <li>فعّل خيار "تشغيل جدار حماية ويندوز" للشبكات الخاصة (العمل أو المنزل) أو العامة (الإنترنت).</li>
-      </ol>
-
-      <div class="card success">
-        <strong>✅ النتيجة:</strong> بعد هذه الخطوات، يكون حاسوبك محمياً من البرامج الضارة أثناء دخولك الشبكة.
+      <div class="card">
+        <ol>
+          <li>افتح قائمة ابدأ.</li>
+          <li>اختر لوحة التحكم (Control Panel).</li>
+          <li>اختر تبويب النظام والأمان (System and Security).</li>
+          <li>اختر جدار حماية ويندوز (Windows Firewall).</li>
+          <li>من القائمة اليمنى، اختر "تشغيل جدار حماية ويندوز".</li>
+          <li>فعّل خيار "تشغيل جدار حماية ويندوز" للشبكات الخاصة أو العامة.</li>
+        </ol>
       </div>
 
-      <h3>🔹 متى تعرف أن الجدار مفعّل؟</h3>
+      <div class="card success">
+        <strong>✅ النتيجة:</strong> بعد هذه الخطوات، يكون حاسوبك محمياً من البرامج الضارة.
+      </div>
+
+      <h3>🔹 كيف تعرف أن الجدار مفعّل؟</h3>
       <div class="card info">
         <ul>
           <li>✅ يظهر بجانب "جدار حماية ويندوز" علامة (تشغيل).</li>
@@ -544,7 +466,7 @@
       </div>
 
       <h3>📊 جدول المقارنة:</h3>
-      <table>
+      <table class="table">
         <tr>
           <th>المقارنة</th>
           <th>جدار الحماية</th>
@@ -553,7 +475,7 @@
         <tr>
           <td>الوظيفة</td>
           <td>يمنع الدخول من الخارج</td>
-          <td>يكتشف ويعالج الفيروسات داخلياً</td>
+          <td>يكتشف ويعالج الفيروسات</td>
         </tr>
         <tr>
           <td>التشبيه</td>
@@ -572,57 +494,21 @@
       </div>
     </div>
 
-    <!-- ===== تبويب ٣: المحاكي ===== -->
     <div id="tab3" class="section">
-      <h2>🎮 المحاكي التفاعلي</h2>
-
-      <div class="simulator">
-        <h4>محاكي: القلعة الرقمية</h4>
-        <p style="color:#2c5aa0; font-size:14px; margin-bottom:10px;">
-          اضغط "شغّل" لمشاهدة جدار الحماية يمنع البرامج الضارة من الدخول.
-        </p>
-
-        <div class="castle-area" id="castleArea">
-          <div style="font-size: 16px; color: #667;">🌐 الإنترنت</div>
-          <div class="wall" id="incoming">
-            <span class="packet good">📄</span>
-            <span class="packet bad">🦠</span>
-            <span class="packet good">📧</span>
-            <span class="packet bad">🐛</span>
-            <span class="packet good">🖼️</span>
-          </div>
-          <div style="font-size: 40px;">🛡️⬇️⬇️⬇️🛡️</div>
-          <div style="font-size: 16px; font-weight: bold; color: #1a4d8f;">جدار الحماية</div>
-          <div class="castle">🏰</div>
-          <div style="font-size: 14px; font-weight: bold; color: #2e9e4a;">حاسوبك محمي ✅</div>
-        </div>
-
-        <div style="text-align: center; margin: 15px 0;">
-          <button class="btn green" onclick="runFirewallSim()">▶️ شغّل جدار الحماية</button>
-          <button class="btn orange" onclick="resetFirewallSim()">🔄 إعادة</button>
-        </div>
-
-        <div class="sim-output" id="simFirewallOutput">👆 اضغط "شغّل" لمشاهدة المحاكاة</div>
-      </div>
-    </div>
-
-    <!-- ===== تبويب ٤: الاختبار ===== -->
-    <div id="tab4" class="section">
       <h2>🎯 اختبار الدرس الثامن</h2>
 
-      <div id="startScreen" style="text-align: center;">
-        <p style="margin: 20px 0; color: #667;">
-          📝 عدد الأسئلة: 10<br>
-          ⏰ الزمن المقترح: 15 دقيقة<br>
-          📊 العلامة الكاملة: 20
-        </p>
-        <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50"
-          style="width: 100%; max-width: 400px; padding: 15px; font-size: 17px; border: 2px solid #c9d6e5; border-radius: 10px; text-align: center; margin: 15px 0; font-family: inherit;">
+      <div id="startScreen">
+        <div class="info-box">
+          📝 <strong>عدد الأسئلة:</strong> 10<br>
+          ⏰ <strong>الزمن المقترح:</strong> 15 دقيقة<br>
+          📊 <strong>العلامة الكاملة:</strong> 20
+        </div>
+        <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50">
         <br>
-        <button class="btn" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+        <button class="btn green" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
       </div>
 
-      <div id="quizScreen" style="display: none;">
+      <div id="quizScreen">
         <div class="quiz-header">
           <span>👤 <span id="displayName"></span></span>
           <span>📋 سؤال <span id="currentNum">1</span> من <span id="totalNum">10</span></span>
@@ -631,14 +517,14 @@
           <div class="progress-fill" id="progressFill"></div>
         </div>
         <div id="questionArea"></div>
-        <div class="nav-buttons">
+        <div class="quiz-nav">
           <button class="btn red" id="prevBtn" onclick="prevQuestion()" disabled>⬅️ السابق</button>
           <button class="btn green" id="nextBtn" onclick="nextQuestion()">التالي ➡️</button>
         </div>
       </div>
 
-      <div id="resultScreen" class="result-screen">
-        <h2>🎉 انتهى الاختبار!</h2>
+      <div id="resultScreen">
+        <h2 style="color: #93c5fd; margin-bottom: 20px;">🎉 انتهى الاختبار!</h2>
         <div class="result-circle" id="resultCircle">
           <div class="score" id="scoreDisplay">0</div>
           <div class="total">من 20</div>
@@ -651,26 +537,27 @@
           <div class="name" id="certName"></div>
           <p>قد أكمل اختبار الدرس الثامن: <strong>جدار الحماية</strong></p>
           <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من 20</p>
-          <p style="margin-top: 10px; color: #8a6d00;" id="certDate"></p>
-        </div>
-
-        <div class="details-box">
-          <h3 style="text-align:center; color:#1a4d8f; margin-bottom:15px;">📊 تفاصيل الإجابات</h3>
-          <div id="detailsArea"></div>
+          <p style="margin-top: 10px; color: #fbbf24;" id="certDate"></p>
         </div>
 
         <div style="margin-top: 25px;">
-          <button class="btn" onclick="location.reload()">🔄 إعادة الاختبار</button>
+          <button class="btn gold" onclick="location.reload()">🔄 إعادة الاختبار</button>
         </div>
       </div>
     </div>
 
   </div>
 
-  <div class="bottom-nav">
+  <div class="nav-buttons">
     <a href="lesson7.html">⬅️ الدرس السابق</a>
     <a href="index.html">🏠 الرئيسية</a>
-    <a href="lesson9.html">الدرس التالي ➡️</a>
+    <a href="lesson9.html" class="green">الدرس التالي ➡️</a>
+  </div>
+
+  <div class="footer">
+    <p>📚 <strong style="color: #93c5fd;">نتعلم سوياً</strong> – تكنولوجيا المعلومات والاتصالات – الصف السابع</p>
+    <p class="designer">🎨 تصميم: المعلم كنان سكيف &amp; المعلمة أحلام الشيخ حسن</p>
+    <p>© 2025 – جميع الحقوق محفوظة</p>
   </div>
 
 </div>
@@ -684,72 +571,6 @@ function showTab(id, btn) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* محاكي جدار الحماية */
-function runFirewallSim() {
-  const out = document.getElementById('simFirewallOutput');
-  const incoming = document.getElementById('incoming');
-  const packets = incoming.querySelectorAll('.packet');
-
-  out.innerHTML = '';
-  resetFirewallSim(true);
-
-  const steps = [
-    { text: '🌐 الاتصالات تصل من الإنترنت إلى جدار الحماية...', class: '', delay: 0 },
-    { text: '🛡️ جدار الحماية بدأ الفحص...', class: '', delay: 800 }
-  ];
-
-  steps.forEach(s => {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = 'sim-step ' + s.class;
-      div.textContent = s.text;
-      out.appendChild(div);
-    }, s.delay);
-  });
-
-  // فحص كل حزمة
-  let goodCount = 0;
-  let badCount = 0;
-
-  packets.forEach((packet, i) => {
-    setTimeout(() => {
-      const isGood = packet.classList.contains('good');
-      const emoji = packet.textContent;
-
-      if (isGood) {
-        goodCount++;
-        const div = document.createElement('div');
-        div.className = 'sim-step success';
-        div.textContent = `✅ ${emoji} برنامج آمن — سُمح له بالدخول`;
-        out.appendChild(div);
-      } else {
-        badCount++;
-        packet.classList.add('blocked');
-        const div = document.createElement('div');
-        div.className = 'sim-step danger';
-        div.textContent = `🚫 ${emoji} برنامج ضار — تم منعه!`;
-        out.appendChild(div);
-      }
-    }, 1600 + (i * 600));
-  });
-
-  // الخاتمة
-  setTimeout(() => {
-    const div = document.createElement('div');
-    div.className = 'sim-step success';
-    div.style.fontWeight = 'bold';
-    div.style.fontSize = '17px';
-    div.textContent = `🏁 النتيجة: ${goodCount} برامج آمنة دخلت، ${badCount} برامج ضارة مُنعت`;
-    out.appendChild(div);
-  }, 1600 + (packets.length * 600) + 500);
-}
-
-function resetFirewallSim(silent) {
-  document.querySelectorAll('#incoming .packet').forEach(p => p.classList.remove('blocked'));
-  if (!silent) document.getElementById('simFirewallOutput').innerHTML = '👆 اضغط "شغّل" لمشاهدة المحاكاة';
-}
-
-/* الاختبار */
 const questions = [
   { q: "ما هو جدار الحماية؟", options: ["برنامج رسم", "برنامج يراقب البيانات الداخلة والخارجة", "لعبة", "برنامج محاسبة"], correct: 1 },
   { q: "ما التشبيه المناسب لجدار الحماية؟", options: ["طبيب الحاسوب", "سور القلعة", "شاشة العرض", "لوحة المفاتيح"], correct: 1 },
@@ -810,7 +631,7 @@ function selectOption(index) {
 }
 
 function nextQuestion() {
-  if (userAnswers[currentIndex] === null) { alert("⚠️ الرجاء اختيار إجابة قبل المتابعة"); return; }
+  if (userAnswers[currentIndex] === null) { alert("⚠️ الرجاء اختيار إجابة"); return; }
   if (currentIndex < questions.length - 1) { currentIndex++; renderQuestion(); }
 }
 
@@ -821,7 +642,7 @@ function prevQuestion() {
 function finishQuiz() {
   const unanswered = userAnswers.findIndex(a => a === null);
   if (unanswered !== -1) {
-    if (!confirm(`⚠️ لم تجب على السؤال رقم ${unanswered + 1}. هل تريد المتابعة؟`)) {
+    if (!confirm(`⚠️ لم تجب على السؤال ${unanswered + 1}. هل تريد المتابعة؟`)) {
       currentIndex = unanswered;
       renderQuestion();
       return;
@@ -831,27 +652,20 @@ function finishQuiz() {
   questions.forEach((q, i) => { if (userAnswers[i] === q.correct) score += scorePerQuestion; });
   document.getElementById('quizScreen').style.display = 'none';
   document.getElementById('resultScreen').style.display = 'block';
-  document.getElementById('resultScreen').classList.add('active');
   document.getElementById('scoreDisplay').textContent = score;
   const percent = (score / 20) * 100;
   const circle = document.getElementById('resultCircle');
   let color, message;
-  if (percent >= 90) { color = 'linear-gradient(135deg, #2e9e4a, #5cb85c)'; message = "🏆 ممتاز! أنت متمكن من الموضوع!"; }
-  else if (percent >= 75) { color = 'linear-gradient(135deg, #2c7be5, #5cb85c)'; message = "👍 جيد جداً! واصل التقدم!"; }
-  else if (percent >= 60) { color = 'linear-gradient(135deg, #f0ad4e, #ffd93b)'; message = "📖 جيد، لكن يحتاج مزيداً من المراجعة."; }
-  else if (percent >= 50) { color = 'linear-gradient(135deg, #e67e22, #f0ad4e)'; message = "⚠️ مقبول، راجع القواعد الذهبية."; }
-  else { color = 'linear-gradient(135deg, #c9302c, #d9534f)'; message = "📚 يحتاج إلى تحسين، راجع الدرس من جديد."; }
+  if (percent >= 90) { color = 'linear-gradient(135deg, #10b981, #5cb85c)'; message = "🏆 ممتاز! أنت متمكن!"; }
+  else if (percent >= 75) { color = 'linear-gradient(135deg, #06b6d4, #5cb85c)'; message = "👍 جيد جداً!"; }
+  else if (percent >= 60) { color = 'linear-gradient(135deg, #f59e0b, #fbbf24)'; message = "📖 جيد، راجع القواعد."; }
+  else if (percent >= 50) { color = 'linear-gradient(135deg, #f59e0b, #d97706)'; message = "⚠️ مقبول."; }
+  else { color = 'linear-gradient(135deg, #ef4444, #dc2626)'; message = "📚 راجع الدرس."; }
   circle.style.background = color;
   document.getElementById('resultMessage').textContent = message;
   document.getElementById('certName').textContent = studentName;
   document.getElementById('certScore').textContent = score;
   document.getElementById('certDate').textContent = '📅 ' + new Date().toLocaleDateString('ar-SY');
-  let detailsHTML = '';
-  questions.forEach((q, i) => {
-    const isCorrect = userAnswers[i] === q.correct;
-    detailsHTML += `<div class="detail-row"><span>س ${i + 1}: ${q.q}</span><span class="${isCorrect ? 'ok' : 'no'}">${isCorrect ? '✅' : `❌ (${q.options[q.correct]})`}</span></div>`;
-  });
-  document.getElementById('detailsArea').innerHTML = detailsHTML;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="google" content="notranslate">
+<title>محاكي أنظمة العد – نتعلم سوياً</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e27">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="logo.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Tahoma", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f172a 100%);
+    min-height: 100vh;
+    padding: 15px;
+    color: #fff;
+    line-height: 1.8;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* ====== شريط علوي ====== */
+  .top-nav {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
+    border-radius: 15px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .top-nav a {
+    color: #7dd3fc;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    transition: all 0.3s;
+    background: rgba(125,211,252,0.1);
+  }
+  .top-nav a:hover { background: #7dd3fc; color: #0a0e27; }
+  .top-nav .title { color: #fbbf24; font-weight: bold; font-size: 14px; }
+
+  /* ====== الترويسة ====== */
+  .hero {
+    text-align: center;
+    padding: 30px 20px;
+    background: radial-gradient(circle at center, rgba(6,182,212,0.25) 0%, transparent 70%);
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero .badge {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: #fff;
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    box-shadow: 0 0 25px rgba(6,182,212,0.5);
+  }
+  .hero h1 { color: #fff; font-size: 32px; margin-bottom: 10px; text-shadow: 0 0 30px rgba(6,182,212,0.6); }
+  .hero p { color: #94a3b8; font-size: 15px; }
+
+  /* ====== التبويبات ====== */
+  .tabs {
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tabs button {
+    background: rgba(255,255,255,0.05);
+    color: #cbd5e1;
+    border: 2px solid transparent;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+  }
+  .tabs button:hover { background: rgba(6,182,212,0.15); border-color: rgba(6,182,212,0.3); }
+  .tabs button.active {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: #fff;
+    border-color: #67e8f9;
+    box-shadow: 0 0 25px rgba(6,182,212,0.6);
+    transform: scale(1.05);
+  }
+
+  /* ====== الأقسام ====== */
+  .section { display: none; animation: fadeIn 0.5s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section h2 {
+    color: #67e8f9;
+    font-size: 22px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px dashed rgba(6,182,212,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section h3 {
+    color: #fbbf24;
+    font-size: 17px;
+    margin: 20px 0 12px;
+  }
+
+  /* ====== البطاقات ====== */
+  .card {
+    background: rgba(0,0,0,0.4);
+    border-right: 5px solid #06b6d4;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 15px 0;
+    transition: all 0.3s;
+  }
+  .card.highlight { border-right-color: #fbbf24; background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(0,0,0,0.4)); }
+  .card.success { border-right-color: #10b981; background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(0,0,0,0.4)); }
+  .card.info { border-right-color: #06b6d4; background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(0,0,0,0.4)); }
+  .card.danger { border-right-color: #ef4444; background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(0,0,0,0.4)); }
+  .card strong { color: #67e8f9; }
+  .card p, .card li { color: #e2e8f0; font-size: 15px; }
+  .card ul, .card ol { padding-right: 25px; margin: 10px 0; }
+
+  /* ====== الجداول ====== */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .table th {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid rgba(6,182,212,0.2);
+  }
+  .table td {
+    border: 1px solid rgba(6,182,212,0.15);
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #e2e8f0;
+    font-size: 15px;
+    font-family: "Consolas", monospace;
+  }
+  .table tr:nth-child(even) td { background: rgba(0,0,0,0.2); }
+
+  /* ====== الكود ====== */
+  .code-box {
+    background: #0f172a;
+    border: 2px solid #06b6d4;
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 15px;
+    line-height: 2;
+    direction: rtl;
+    text-align: right;
+    margin: 15px 0;
+    overflow-x: auto;
+    color: #67e8f9;
+    box-shadow: 0 4px 20px rgba(6,182,212,0.2);
+  }
+  .code-box .key { color: #fbbf24; font-weight: bold; }
+
+  /* ====== المحوّل ====== */
+  .converter {
+    background: rgba(0,0,0,0.4);
+    border: 2px solid rgba(6,182,212,0.3);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px 0;
+  }
+  .input-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 15px;
+    justify-content: center;
+  }
+  .input-row label {
+    color: #67e8f9;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  .input-row input {
+    padding: 12px 16px;
+    border: 2px solid rgba(6,182,212,0.3);
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: "Consolas", monospace;
+    width: 130px;
+    text-align: center;
+    font-weight: bold;
+    background: rgba(0,0,0,0.5);
+    color: #fbbf24;
+  }
+  .input-row input:focus {
+    outline: none;
+    border-color: #06b6d4;
+    box-shadow: 0 0 0 3px rgba(6,182,212,0.25);
+  }
+  .input-row input[type="range"] {
+    flex: 1;
+    min-width: 200px;
+    accent-color: #06b6d4;
+    padding: 0;
+    width: auto;
+  }
+
+  /* ====== البتات (المصابيح) ====== */
+  .bits-display {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
+  .bit-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .bit-power {
+    color: #94a3b8;
+    font-size: 12px;
+    font-family: "Consolas", monospace;
+    font-weight: bold;
+  }
+  .bit-value {
+    color: #06b6d4;
+    font-size: 14px;
+    font-family: "Consolas", monospace;
+    font-weight: bold;
+  }
+  .bit-light {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #1e293b;
+    border: 3px solid #334155;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    transition: all 0.5s ease;
+    position: relative;
+  }
+  .bit-light.on {
+    background: radial-gradient(circle at 30% 30%, #fef3c7, #f59e0b);
+    border-color: #fbbf24;
+    box-shadow: 0 0 25px rgba(251,191,36,0.9), 0 0 50px rgba(251,191,36,0.5);
+    transform: scale(1.1);
+  }
+
+  /* ====== النتيجة ====== */
+  .result-display {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #67e8f9;
+    padding: 20px;
+    border-radius: 12px;
+    font-family: "Consolas", monospace;
+    text-align: center;
+    margin-top: 20px;
+    border: 2px solid rgba(6,182,212,0.3);
+  }
+  .result-display .label {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .result-display .value {
+    color: #fbbf24;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
+  .result-display .calc {
+    color: #6ee7b7;
+    font-size: 15px;
+    margin-top: 12px;
+    font-family: "Consolas", monospace;
+  }
+
+  /* ====== الخطوات ====== */
+  .steps-box {
+    background: rgba(0,0,0,0.4);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+    min-height: 100px;
+    font-family: "Consolas", monospace;
+    font-size: 15px;
+  }
+  .step-line {
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 6px;
+    background: rgba(6,182,212,0.15);
+    border-right: 3px solid #06b6d4;
+    animation: slideStep 0.4s ease;
+  }
+  .step-line.result {
+    background: rgba(16,185,129,0.2);
+    border-right-color: #10b981;
+    color: #6ee7b7;
+    font-weight: bold;
+    font-size: 17px;
+  }
+  @keyframes slideStep {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ====== الأزرار ====== */
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(6,182,212,0.4);
+    margin: 5px;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(6,182,212,0.6); }
+  .btn.green { background: linear-gradient(135deg, #10b981, #059669); }
+  .btn.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  .btn.gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+  /* ====== أزرار التنقل ====== */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+  }
+  .nav-buttons a {
+    flex: 1;
+    min-width: 130px;
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: #fff;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(6,182,212,0.3);
+  }
+  .nav-buttons a:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(6,182,212,0.5); }
+
+  /* ====== التذييل ====== */
+  .footer {
+    background: linear-gradient(135deg, rgba(26,77,143,0.3), rgba(15,23,42,0.5));
+    border: 1px solid rgba(125,211,252,0.15);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 25px;
+  }
+  .footer .designer { color: #fbbf24; font-weight: bold; margin: 8px 0; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 22px; }
+    .tabs button { padding: 10px 12px; font-size: 11px; }
+    .bit-light { width: 45px; height: 45px; font-size: 20px; }
+    .display-board { grid-template-columns: 1fr; }
+    .btn { font-size: 13px; padding: 10px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-nav">
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="lesson4.html">📖 الدرس الرابع</a>
+    <span class="title">🔢 محاكي أنظمة العد</span>
+  </div>
+
+  <div class="hero">
+    <span class="badge">🔢 محاكي تفاعلي</span>
+    <h1>محاكي أنظمة العد</h1>
+    <p>اكتشف النظام الثنائي وتعلّم التحويل بطريقة تفاعلية</p>
+  </div>
+
+  <!-- التبويبات -->
+  <div class="tabs">
+    <button class="active" onclick="showTab('tab1', this)">📖 الشرح</button>
+    <button onclick="showTab('tab2', this)">🔄 المحوّل</button>
+    <button onclick="showTab('tab3', this)">💡 آلة البتات</button>
+    <button onclick="showTab('tab4', this)">📊 قوى ٢</button>
+  </div>
+
+  <!-- ====== تبويب ١: الشرح ====== -->
+  <div id="tab1" class="section active">
+    <h2>📖 ما هو نظام العد؟</h2>
+
+    <div class="card highlight">
+      <strong>نظام العد:</strong> هو طريقة لتمثيل الأعداد باستخدام رموز محددة.
+    </div>
+
+    <h3>🎯 لماذا يستخدم الحاسوب النظام الثنائي؟</h3>
+    <div class="card info">
+      <p>الحاسوب جهاز إلكتروني يعمل بالإشارات الكهربائية، وهذه الإشارات لها <strong>حالتان فقط</strong>:</p>
+      <ul>
+        <li>🔌 <strong>لا يوجد تيار</strong> ← الرقم <strong>0</strong></li>
+        <li>💡 <strong>يوجد تيار</strong> ← الرقم <strong>1</strong></li>
+      </ul>
+      <p>لهذا السبب، يستخدم الحاسوب النظام الثنائي (0 و 1).</p>
+    </div>
+
+    <h3>📊 مقارنة بين النظامين:</h3>
+    <table class="table">
+      <tr>
+        <th>النظام</th>
+        <th>الأساس</th>
+        <th>الرموز</th>
+        <th>مثال</th>
+      </tr>
+      <tr>
+        <td><strong>العشري</strong></td>
+        <td>10</td>
+        <td>0 - 9</td>
+        <td>25</td>
+      </tr>
+      <tr>
+        <td><strong>الثنائي</strong></td>
+        <td>2</td>
+        <td>0 ، 1</td>
+        <td>11001</td>
+      </tr>
+    </table>
+
+    <h3>📌 المصطلحات المهمة:</h3>
+    <div class="card">
+      <ul>
+        <li><strong>البت (Bit):</strong> أصغر وحدة تخزين، قيمته إما 0 أو 1.</li>
+        <li><strong>البايت (Byte):</strong> يتكون من 8 بتات.</li>
+        <li><strong>الكيلوبايت (KB):</strong> 1024 بايت.</li>
+        <li><strong>الميجابايت (MB):</strong> 1024 كيلوبايت.</li>
+      </ul>
+    </div>
+
+    <h3>💡 قاعدة مهمة:</h3>
+    <div class="card success">
+      <p><strong>عدد الأعداد الممكن تمثيلها = 2^(عدد البتات)</strong></p>
+      <ul>
+        <li>1 بت ← 2 أعداد (0، 1)</li>
+        <li>2 بت ← 4 أعداد (0 إلى 3)</li>
+        <li>3 بت ← 8 أعداد (0 إلى 7)</li>
+        <li>4 بت ← 16 عدداً (0 إلى 15)</li>
+        <li>8 بت (بايت) ← 256 عدداً (0 إلى 255)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ====== تبويب ٢: المحوّل ====== -->
+  <div id="tab2" class="section">
+    <h2>🔄 المحوّل التفاعلي</h2>
+    <p style="color:#94a3b8; margin-bottom:15px;">اكتب عدداً عشرياً وشاهد التمثيل الثنائي فوراً!</p>
+
+    <div class="converter">
+      <div class="input-row">
+        <label>العدد العشري:</label>
+        <input type="number" id="decimalInput" value="13" min="0" max="255" oninput="convertNumber()">
+        <input type="range" id="decimalSlider" min="0" max="255" value="13" oninput="syncSlider()">
+      </div>
+
+      <div class="bits-display" id="bitsDisplay"></div>
+
+      <div class="result-display">
+        <div class="label">النظام الثنائي</div>
+        <div class="value" id="binaryResult">00001101</div>
+        <div class="calc" id="calcResult">8 + 4 + 1 = 13</div>
+      </div>
+
+      <div style="text-align:center; margin-top:15px;">
+        <button class="btn orange" onclick="randomNumber()">🎲 عدد عشوائي</button>
+      </div>
+    </div>
+
+    <div class="card success">
+      <strong>💡 القاعدة الذهبية:</strong><br>
+      - ثنائي → عشري: <strong>اضرب في قوى ٢ ثم اجمع</strong><br>
+      - عشري → ثنائي: <strong>اقسم على ٢ واقرأ البواقي من الأسفل</strong>
+    </div>
+  </div>
+
+  <!-- ====== تبويب ٣: آلة البتات ====== -->
+  <div id="tab3" class="section">
+    <h2>💡 آلة البتات التفاعلية</h2>
+    <p style="color:#94a3b8; margin-bottom:15px;">اضغط على المصابيح لإضافتها، وشاهد العدد العشري يتغير!</p>
+
+    <div class="converter">
+      <div class="bits-display" id="bitMachine"></div>
+
+      <div class="result-display">
+        <div class="label">العدد العشري الحالي</div>
+        <div class="value" id="bitMachineResult">0</div>
+        <div class="calc" id="bitMachineCalc">اضغط على المصابيح لتبدأ</div>
+      </div>
+
+      <div style="text-align:center; margin-top:15px;">
+        <button class="btn orange" onclick="resetBitMachine()">🔄 إعادة تعيين</button>
+        <button class="btn green" onclick="randomBitMachine()">🎲 عدد عشوائي</button>
+      </div>
+    </div>
+
+    <div class="card info">
+      <strong>🎯 الهدف:</strong><br>
+      تعلّم كيف يعمل النظام الثنائي من خلال التجربة المباشرة.
+    </div>
+  </div>
+
+  <!-- ====== تبويب ٤: قوى ٢ ====== -->
+  <div id="tab4" class="section">
+    <h2>📊 قوى العدد ٢</h2>
+    <p style="color:#94a3b8; margin-bottom:15px;">قوى العدد ٢ هي أساس التحويل بين الأنظمة.</p>
+
+    <div class="bits-display" style="flex-wrap:wrap; gap:15px;">
+      <div class="bit-column">
+        <div class="bit-power">2⁰</div>
+        <div class="bit-value" style="font-size:20px; color:#fbbf24;">1</div>
+      </div>
+      <div class="bit-column">
+        <div class="bit-power">2¹</div>
+        <div class="bit-value" style="font-size:20px; color:#fbbf24;">2</div>
+      </div>
+      <div class="bit-column">
+        <div class="bit-power">2²</div>
+        <div class="bit-value" style="font-size:20px; color:#fbbf24;">4</div>
+      </div>
+      <div class="bit-column">
+        <div class="bit-power">2³</div>
+        <div class="bit-value" style="font-size:20px; color:#fbbf24;">8</div>
+      </div>
+      <div class="bit-column">
+        <div class="bit-power">2⁴</div>
+        <div class="bit-value" style="font-size:20px; color:#fbbf24;">16</div>
+      </div>
+      <div class="bit-column">
+        <div class="bit-power">2⁵</div>
+        <div class="bit-value" style="font-size:20px; color:#fbbf24;">32</div>
+      </div>
+      <div class="bit-column">
+        <div class="bit-power">2⁶</div>
+        <div class="bit-value" style="font-size:20px; color:#fbbf24;">64</div>
+      </div>
+      <div class="bit-column">
+        <div class="bit-power">2⁷</div>
+        <div class="bit-value" style="font-size:20px; color:#fbbf24;">128</div>
+      </div>
+    </div>
+
+    <div class="card highlight">
+      <strong>📝 مثال على التحويل:</strong><br>
+      <p style="margin-top:10px;">العدد الثنائي: <strong>1101</strong></p>
+      <ul>
+        <li>1 × 2³ = 8</li>
+        <li>1 × 2² = 4</li>
+        <li>0 × 2¹ = 0</li>
+        <li>1 × 2⁰ = 1</li>
+        <li><strong>المجموع = 8 + 4 + 0 + 1 = 13</strong></li>
+      </ul>
+    </div>
+
+    <div class="card success">
+      <strong>💡 جملة تذكيرية:</strong><br>
+      "قوى ٢ = سلّم العدد الثنائي"
+    </div>
+  </div>
+
+  <!-- أزرار التنقل -->
+  <div class="nav-buttons">
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="lesson4.html">📖 الدرس الرابع</a>
+  </div>
+
+  <!-- التذييل -->
+  <div class="footer">
+    <p>📚 <strong style="color: #67e8f9;">نتعلم سوياً</strong> – تكنولوجيا المعلومات والاتصالات – الصف السابع</p>
+    <p class="designer">🎨 تصميم: المعلم كنان سكيف &amp; المعلمة أحلام الشيخ حسن</p>
+    <p>© 2025 – جميع الحقوق محفوظة</p>
+  </div>
+
+</div>
+
+<script>
+/* ========== التبويبات ========== */
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ========== المحوّل ========== */
+function convertNumber() {
+  let num = parseInt(document.getElementById('decimalInput').value) || 0;
+  if (num < 0) num = 0;
+  if (num > 255) num = 255;
+  document.getElementById('decimalSlider').value = num;
+  renderBits(num, 'bitsDisplay');
+  updateBinaryResult(num);
+}
+
+function syncSlider() {
+  const num = parseInt(document.getElementById('decimalSlider').value);
+  document.getElementById('decimalInput').value = num;
+  renderBits(num, 'bitsDisplay');
+  updateBinaryResult(num);
+}
+
+function renderBits(num, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  const bits = num.toString(2).padStart(8, '0').split('');
+
+  for (let i = 0; i < 8; i++) {
+    const power = 7 - i;
+    const bitValue = bits[i];
+    const col = document.createElement('div');
+    col.className = 'bit-column';
+    col.innerHTML = `
+      <div class="bit-power">2^${power}</div>
+      <div class="bit-value">${Math.pow(2, power)}</div>
+      <div class="bit-light ${bitValue === '1' ? 'on' : ''}">
+        ${bitValue === '1' ? '💡' : '🔌'}
+      </div>
+      <div class="bit-value" style="color:${bitValue === '1' ? '#fbbf24' : '#667'}">${bitValue}</div>
+    `;
+    container.appendChild(col);
+  }
+}
+
+function updateBinaryResult(num) {
+  const binary = num.toString(2).padStart(8, '0');
+  document.getElementById('binaryResult').textContent = binary;
+
+  const bits = binary.split('');
+  const parts = [];
+  for (let i = 0; i < 8; i++) {
+    if (bits[i] === '1') parts.push(Math.pow(2, 7 - i));
+  }
+
+  document.getElementById('calcResult').textContent = 
+    parts.length === 0 ? '0' : parts.join(' + ') + ' = ' + num;
+}
+
+function randomNumber() {
+  const num = Math.floor(Math.random() * 256);
+  document.getElementById('decimalInput').value = num;
+  convertNumber();
+}
+
+/* ========== آلة البتات ========== */
+let bitMachineState = [0, 0, 0, 0, 0, 0, 0, 0];
+
+function renderBitMachine() {
+  const container = document.getElementById('bitMachine');
+  container.innerHTML = '';
+
+  for (let i = 0; i < 8; i++) {
+    const power = 7 - i;
+    const col = document.createElement('div');
+    col.className = 'bit-column';
+    col.innerHTML = `
+      <div class="bit-power">2^${power}</div>
+      <div class="bit-value">${Math.pow(2, power)}</div>
+      <div class="bit-light ${bitMachineState[i] === 1 ? 'on' : ''}" 
+           onclick="toggleBit(${i})" style="cursor:pointer;">
+        ${bitMachineState[i] === 1 ? '💡' : '🔌'}
+      </div>
+      <div class="bit-value" style="color:${bitMachineState[i] === 1 ? '#fbbf24' : '#667'}">${bitMachineState[i]}</div>
+    `;
+    container.appendChild(col);
+  }
+
+  updateBitMachineResult();
+}
+
+function toggleBit(index) {
+  bitMachineState[index] = bitMachineState[index] === 1 ? 0 : 1;
+  renderBitMachine();
+}
+
+function updateBitMachineResult() {
+  let sum = 0;
+  let parts = [];
+
+  for (let i = 0; i < 8; i++) {
+    if (bitMachineState[i] === 1) {
+      const value = Math.pow(2, 7 - i);
+      sum += value;
+      parts.push(value);
+    }
+  }
+
+  document.getElementById('bitMachineResult').textContent = sum;
+  document.getElementById('bitMachineCalc').textContent = 
+    parts.length === 0 ? 'اضغط على المصابيح لتبدأ' : parts.join(' + ') + ' = ' + sum;
+}
+
+function resetBitMachine() {
+  bitMachineState = [0, 0, 0, 0, 0, 0, 0, 0];
+  renderBitMachine();
+}
+
+function randomBitMachine() {
+  const num = Math.floor(Math.random() * 256);
+  const bits = num.toString(2).padStart(8, '0').split('');
+  bitMachineState = bits.map(b => parseInt(b));
+  renderBitMachine();
+}
+
+/* ========== التهيئة ========== */
+window.addEventListener('load', () => {
+  convertNumber();
+  renderBitMachine();
+});
+</script>
+
+</body>
+</html>

@@ -1,364 +1,309 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" translate="no">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="google" content="notranslate">
 <title>الدرس الثالث: الجمل الشرطية – نتعلم سوياً</title>
 <link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e27">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="logo.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     font-family: "Tahoma", "Segoe UI", sans-serif;
-    background: linear-gradient(135deg, #1a4d8f 0%, #2c7be5 100%);
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f172a 100%);
     min-height: 100vh;
-    padding: 20px;
-    color: #1f2d3d;
+    padding: 15px;
+    color: #fff;
     line-height: 1.8;
   }
-
-  .container { max-width: 900px; margin: 0 auto; }
-
+  .container { max-width: 1200px; margin: 0 auto; }
   .top-nav {
-    background: #fff;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
     border-radius: 15px;
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
     flex-wrap: wrap;
     gap: 10px;
   }
-
   .top-nav a {
-    color: #1a4d8f;
+    color: #7dd3fc;
     text-decoration: none;
     font-weight: bold;
-    font-size: 15px;
-    padding: 8px 16px;
+    font-size: 14px;
+    padding: 8px 14px;
     border-radius: 20px;
     transition: all 0.3s;
-    background: #eaf2ff;
+    background: rgba(125,211,252,0.1);
   }
-
-  .top-nav a:hover {
-    background: #1a4d8f;
-    color: #fff;
-  }
-
-  .header {
-    background: #fff;
-    border-radius: 20px;
-    padding: 25px;
+  .top-nav a:hover { background: #7dd3fc; color: #0a0e27; }
+  .top-nav .title { color: #fbbf24; font-weight: bold; font-size: 14px; }
+  .hero {
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 30px 20px;
+    background: radial-gradient(circle at center, rgba(59,130,246,0.25) 0%, transparent 70%);
+    border-radius: 20px;
     margin-bottom: 20px;
   }
-
-  .header .lesson-badge {
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+  .hero .badge {
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
     color: #fff;
     display: inline-block;
-    padding: 5px 18px;
-    border-radius: 20px;
+    padding: 6px 20px;
+    border-radius: 25px;
     font-size: 13px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 25px rgba(139,92,246,0.5);
   }
-
-  .header h1 {
-    color: #1a4d8f;
-    font-size: 28px;
-    margin-bottom: 8px;
-  }
-
-  .header .subtitle {
-    color: #667;
-    font-size: 15px;
-  }
-
+  .hero h1 { color: #fff; font-size: 32px; margin-bottom: 10px; text-shadow: 0 0 30px rgba(139,92,246,0.6); }
+  .hero p { color: #94a3b8; font-size: 15px; }
   .tabs {
-    background: #fff;
+    background: rgba(0,0,0,0.3);
     border-radius: 15px;
     padding: 10px;
+    margin-bottom: 20px;
     display: flex;
     gap: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .tabs button {
-    background: #f0f6ff;
-    color: #1a4d8f;
+    background: rgba(255,255,255,0.05);
+    color: #cbd5e1;
     border: 2px solid transparent;
-    padding: 10px 18px;
-    border-radius: 25px;
+    padding: 12px 22px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
     font-family: inherit;
     transition: all 0.3s;
   }
-
-  .tabs button:hover { background: #d9e7ff; }
+  .tabs button:hover { background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.3); }
   .tabs button.active {
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
     color: #fff;
+    border-color: #c4b5fd;
+    box-shadow: 0 0 25px rgba(139,92,246,0.6);
+    transform: scale(1.05);
   }
-
   .content {
-    background: #fff;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.15);
     border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 25px;
+    margin-bottom: 20px;
+    min-height: 400px;
   }
-
-  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section { display: none; animation: fadeIn 0.5s ease; }
   .section.active { display: block; }
-
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   .section h2 {
-    color: #1a4d8f;
-    font-size: 22px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 3px dashed #2c7be5;
+    color: #c4b5fd;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px dashed rgba(139,92,246,0.3);
   }
-
-  .section h3 {
-    color: #2c5aa0;
-    font-size: 18px;
-    margin: 20px 0 10px;
-  }
-
+  .section h3 { color: #fbbf24; font-size: 18px; margin: 20px 0 12px; }
   .card {
-    background: #f9fbff;
-    border-right: 5px solid #2c7be5;
-    padding: 15px 20px;
-    border-radius: 10px;
+    background: rgba(0,0,0,0.4);
+    border-right: 5px solid #8b5cf6;
+    border-radius: 12px;
+    padding: 18px 22px;
     margin: 15px 0;
-  }
-
-  .card.highlight { background: #fffbe6; border-right-color: #f0ad4e; }
-  .card.success { background: #eaf7ea; border-right-color: #2e9e4a; }
-  .card.info { background: #e8f4ff; border-right-color: #337ab7; }
-
-  ul, ol { padding-right: 25px; margin: 10px 0; }
-  li { margin: 6px 0; }
-
-  table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-  th, td { border: 1px solid #d0d7e0; padding: 10px 12px; text-align: center; }
-  th { background: #1a4d8f; color: #fff; }
-  tr:nth-child(even) td { background: #f7f9fc; }
-
-  pre {
-    background: #0f172a;
-    color: #7dd3fc;
-    padding: 15px;
-    border-radius: 10px;
-    overflow-x: auto;
-    direction: rtl;
-    text-align: right;
-    font-family: "Consolas", "Tahoma", monospace;
-    font-size: 15px;
-    line-height: 1.8;
-  }
-
-  .btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #1a4d8f, #2c7be5);
-    color: #fff;
-    padding: 12px 25px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    font-family: inherit;
-    margin: 5px;
     transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(26,77,143,0.25);
   }
-
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(26,77,143,0.4); }
-  .btn.green { background: linear-gradient(135deg, #2e9e4a, #5cb85c); }
-  .btn.red { background: linear-gradient(135deg, #c9302c, #d9534f); }
-  .btn.orange { background: linear-gradient(135deg, #e67e22, #f0ad4e); }
-
-  .simulator {
-    background: linear-gradient(135deg, #f0f7ff, #e0efff);
-    border: 2px solid #2c7be5;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 20px 0;
-  }
-
-  .simulator h4 {
-    color: #1a4d8f;
-    font-size: 17px;
-    margin-bottom: 15px;
-  }
-
-  .simulator h4::before { content: "🎮 "; }
-
-  .sim-inputs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 15px 0;
-    align-items: center;
-  }
-
-  .sim-inputs label {
-    font-weight: bold;
-    color: #1a4d8f;
-    font-size: 15px;
-  }
-
-  .sim-inputs input {
-    padding: 10px 14px;
-    border: 2px solid #c9d6e5;
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: inherit;
-    width: 120px;
-    text-align: center;
-  }
-
-  .sim-inputs input:focus {
-    outline: none;
-    border-color: #2c7be5;
-    box-shadow: 0 0 0 3px rgba(44,123,229,0.15);
-  }
-
-  .sim-output {
+  .card:hover { transform: translateX(-5px); background: rgba(0,0,0,0.5); }
+  .card.highlight { border-right-color: #fbbf24; background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(0,0,0,0.4)); }
+  .card.success { border-right-color: #10b981; background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(0,0,0,0.4)); }
+  .card.info { border-right-color: #06b6d4; background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(0,0,0,0.4)); }
+  .card strong { color: #c4b5fd; }
+  .code-box {
     background: #0f172a;
-    color: #7dd3fc;
-    padding: 15px;
-    border-radius: 10px;
-    font-family: "Consolas", monospace;
+    border: 2px solid #8b5cf6;
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-family: "Consolas", "Courier New", monospace;
     font-size: 15px;
-    min-height: 80px;
-    margin-top: 15px;
     line-height: 2;
     direction: rtl;
     text-align: right;
-  }
-
-  .sim-step {
-    padding: 6px 10px;
-    margin: 4px 0;
-    border-radius: 6px;
-    animation: slideStep 0.4s ease;
-    background: rgba(44,123,229,0.15);
-    border-right: 3px solid #2c7be5;
-  }
-
-  .sim-step.result {
-    background: rgba(46,158,74,0.2);
-    border-right-color: #2e9e4a;
-    color: #b5f7b5;
-    font-weight: bold;
-    font-size: 17px;
-  }
-
-  @keyframes slideStep {
-    from { opacity: 0; transform: translateX(-15px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  .decision-box {
-    text-align: center;
-    padding: 20px;
-    border-radius: 12px;
     margin: 15px 0;
-    font-size: 22px;
-    font-weight: bold;
-    transition: all 0.5s;
+    overflow-x: auto;
+    color: #c4b5fd;
+    box-shadow: 0 4px 20px rgba(139,92,246,0.2);
   }
-
-  .decision-box.success {
-    background: linear-gradient(135deg, #2e9e4a, #5cb85c);
-    color: #fff;
-  }
-
-  .decision-box.fail {
-    background: linear-gradient(135deg, #c9302c, #d9534f);
-    color: #fff;
-  }
-
-  .quiz-header {
-    background: #eaf2ff;
-    padding: 15px 20px;
+  .code-box .key { color: #fbbf24; font-weight: bold; }
+  .code-box .str { color: #6ee7b7; }
+  .code-box .comment { color: #64748b; font-style: italic; }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: rgba(0,0,0,0.3);
     border-radius: 10px;
+    overflow: hidden;
+  }
+  .table th {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid rgba(139,92,246,0.2);
+  }
+  .table td {
+    border: 1px solid rgba(139,92,246,0.15);
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #e2e8f0;
+    font-size: 14px;
+  }
+  .table tr:nth-child(even) td { background: rgba(0,0,0,0.2); }
+  .content ul, .content ol { padding-right: 25px; margin: 10px 0; color: #e2e8f0; }
+  .content li { margin: 8px 0; font-size: 15px; }
+  .content p { color: #e2e8f0; font-size: 15px; margin: 10px 0; }
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+  }
+  .nav-buttons a {
+    flex: 1;
+    min-width: 130px;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: #fff;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(139,92,246,0.3);
+  }
+  .nav-buttons a:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(139,92,246,0.5); }
+  .nav-buttons a.green { background: linear-gradient(135deg, #10b981, #059669); }
+  .nav-buttons a.green:hover { box-shadow: 0 8px 25px rgba(16,185,129,0.5); }
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: #fff;
+    padding: 14px 35px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(139,92,246,0.4);
+  }
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(139,92,246,0.6); }
+  .btn:disabled { background: #475569; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn.green { background: linear-gradient(135deg, #10b981, #059669); }
+  .btn.red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+  .btn.gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  #startScreen { text-align: center; padding: 30px 15px; }
+  #startScreen .info-box {
+    background: rgba(139,92,246,0.1);
+    border: 2px solid rgba(139,92,246,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    color: #c4b5fd;
+    font-size: 15px;
+    line-height: 2;
+  }
+  #startScreen input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    font-size: 17px;
+    border: 2px solid rgba(139,92,246,0.3);
+    border-radius: 10px;
+    text-align: center;
+    margin: 15px 0;
+    font-family: inherit;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+  }
+  #startScreen input:focus { outline: none; border-color: #8b5cf6; box-shadow: 0 0 0 4px rgba(139,92,246,0.2); }
+  #quizScreen { display: none; }
+  .quiz-header {
+    background: rgba(139,92,246,0.15);
+    border: 1px solid rgba(139,92,246,0.3);
+    border-radius: 12px;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     font-weight: bold;
-    color: #1a4d8f;
+    color: #c4b5fd;
     flex-wrap: wrap;
     gap: 10px;
   }
-
   .progress-wrapper {
-    background: #e0e7f0;
-    height: 10px;
+    background: rgba(0,0,0,0.4);
+    height: 8px;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 20px;
   }
-
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #5cb85c, #2e9e4a);
+    background: linear-gradient(90deg, #8b5cf6, #a855f7, #c4b5fd);
     width: 0%;
     transition: width 0.5s ease;
+    box-shadow: 0 0 15px rgba(139,92,246,0.8);
   }
-
   .question-box {
-    background: #f9fbff;
-    border-right: 6px solid #2c7be5;
-    padding: 20px;
+    background: rgba(0,0,0,0.4);
+    border-right: 5px solid #8b5cf6;
+    padding: 20px 25px;
     border-radius: 12px;
     margin-bottom: 20px;
   }
-
-  .question-box h3 {
-    color: #1a4d8f;
-    margin-bottom: 15px;
-    font-size: 18px;
-    line-height: 1.6;
-  }
-
+  .question-box h3 { color: #c4b5fd; margin-bottom: 15px; font-size: 17px; line-height: 1.6; }
   .option {
     display: block;
-    background: #fff;
-    border: 2px solid #d0d7e0;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(139,92,246,0.2);
     padding: 14px 18px;
     margin: 10px 0;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.25s;
-    font-size: 16px;
+    font-size: 15px;
+    color: #e2e8f0;
   }
-
-  .option:hover { border-color: #2c7be5; background: #eaf2ff; transform: translateX(-5px); }
-  .option.selected { background: #2c7be5; color: #fff; border-color: #1a4d8f; font-weight: bold; }
-
-  .nav-buttons { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
-
-  .result-screen { display: none; text-align: center; }
-  .result-screen.active { display: block; }
-
+  .option:hover { border-color: #8b5cf6; background: rgba(139,92,246,0.15); transform: translateX(-5px); }
+  .option.selected {
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: #fff;
+    border-color: #c4b5fd;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(139,92,246,0.5);
+  }
+  .quiz-nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
+  #resultScreen { display: none; text-align: center; }
   .result-circle {
     width: 180px;
     height: 180px;
@@ -370,93 +315,51 @@
     justify-content: center;
     color: #fff;
     font-weight: bold;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     animation: pop 0.6s ease;
   }
-
   @keyframes pop {
     0% { transform: scale(0); }
     70% { transform: scale(1.1); }
     100% { transform: scale(1); }
   }
-
   .result-circle .score { font-size: 48px; line-height: 1; }
   .result-circle .total { font-size: 20px; opacity: 0.9; }
-
-  .result-message { font-size: 22px; font-weight: bold; margin: 20px 0; }
-
+  .result-message { font-size: 22px; font-weight: bold; margin: 20px 0; color: #c4b5fd; }
   .certificate {
-    background: linear-gradient(135deg, #fffbe6, #fff5cc);
-    border: 3px dashed #f0ad4e;
+    background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(245,158,11,0.1));
+    border: 3px dashed #fbbf24;
     border-radius: 15px;
     padding: 25px;
     margin-top: 20px;
   }
-
-  .certificate h2 { color: #8a6d00; margin-bottom: 15px; font-size: 22px; }
-
+  .certificate h2 { color: #fbbf24; margin-bottom: 15px; font-size: 22px; }
   .certificate .name {
     font-size: 28px;
-    color: #1a4d8f;
+    color: #c4b5fd;
     font-weight: bold;
     margin: 15px 0;
-    border-bottom: 2px dotted #1a4d8f;
+    border-bottom: 2px dotted #c4b5fd;
     display: inline-block;
     padding-bottom: 5px;
   }
-
-  .details-box {
-    background: #f9fbff;
-    border-radius: 12px;
+  .footer {
+    background: linear-gradient(135deg, rgba(26,77,143,0.3), rgba(15,23,42,0.5));
+    border: 1px solid rgba(125,211,252,0.15);
+    border-radius: 15px;
     padding: 20px;
-    margin-top: 20px;
-    text-align: right;
-  }
-
-  .detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #e0e7f0;
-    font-size: 14px;
-    gap: 10px;
-  }
-
-  .detail-row .ok { color: #2e9e4a; font-weight: bold; }
-  .detail-row .no { color: #c9302c; font-weight: bold; }
-
-  .bottom-nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-  }
-
-  .bottom-nav a {
-    flex: 1;
-    min-width: 120px;
-    background: #fff;
-    color: #1a4d8f;
     text-align: center;
-    padding: 14px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: all 0.3s;
+    color: #94a3b8;
+    font-size: 13px;
   }
-
-  .bottom-nav a:hover {
-    background: #1a4d8f;
-    color: #fff;
-    transform: translateY(-3px);
-  }
-
-  @media (max-width: 600px) {
-    .header h1 { font-size: 22px; }
-    .tabs button { padding: 8px 12px; font-size: 12px; }
-    .content { padding: 20px; }
+  .footer .designer { color: #fbbf24; font-weight: bold; margin: 8px 0; }
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 22px; }
+    .tabs button { padding: 10px 14px; font-size: 12px; }
+    .content { padding: 18px; }
+    .section h2 { font-size: 19px; }
+    .code-box { font-size: 13px; padding: 14px; }
+    .nav-buttons a { font-size: 12px; padding: 10px 14px; }
     .result-circle { width: 140px; height: 140px; }
     .result-circle .score { font-size: 38px; }
   }
@@ -468,52 +371,51 @@
 
   <div class="top-nav">
     <a href="index.html">🏠 الرئيسية</a>
-    <span style="color: #1a4d8f; font-weight: bold;">🔀 الدرس الثالث: الجمل الشرطية</span>
+    <span class="title">📖 الدرس الثالث: الجمل الشرطية</span>
   </div>
 
-  <div class="header">
-    <span class="lesson-badge">الدرس ٣</span>
+  <div class="hero">
+    <span class="badge">📖 الدرس الثالث</span>
     <h1>🔀 الجمل الشرطية</h1>
-    <p class="subtitle">مفهوم الجمل الشرطية – إذا وإلا – أمثلة عملية</p>
+    <p>اتخاذ القرارات – إذا وإلا – أمثلة عملية</p>
   </div>
 
   <div class="tabs">
-    <button onclick="showTab('tab1', this)" class="active">📖 الشرح</button>
+    <button class="active" onclick="showTab('tab1', this)">📖 الشرح</button>
     <button onclick="showTab('tab2', this)">📝 الأمثلة</button>
-    <button onclick="showTab('tab3', this)">🎮 المحاكيات</button>
-    <button onclick="showTab('tab4', this)">🎯 الاختبار</button>
+    <button onclick="showTab('tab3', this)">🎯 الاختبار</button>
   </div>
 
   <div class="content">
 
-    <!-- ===== تبويب ١: الشرح ===== -->
     <div id="tab1" class="section active">
       <h2>📖 مفهوم الجمل الشرطية</h2>
 
       <div class="card highlight">
-        <strong>تعريف الجمل الشرطية:</strong><br>
-        هي أدوات تستخدم لاتخاذ قرارات مختلفة وتنفيذ مجموعة تعليمات اعتماداً على شرط معين.
+        <strong>الجمل الشرطية:</strong> هي أدوات تستخدم لاتخاذ قرارات مختلفة وتنفيذ مجموعة تعليمات اعتمادًا على شرط معين.
       </div>
 
-      <h3>تكوين الجملة الشرطية:</h3>
+      <h3>🔧 تكوين الجملة الشرطية:</h3>
       <div class="card info">
-        <pre style="background:#fff; color:#1a4d8f; border:1px dashed #2c7be5;">
-إذا (الشرط) عندها
-   نفّذ التعليمات
-وإلا
-   نفّذ تعليمات بديلة
-        </pre>
+        <div class="code-box" style="background: rgba(0,0,0,0.3); color: #c4b5fd; border-color: #8b5cf6;">
+          إذا (الشرط) عندها<br>
+          &nbsp;&nbsp;&nbsp;نفّذ التعليمات<br>
+          وإلا<br>
+          &nbsp;&nbsp;&nbsp;نفّذ تعليمات بديلة
+        </div>
       </div>
 
-      <h3>متى نستخدمها؟</h3>
-      <ul>
-        <li>عند اتخاذ قرار (ناجح / راسب).</li>
-        <li>عند التمييز بين شيئين (زوجي / فردي).</li>
-        <li>عند التحقق من شرط (أكبر / أصغر).</li>
-      </ul>
+      <h3>🎯 متى نستخدمها؟</h3>
+      <div class="card">
+        <ul>
+          <li>عند اتخاذ قرار (ناجح / راسب).</li>
+          <li>عند التمييز بين شيئين (زوجي / فردي).</li>
+          <li>عند التحقق من شرط (أكبر / أصغر).</li>
+        </ul>
+      </div>
 
       <h3>📊 الفرق بين الجمل الشرطية وحلقات التكرار:</h3>
-      <table>
+      <table class="table">
         <tr>
           <th>المقارنة</th>
           <th>حلقات التكرار</th>
@@ -537,14 +439,11 @@
       </table>
     </div>
 
-    <!-- ===== تبويب ٢: الأمثلة ===== -->
     <div id="tab2" class="section">
       <h2>📝 أمثلة عملية</h2>
 
       <h3>📌 مثال ١: التحقق من علامة الطالب</h3>
-      <p>اكتب خوارزمية تقرأ علامة الطالب، إذا كانت أكبر أو تساوي 60 اطبع "ناجح"، وإلا اطبع "راسب":</p>
-
-      <div class="card">
+      <div class="card info">
         <p><strong>تحليل المسألة:</strong></p>
         <ul>
           <li><strong>المدخلات:</strong> علامة الطالب A</li>
@@ -553,96 +452,60 @@
         </ul>
       </div>
 
-      <pre>
-1. البداية
-2. أدخل علامة الطالب A
-3. إذا A >= 60 عندها
-      اطبع "ناجح"
-   وإلا
-      اطبع "راسب"
-4. النهاية
-      </pre>
+      <p><strong>خطوات العمل:</strong></p>
+      <div class="code-box">
+        <span class="key">١.</span> البداية<br>
+        <span class="key">٢.</span> أدخل علامة الطالب A<br>
+        <span class="key">٣.</span> إذا A &gt;= 60 عندها<br>
+        <span class="key">٤.</span>   اطبع <span class="str">"ناجح"</span><br>
+        <span class="key">٥.</span> وإلا<br>
+        <span class="key">٦.</span>   اطبع <span class="str">"راسب"</span><br>
+        <span class="key">٧.</span> النهاية
+      </div>
 
       <h3>📌 مثال ٢: زوجي أم فردي</h3>
-      <pre>
-1. البداية
-2. أدخل عدد X
-3. إذا باقي قسمة X على 2 = 0 عندها
-      اطبع "عدد زوجي"
-   وإلا
-      اطبع "عدد فردي"
-4. النهاية
-      </pre>
+      <div class="card info">
+        <p><strong>تحليل المسألة:</strong></p>
+        <ul>
+          <li><strong>المدخلات:</strong> العدد X</li>
+          <li><strong>المعالجة:</strong> باقي X ÷ 2 = 0</li>
+          <li><strong>المخرجات:</strong> "زوجي" أو "فردي"</li>
+        </ul>
+      </div>
 
-      <h3>📌 مثال ٣: العدد الأولي</h3>
-      <pre>
-1. البداية
-2. أدخل عدد X
-3. إذا X <= 1 عندها
-      اطبع "ليس أولي"
-      اذهب إلى النهاية
-4. عيّن I = 2
-5. طالما I < X
-      إذا باقي قسمة X على I = 0 عندها
-         اطبع "ليس أولي"
-         اذهب إلى النهاية
-      I = I + 1
-6. اطبع "أولي"
-7. النهاية
-      </pre>
+      <p><strong>خطوات العمل:</strong></p>
+      <div class="code-box">
+        <span class="key">١.</span> البداية<br>
+        <span class="key">٢.</span> أدخل عدد X<br>
+        <span class="key">٣.</span> إذا باقي X ÷ 2 = 0 عندها<br>
+        <span class="key">٤.</span>   اطبع <span class="str">"زوجي"</span><br>
+        <span class="key">٥.</span> وإلا<br>
+        <span class="key">٦.</span>   اطبع <span class="str">"فردي"</span><br>
+        <span class="key">٧.</span> النهاية
+      </div>
+
+      <div class="card success">
+        <strong>💡 تذكر:</strong><br>
+        - إذا = عندما يتحقق الشرط<br>
+        - وإلا = عندما لا يتحقق الشرط
+      </div>
     </div>
 
-    <!-- ===== تبويب ٣: المحاكيات ===== -->
     <div id="tab3" class="section">
-      <h2>🎮 المحاكيات التفاعلية</h2>
-
-      <div class="simulator">
-        <h4>محاكي ١: التحقق من علامة الطالب</h4>
-        <p style="color:#2c5aa0; font-size:14px; margin-bottom:10px;">
-          أدخل علامة الطالب، وشاهد القرار: ناجح أم راسب.
-        </p>
-        <div class="sim-inputs">
-          <label>علامة الطالب =</label>
-          <input type="number" id="simGrade" value="75" min="0" max="100">
-          <button class="btn green" onclick="runGradeSim()">▶️ شغّل</button>
-          <button class="btn orange" onclick="resetSim('simGradeOutput'); document.getElementById('decisionBox').style.display='none';">🔄 مسح</button>
-        </div>
-        <div class="decision-box" id="decisionBox" style="display:none;"></div>
-        <div class="sim-output" id="simGradeOutput">👆 أدخل العلامة ثم اضغط "شغّل"</div>
-      </div>
-
-      <div class="simulator">
-        <h4>محاكي ٢: زوجي أم فردي</h4>
-        <p style="color:#2c5aa0; font-size:14px; margin-bottom:10px;">
-          أدخل عدداً، وشاهد النتيجة: زوجي أم فردي.
-        </p>
-        <div class="sim-inputs">
-          <label>أدخل عدداً =</label>
-          <input type="number" id="simEven" value="7" min="0">
-          <button class="btn green" onclick="runEvenSim()">▶️ شغّل</button>
-          <button class="btn orange" onclick="resetSim('simEvenOutput')">🔄 مسح</button>
-        </div>
-        <div class="sim-output" id="simEvenOutput">👆 أدخل عدداً ثم اضغط "شغّل"</div>
-      </div>
-    </div>
-
-    <!-- ===== تبويب ٤: الاختبار ===== -->
-    <div id="tab4" class="section">
       <h2>🎯 اختبار الدرس الثالث</h2>
 
-      <div id="startScreen" style="text-align: center;">
-        <p style="margin: 20px 0; color: #667;">
-          📝 عدد الأسئلة: 10<br>
-          ⏰ الزمن المقترح: 15 دقيقة<br>
-          📊 العلامة الكاملة: 20
-        </p>
-        <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50"
-          style="width: 100%; max-width: 400px; padding: 15px; font-size: 17px; border: 2px solid #c9d6e5; border-radius: 10px; text-align: center; margin: 15px 0; font-family: inherit;">
+      <div id="startScreen">
+        <div class="info-box">
+          📝 <strong>عدد الأسئلة:</strong> 10<br>
+          ⏰ <strong>الزمن المقترح:</strong> 15 دقيقة<br>
+          📊 <strong>العلامة الكاملة:</strong> 20
+        </div>
+        <input type="text" id="studentName" placeholder="✍️ اكتب اسمك الكامل هنا" maxlength="50">
         <br>
-        <button class="btn" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
+        <button class="btn green" onclick="startQuiz()">🚀 ابدأ الاختبار</button>
       </div>
 
-      <div id="quizScreen" style="display: none;">
+      <div id="quizScreen">
         <div class="quiz-header">
           <span>👤 <span id="displayName"></span></span>
           <span>📋 سؤال <span id="currentNum">1</span> من <span id="totalNum">10</span></span>
@@ -651,14 +514,14 @@
           <div class="progress-fill" id="progressFill"></div>
         </div>
         <div id="questionArea"></div>
-        <div class="nav-buttons">
+        <div class="quiz-nav">
           <button class="btn red" id="prevBtn" onclick="prevQuestion()" disabled>⬅️ السابق</button>
           <button class="btn green" id="nextBtn" onclick="nextQuestion()">التالي ➡️</button>
         </div>
       </div>
 
-      <div id="resultScreen" class="result-screen">
-        <h2>🎉 انتهى الاختبار!</h2>
+      <div id="resultScreen">
+        <h2 style="color: #c4b5fd; margin-bottom: 20px;">🎉 انتهى الاختبار!</h2>
         <div class="result-circle" id="resultCircle">
           <div class="score" id="scoreDisplay">0</div>
           <div class="total">من 20</div>
@@ -671,26 +534,27 @@
           <div class="name" id="certName"></div>
           <p>قد أكمل اختبار الدرس الثالث: <strong>الجمل الشرطية</strong></p>
           <p style="margin-top: 10px;">بنتيجة <span id="certScore"></span> من 20</p>
-          <p style="margin-top: 10px; color: #8a6d00;" id="certDate"></p>
-        </div>
-
-        <div class="details-box">
-          <h3 style="text-align:center; color:#1a4d8f; margin-bottom:15px;">📊 تفاصيل الإجابات</h3>
-          <div id="detailsArea"></div>
+          <p style="margin-top: 10px; color: #fbbf24;" id="certDate"></p>
         </div>
 
         <div style="margin-top: 25px;">
-          <button class="btn" onclick="location.reload()">🔄 إعادة الاختبار</button>
+          <button class="btn gold" onclick="location.reload()">🔄 إعادة الاختبار</button>
         </div>
       </div>
     </div>
 
   </div>
 
-  <div class="bottom-nav">
+  <div class="nav-buttons">
     <a href="lesson2.html">⬅️ الدرس السابق</a>
     <a href="index.html">🏠 الرئيسية</a>
-    <a href="lesson4.html">الدرس التالي ➡️</a>
+    <a href="lesson4.html" class="green">الدرس التالي ➡️</a>
+  </div>
+
+  <div class="footer">
+    <p>📚 <strong style="color: #c4b5fd;">نتعلم سوياً</strong> – تكنولوجيا المعلومات والاتصالات – الصف السابع</p>
+    <p class="designer">🎨 تصميم: المعلم كنان سكيف &amp; المعلمة أحلام الشيخ حسن</p>
+    <p>© 2025 – جميع الحقوق محفوظة</p>
   </div>
 
 </div>
@@ -704,99 +568,16 @@ function showTab(id, btn) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function runGradeSim() {
-  const grade = parseFloat(document.getElementById('simGrade').value);
-  const out = document.getElementById('simGradeOutput');
-  const decision = document.getElementById('decisionBox');
-
-  if (isNaN(grade) || grade < 0 || grade > 100) {
-    out.innerHTML = '<div class="sim-step">⚠️ الرجاء إدخال علامة بين 0 و 100</div>';
-    decision.style.display = 'none';
-    return;
-  }
-
-  out.innerHTML = '';
-  decision.style.display = 'none';
-
-  const steps = [
-    { text: '▶️ 1. البداية', delay: 0 },
-    { text: `📥 2. أدخل علامة الطالب A = ${grade}`, delay: 600 },
-    { text: `🤔 3. إذا A >= 60 عندها ...`, delay: 1200 }
-  ];
-
-  steps.forEach(s => {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = 'sim-step';
-      div.textContent = s.text;
-      out.appendChild(div);
-    }, s.delay);
-  });
-
-  setTimeout(() => {
-    if (grade >= 60) {
-      const div = document.createElement('div');
-      div.className = 'sim-step result';
-      div.textContent = `📤 4. اطبع "ناجح"`;
-      out.appendChild(div);
-      decision.className = 'decision-box success';
-      decision.textContent = `🎉 ناجح (${grade} >= 60)`;
-      decision.style.display = 'block';
-    } else {
-      const div = document.createElement('div');
-      div.className = 'sim-step result';
-      div.textContent = `📤 4. وإلا اطبع "راسب"`;
-      out.appendChild(div);
-      decision.className = 'decision-box fail';
-      decision.textContent = `😢 راسب (${grade} < 60)`;
-      decision.style.display = 'block';
-    }
-  }, 2000);
-}
-
-function runEvenSim() {
-  const x = parseInt(document.getElementById('simEven').value);
-  const out = document.getElementById('simEvenOutput');
-
-  if (isNaN(x)) {
-    out.innerHTML = '<div class="sim-step">⚠️ الرجاء إدخال عدد صحيح</div>';
-    return;
-  }
-
-  out.innerHTML = '';
-  const isEven = x % 2 === 0;
-
-  const steps = [
-    { text: '▶️ 1. البداية', delay: 0 },
-    { text: `📥 2. أدخل عدد X = ${x}`, delay: 600 },
-    { text: `🤔 3. باقي قسمة ${x} على 2 = ${x % 2} ${isEven ? '= 0 ✅' : '≠ 0 ❌'}`, delay: 1200 },
-    { text: isEven ? `📤 4. اطبع "عدد زوجي"` : `📤 4. وإلا اطبع "عدد فردي"`, delay: 1800, result: true }
-  ];
-
-  steps.forEach(s => {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = 'sim-step' + (s.result ? ' result' : '');
-      div.textContent = s.text;
-      out.appendChild(div);
-    }, s.delay);
-  });
-}
-
-function resetSim(id) {
-  document.getElementById(id).innerHTML = '👆 أدخل القيم ثم اضغط "شغّل"';
-}
-
 const questions = [
   { q: "ما تعريف الجملة الشرطية؟", options: ["تكرار الأمر", "اتخاذ قرار بناءً على شرط", "طباعة النتائج", "إدخال البيانات"], correct: 1 },
   { q: "الجملة الشرطية تبدأ بكلمة:", options: ["كرر", "إذا", "اطبع", "أدخل"], correct: 1 },
   { q: "في الجملة الشرطية، كلمة (وإلا) تستخدم:", options: ["عندما يتحقق الشرط", "عندما لا يتحقق الشرط", "لتكرار الأمر", "لإنهاء البرنامج"], correct: 1 },
-  { q: "في خوارزمية: إذا A >= 60 اطبع (ناجح) وإلا اطبع (راسب)، ما نوع الأداة المستخدمة؟", options: ["حلقة تكرار", "جملة شرطية", "عملية حسابية", "لا شيء"], correct: 1 },
-  { q: "لتحديد إذا كان العدد X زوجياً أم فردياً، الشرط المناسب:", options: ["إذا X > 0", "إذا X < 0", "إذا باقي قسمة X على 2 = 0", "إذا X = 0"], correct: 2 },
+  { q: "في: إذا A >= 60 اطبع (ناجح) وإلا اطبع (راسب). ما نوع الأداة؟", options: ["حلقة تكرار", "جملة شرطية", "عملية حسابية", "لا شيء"], correct: 1 },
+  { q: "لتحديد إذا كان العدد X زوجيًا أم فرديًا، الشرط المناسب:", options: ["إذا X > 0", "إذا X < 0", "إذا باقي قسمة X على 2 = 0", "إذا X = 0"], correct: 2 },
   { q: "ما الفرق بين الجمل الشرطية وحلقات التكرار؟", options: ["لا فرق", "الشرطية تكرر، التكرار يقارن", "الشرطية تتخذ قرار، التكرار يكرر", "كلاهما نفس الشيء"], correct: 2 },
   { q: "إذا كانت علامة الطالب 45، ماذا ستطبع الخوارزمية؟ (الشرط: A >= 60)", options: ["ناجح", "راسب", "لا شيء", "خطأ"], correct: 1 },
   { q: "إذا كانت علامة الطالب 80، ماذا ستطبع الخوارزمية؟ (الشرط: A >= 60)", options: ["ناجح", "راسب", "لا شيء", "خطأ"], correct: 0 },
-  { q: "أي مما يلي يعتبر شرطاً صحيحاً؟", options: ["إذا X = 5", "إذا X يساوي 5", "إذا (X == 5)", "جميعها صحيحة"], correct: 2 },
+  { q: "أي مما يلي يعتبر شرطًا صحيحًا؟", options: ["إذا X = 5", "إذا X يساوي 5", "إذا (X == 5)", "جميعها صحيحة"], correct: 2 },
   { q: "الجملة الشرطية يمكن أن تحتوي على:", options: ["شرط واحد فقط", "شرطين فقط", "أكثر من شرط (إذا / وإذا / وإلا)", "لا تحتوي على شروط"], correct: 2 }
 ];
 
@@ -847,7 +628,7 @@ function selectOption(index) {
 }
 
 function nextQuestion() {
-  if (userAnswers[currentIndex] === null) { alert("⚠️ الرجاء اختيار إجابة قبل المتابعة"); return; }
+  if (userAnswers[currentIndex] === null) { alert("⚠️ الرجاء اختيار إجابة"); return; }
   if (currentIndex < questions.length - 1) { currentIndex++; renderQuestion(); }
 }
 
@@ -858,7 +639,7 @@ function prevQuestion() {
 function finishQuiz() {
   const unanswered = userAnswers.findIndex(a => a === null);
   if (unanswered !== -1) {
-    if (!confirm(`⚠️ لم تجب على السؤال رقم ${unanswered + 1}. هل تريد المتابعة؟`)) {
+    if (!confirm(`⚠️ لم تجب على السؤال ${unanswered + 1}. هل تريد المتابعة؟`)) {
       currentIndex = unanswered;
       renderQuestion();
       return;
@@ -868,27 +649,20 @@ function finishQuiz() {
   questions.forEach((q, i) => { if (userAnswers[i] === q.correct) score += scorePerQuestion; });
   document.getElementById('quizScreen').style.display = 'none';
   document.getElementById('resultScreen').style.display = 'block';
-  document.getElementById('resultScreen').classList.add('active');
   document.getElementById('scoreDisplay').textContent = score;
   const percent = (score / 20) * 100;
   const circle = document.getElementById('resultCircle');
   let color, message;
-  if (percent >= 90) { color = 'linear-gradient(135deg, #2e9e4a, #5cb85c)'; message = "🏆 ممتاز! أنت متمكن من الموضوع!"; }
-  else if (percent >= 75) { color = 'linear-gradient(135deg, #2c7be5, #5cb85c)'; message = "👍 جيد جداً! واصل التقدم!"; }
-  else if (percent >= 60) { color = 'linear-gradient(135deg, #f0ad4e, #ffd93b)'; message = "📖 جيد، لكن يحتاج مزيداً من المراجعة."; }
-  else if (percent >= 50) { color = 'linear-gradient(135deg, #e67e22, #f0ad4e)'; message = "⚠️ مقبول، راجع القواعد الذهبية."; }
-  else { color = 'linear-gradient(135deg, #c9302c, #d9534f)'; message = "📚 يحتاج إلى تحسين، راجع الدرس من جديد."; }
+  if (percent >= 90) { color = 'linear-gradient(135deg, #10b981, #5cb85c)'; message = "🏆 ممتاز! أنت متمكن!"; }
+  else if (percent >= 75) { color = 'linear-gradient(135deg, #8b5cf6, #5cb85c)'; message = "👍 جيد جداً!"; }
+  else if (percent >= 60) { color = 'linear-gradient(135deg, #f59e0b, #fbbf24)'; message = "📖 جيد، راجع القواعد."; }
+  else if (percent >= 50) { color = 'linear-gradient(135deg, #f59e0b, #d97706)'; message = "⚠️ مقبول."; }
+  else { color = 'linear-gradient(135deg, #ef4444, #dc2626)'; message = "📚 راجع الدرس."; }
   circle.style.background = color;
   document.getElementById('resultMessage').textContent = message;
   document.getElementById('certName').textContent = studentName;
   document.getElementById('certScore').textContent = score;
   document.getElementById('certDate').textContent = '📅 ' + new Date().toLocaleDateString('ar-SY');
-  let detailsHTML = '';
-  questions.forEach((q, i) => {
-    const isCorrect = userAnswers[i] === q.correct;
-    detailsHTML += `<div class="detail-row"><span>س ${i + 1}: ${q.q}</span><span class="${isCorrect ? 'ok' : 'no'}">${isCorrect ? '✅' : `❌ (${q.options[q.correct]})`}</span></div>`;
-  });
-  document.getElementById('detailsArea').innerHTML = detailsHTML;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
