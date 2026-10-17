@@ -18,9 +18,8 @@
     color: #fff;
     line-height: 1.8;
   }
-  .container { max-width: 900px; margin: 0 auto; }
+  .container { max-width: 800px; margin: 0 auto; }
 
-  /* شريط التنقل العلوي */
   .top-nav {
     background: rgba(0,0,0,0.4);
     backdrop-filter: blur(15px);
@@ -31,8 +30,6 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 10px;
   }
   .top-nav a {
     color: #7dd3fc;
@@ -41,13 +38,11 @@
     font-size: 14px;
     padding: 8px 14px;
     border-radius: 20px;
-    transition: all 0.3s;
     background: rgba(125,211,252,0.1);
   }
   .top-nav a:hover { background: #7dd3fc; color: #0a0e27; }
   .top-nav .title { color: #fbbf24; font-weight: bold; font-size: 14px; }
 
-  /* الترويسة */
   .header {
     text-align: center;
     padding: 30px 20px;
@@ -55,93 +50,37 @@
     border-radius: 20px;
     margin-bottom: 20px;
   }
-  .header .badge {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-    color: #1a1f3a;
-    display: inline-block;
-    padding: 6px 20px;
-    border-radius: 25px;
-    font-size: 13px;
-    font-weight: bold;
-    margin-bottom: 12px;
-    box-shadow: 0 0 25px rgba(251,191,36,0.5);
-  }
-  .header h1 { color: #fff; font-size: 32px; margin-bottom: 10px; text-shadow: 0 0 20px rgba(251,191,36,0.6); }
+  .header h1 { color: #fbbf24; font-size: 30px; margin-bottom: 10px; text-shadow: 0 0 20px rgba(251,191,36,0.5); }
   .header p { color: #94a3b8; font-size: 15px; }
 
-  /* لوحة الشرف */
-  .honor-board {
+  /* تصميم قائمة الشرف المبسطة */
+  .honor-box {
     background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(251,191,36,0.3);
-    border-radius: 20px;
-    padding: 25px;
+    border: 2px solid rgba(251,191,36,0.3);
+    border-radius: 15px;
+    padding: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
-
-  .board-title {
-    text-align: center;
-    color: #fbbf24;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px dashed rgba(251,191,36,0.3);
-  }
-
-  /* تصميم قائمة الطلاب */
-  .honor-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
   }
 
   .honor-item {
     display: flex;
     align-items: center;
-    background: linear-gradient(90deg, rgba(251,191,36,0.1), rgba(255,255,255,0.02));
-    border: 1px solid rgba(251,191,36,0.2);
-    border-radius: 12px;
+    justify-content: space-between;
+    background: linear-gradient(90deg, rgba(251,191,36,0.1), transparent);
+    border-right: 4px solid #fbbf24;
     padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 18px;
     transition: all 0.3s;
   }
 
   .honor-item:hover {
     transform: translateX(-5px);
-    background: linear-gradient(90deg, rgba(251,191,36,0.2), rgba(255,255,255,0.05));
-    box-shadow: 0 5px 15px rgba(251,191,36,0.2);
-  }
-
-  /* المراكز الأولى (ميداليات) */
-  .rank {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: bold;
-    margin-left: 15px;
-    flex-shrink: 0;
-    color: #1a1f3a;
-  }
-  .rank-1 { background: linear-gradient(135deg, #fbbf24, #f59e0b); box-shadow: 0 0 15px rgba(251,191,36,0.6); font-size: 24px; }
-  .rank-2 { background: linear-gradient(135deg, #cbd5e1, #94a3b8); box-shadow: 0 0 10px rgba(203,213,225,0.5); font-size: 22px; }
-  .rank-3 { background: linear-gradient(135deg, #d97706, #b45309); box-shadow: 0 0 10px rgba(217,119,6,0.5); font-size: 20px; }
-  .rank-other { background: rgba(255,255,255,0.1); color: #cbd5e1; font-size: 16px; }
-
-  /* تفاصيل الطالب */
-  .student-details {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
+    background: linear-gradient(90deg, rgba(251,191,36,0.2), transparent);
   }
 
   .student-name {
-    font-size: 18px;
     font-weight: bold;
     color: #fff;
   }
@@ -151,99 +90,54 @@
     color: #6ee7b7;
     padding: 5px 15px;
     border-radius: 20px;
-    font-weight: bold;
     font-size: 15px;
     border: 1px solid rgba(16,185,129,0.3);
   }
-
-  /* التذييل */
-  .footer {
-    text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    color: #94a3b8;
-    font-size: 13px;
-  }
-
-  @media (max-width: 600px) {
-    .header h1 { font-size: 24px; }
-    .student-details { flex-direction: column; align-items: flex-start; }
-    .honor-item { padding: 12px 15px; }
-  }
+  
+  .footer { text-align: center; margin-top: 30px; padding: 20px; color: #94a3b8; font-size: 13px; }
 </style>
 </head>
 <body>
 
 <div class="container">
-
   <div class="top-nav">
     <a href="index.html">🏠 الرئيسية</a>
     <span class="title">🏆 لوحة الشرف</span>
   </div>
 
   <div class="header">
-    <span class="badge">🏆 تحية لأبطالنا</span>
-    <h1>لوحة الشرف</h1>
-    <p>أسماء الطلاب المتميزين الحاصلين على العلامة الكاملة في الاختبارات</p>
+    <h1>🏆 لوحة الشرف</h1>
+    <p>أسماء الطلاب المتميزين الحاصلين على العلامة الكاملة</p>
   </div>
 
-  <div class="honor-board">
-    <div class="board-title">🌟 أبطال المنصة 🌟</div>
-    
-    <div class="honor-list">
-      
-      <!-- المركز الأول -->
-      <div class="honor-item">
-        <div class="rank rank-1">🥇</div>
-        <div class="student-details">
-          <span class="student-name">محمد أحمد</span>
-          <span class="student-score">20 / 20</span>
-        </div>
-      </div>
+  <div class="honor-box">
+    <!-- 
+      🛑 كيفية إضافة طالب جديد:
+      ١. انسخ السطر الذي يحتوي على "اسم الطالب" و "20 / 20" بالكامل.
+      ٢. الصقه فوق هذا التعليق.
+      ٣. غيّر الاسم فقط، واحفظ!
+    -->
 
-      <!-- المركز الثاني -->
-      <div class="honor-item">
-        <div class="rank rank-2">🥈</div>
-        <div class="student-details">
-          <span class="student-name">سارة علي</span>
-          <span class="student-score">20 / 20</span>
-        </div>
-      </div>
-
-      <!-- المركز الثالث -->
-      <div class="honor-item">
-        <div class="rank rank-3">🥉</div>
-        <div class="student-details">
-          <span class="student-name">عمر خالد</span>
-          <span class="student-score">19 / 20</span>
-        </div>
-      </div>
-
-      <!-- مراكز أخرى -->
-      <div class="honor-item">
-        <div class="rank rank-other">4</div>
-        <div class="student-details">
-          <span class="student-name">ليلى محمود</span>
-          <span class="student-score">19 / 20</span>
-        </div>
-      </div>
-
-      <div class="honor-item">
-        <div class="rank rank-other">5</div>
-        <div class="student-details">
-          <span class="student-name">ياسين يوسف</span>
-          <span class="student-score">18 / 20</span>
-        </div>
-      </div>
-
+    <div class="honor-item">
+      <span class="student-name">محمد أحمد</span>
+      <span class="student-score">20 / 20</span>
     </div>
+
+    <div class="honor-item">
+      <span class="student-name">سارة علي</span>
+      <span class="student-score">20 / 20</span>
+    </div>
+
+    <div class="honor-item">
+      <span class="student-name">عمر خالد</span>
+      <span class="student-score">19 / 20</span>
+    </div>
+
   </div>
 
   <div class="footer">
-    <p>📚 منصة "نتعلم سوياً" – تكنولوجيا المعلومات والاتصالات – الصف السابع</p>
-    <p>إعداد: المعلم كنان سكيف</p>
+    <p>📚 منصة "نتعلم سوياً" – الصف السابع</p>
   </div>
-
 </div>
 
 </body>
