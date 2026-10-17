@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="google" content="notranslate">
-<meta name="description" content="منصة تعليمية تفاعلية لمادة تكنولوجيا المعلومات والاتصالات - الصف السابع - المنهاج السوري">
+<meta name="description" content="منصة تعليمية تفاعلية لمادة تكنولوجيا المعلومات والاتصالات - الصف السابع - الفصل الأول">
 <meta name="author" content="كنان سكيف">
 <title>نتعلم سوياً – تكنولوجيا المعلومات والاتصالات – الصف السابع</title>
 <link rel="icon" type="image/png" href="logo.png">
@@ -85,7 +85,7 @@
     margin-bottom: 20px;
   }
 
-  /* المعلمون */
+  /* المعلم */
   .teachers-badge {
     display: flex;
     justify-content: center;
@@ -413,6 +413,20 @@
     border-top: 1px solid rgba(125,211,252,0.15);
   }
 
+  /* ====== عداد الزوار ====== */
+  .visitor-counter {
+    text-align: center;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #94a3b8;
+  }
+  .visitor-counter img {
+    vertical-align: middle;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+
   /* ====== زر العودة للأعلى ====== */
   .back-to-top {
     position: fixed;
@@ -446,41 +460,33 @@
   /* ====== الجوال ====== */
   @media (max-width: 768px) {
     .container { padding: 0; }
-
     .hero { padding: 25px 15px; border-radius: 15px; }
     .logo-big { width: 100px; height: 100px; }
     .hero h1 { font-size: 22px; }
     .hero .subtitle { font-size: 14px; }
     .hero .meta { font-size: 12px; }
-
     .teachers-badge { gap: 8px; }
     .teacher-card { padding: 8px 12px; font-size: 12px; }
-
     .whatsapp-card { padding: 12px; flex-direction: column; text-align: center; }
     .whatsapp-info { flex-direction: column; }
     .whatsapp-icon { width: 50px; height: 50px; font-size: 32px; }
     .whatsapp-text .title { font-size: 13px; }
     .whatsapp-text .number { font-size: 18px; }
-
     .section-header { padding: 12px 15px; margin: 20px 0 15px; }
     .section-header h2 { font-size: 17px; }
     .section-header .icon { font-size: 22px; }
     .section-header .count { font-size: 11px; }
-
     .cards-grid { grid-template-columns: 1fr; gap: 15px; }
     .card { padding: 20px 15px; }
     .card-icon { font-size: 44px; }
     .card-title { font-size: 17px; }
     .card-desc { font-size: 13px; }
-
     .footer { padding: 20px 15px; }
     .footer .footer-title { font-size: 17px; }
     .footer .footer-info { gap: 8px; }
     .footer .footer-item { font-size: 11px; padding: 6px 12px; }
-
     .back-to-top { bottom: 15px; left: 15px; width: 45px; height: 45px; font-size: 18px; }
   }
-
   @media (max-width: 400px) {
     .hero h1 { font-size: 19px; }
     .hero .subtitle { font-size: 12px; }
@@ -506,10 +512,6 @@
         <span>👨‍🏫</span>
         <span>المعلم: كنان سكيف</span>
       </div>
-      <div class="teacher-card">
-        <span>👩‍🏫</span>
-        <span>المعلمة: أحلام الشيخ حسن</span>
-      </div>
     </div>
   </header>
 
@@ -528,7 +530,7 @@
   <!-- ====== قسم دروس المقرر ====== -->
   <div class="section-header">
     <span class="icon">📖</span>
-    <h2>دروس المقرر</h2>
+    <h2>دروس الفصل الأول</h2>
     <span class="count">٩ دروس</span>
   </div>
 
@@ -621,7 +623,7 @@
   <div class="section-header">
     <span class="icon">🎮</span>
     <h2>أدوات تفاعلية</h2>
-    <span class="count">٤ أدوات</span>
+    <span class="count">٥ أدوات</span>
   </div>
 
   <div class="cards-grid">
@@ -652,19 +654,27 @@
 
     <a href="simulator-lessons.html" class="card extra">
       <div class="card-icon">🎓</div>
-      <div class="card-title">السبورة الشاملة لأول ثلاث دروس</div>
+      <div class="card-title">السبورة الشاملة</div>
       <div class="card-desc">شرح تفاعلي مع محاكاة للدروس الثلاثة الأولى</div>
       <div class="card-status extra">🎬 سبورة</div>
       <div class="card-btn">🚀 افتح السبورة</div>
+    </a>
+
+    <a href="malware.html" class="card extra">
+      <div class="card-icon">🦠</div>
+      <div class="card-title">معمل الفيروسات</div>
+      <div class="card-desc">شاهد كيف تعمل البرمجيات الضارة وكيف تحمي حاسوبك</div>
+      <div class="card-status extra">🎬 محاكي</div>
+      <div class="card-btn">🚀 جرّب المعمل</div>
     </a>
 
   </div>
 
   <!-- ====== قسم أدوات مساعدة ====== -->
   <div class="section-header">
-    <span class="icon">📄</span>
+    <span class="icon">🛠️</span>
     <h2>أدوات مساعدة</h2>
-    <span class="count">١ أداة</span>
+    <span class="count">٣ أدوات</span>
   </div>
 
   <div class="cards-grid">
@@ -672,9 +682,25 @@
     <a href="worksheet.html" class="card extra">
       <div class="card-icon">📄</div>
       <div class="card-title">ورقة عمل شاملة</div>
-      <div class="card-desc">ورقة قابلة للطباعة على A4 – الدروس الثلاثة الأولى</div>
+      <div class="card-desc">ورقة قابلة للطباعة على A4 – الفصل الأول</div>
       <div class="card-status extra">📄 ورقة</div>
       <div class="card-btn">🚀 افتح الورقة</div>
+    </a>
+
+    <a href="faq.html" class="card extra">
+      <div class="card-icon">❓</div>
+      <div class="card-title">الأسئلة الشائعة</div>
+      <div class="card-desc">كل ما تحتاج معرفته عن المنصة وكيفية استخدامها</div>
+      <div class="card-status extra">💡 مساعدة</div>
+      <div class="card-btn">🚀 افتح المركز</div>
+    </a>
+
+    <a href="honor.html" class="card extra">
+      <div class="card-icon">🏆</div>
+      <div class="card-title">لوحة الشرف</div>
+      <div class="card-desc">أسماء الطلاب المتميزين الحاصلين على العلامة الكاملة</div>
+      <div class="card-status extra">🌟 أبطال</div>
+      <div class="card-btn">🚀 شاهد الأبطال</div>
     </a>
 
   </div>
@@ -686,12 +712,15 @@
 
     <div class="footer-info">
       <div class="footer-item">👨‍🏫 المعلم: كنان سكيف</div>
-      <div class="footer-item">👩‍🏫 المعلمة: أحلام الشيخ حسن</div>
       <div class="footer-item">📚 الصف السابع</div>
-      <div class="footer-item">🇸🇾 المنهاج السوري</div>
+      <div class="footer-item">🇸🇾 المنهاج السوري – الفصل الأول</div>
     </div>
 
-    <div class="designer">🎨 تصميم: كنان سكيف</div>
+    <!-- شعار المعلم الشخصي -->
+    <div style="text-align: center; margin: 20px 0;">
+      <img src="teacher-logo.png" alt="شعار المعلم كنان سكيف" style="width: 110px; height: auto; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); background: #fff; padding: 6px;" onerror="this.style.display='none'">
+      <p class="designer" style="margin-top: 10px;">🎨 تصميم وإعداد: المعلم كنان سكيف</p>
+    </div>
 
     <div class="footer-info">
       <a href="https://wa.me/963963988397780" class="footer-item" target="_blank" rel="noopener" style="text-decoration: none; color: #7dd3fc;">
@@ -701,6 +730,13 @@
 
     <div class="copyright">
       © 2025 – جميع الحقوق محفوظة | نتعلم سوياً
+    </div>
+
+    <!-- عداد الزوار -->
+    <div class="visitor-counter">
+      <a href="https://librecounter.org/kinan-skeaf.github.io/show" target="_blank">
+        <img src="https://librecounter.org/counter.svg" referrerpolicy="unsafe-url" alt="عداد الزوار" />
+      </a>
     </div>
 
   </footer>

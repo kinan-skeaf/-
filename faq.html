@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="google" content="notranslate">
+<title>الأسئلة الشائعة – نتعلم سوياً</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0e27">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Tahoma", "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f172a 100%);
+    min-height: 100vh;
+    padding: 15px;
+    color: #fff;
+    line-height: 1.8;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+
+  .top-nav {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(125,211,252,0.2);
+    border-radius: 15px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .top-nav a {
+    color: #7dd3fc;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    transition: all 0.3s;
+    background: rgba(125,211,252,0.1);
+  }
+  .top-nav a:hover { background: #7dd3fc; color: #0a0e27; }
+  .top-nav .title { color: #fbbf24; font-weight: bold; font-size: 14px; }
+
+  .header {
+    text-align: center;
+    padding: 30px 20px;
+    background: radial-gradient(circle at center, rgba(59,130,246,0.25) 0%, transparent 70%);
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .header .badge {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    color: #fff;
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+  }
+  .header h1 { color: #fff; font-size: 30px; margin-bottom: 10px; }
+  .header p { color: #94a3b8; font-size: 15px; }
+
+  /* تصميم الأسئلة الشائعة (Accordion) */
+  .faq-item {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(125,211,252,0.2);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .faq-question {
+    padding: 18px 20px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #7dd3fc;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(59,130,246,0.05);
+    transition: background 0.3s;
+  }
+  
+  .faq-question:hover {
+    background: rgba(59,130,246,0.15);
+  }
+  
+  .faq-icon {
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.3s;
+  }
+  
+  .faq-answer {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    color: #e2e8f0;
+    font-size: 16px;
+    border-top: 1px dashed rgba(125,211,252,0.2);
+  }
+  
+  .faq-item.active .faq-answer {
+    padding: 20px;
+    max-height: 500px; /* كافي لإظهار النص */
+  }
+  
+  .faq-item.active .faq-icon {
+    transform: rotate(45deg); /* تحويل علامة + إلى x */
+    color: #fbbf24;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    color: #94a3b8;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-nav">
+    <a href="index.html">🏠 الرئيسية</a>
+    <span class="title">❓ الأسئلة الشائعة</span>
+  </div>
+
+  <div class="header">
+    <span class="badge">❓ مركز المساعدة</span>
+    <h1>الأسئلة الشائعة</h1>
+    <p>كل ما تحتاج معرفته عن منصة "نتعلم سوياً"</p>
+  </div>
+
+  <!-- الأسئلة -->
+  <div id="faqList">
+    
+    <!-- سؤال 1 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>كيف أقوم بتثبيت المنصة كتطبيق على جوالي؟</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        <p><strong>على أجهزة أندرويد (Google Chrome):</strong> اضغط على الثلاث نقاط (⋮) في أعلى المتصفح، ثم اختر "إضافة إلى الشاشة الرئيسية".</p>
+        <p><strong>على أجهزة آيفون (Safari):</strong> اضغط على زر المشاركة (المربع الذي يخرج منه سهم)، ثم مرر للأسفل واختر "إضافة إلى الشاشة الرئيسية".</p>
+      </div>
+    </div>
+
+    <!-- سؤال 2 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>هل تعمل المنصة بدون إنترنت؟</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>نعم! بمجرد فتح المنصة لأول مرة (وتثبيتها كتطبيق)، يمكنك تصفح الدروس وحل الاختبارات واستخدام المحاكيات <strong>بدون الحاجة للاتصال بالإنترنت</strong>، باستثناء المرة الأولى التي تحتاج فيها لتحميل البيانات.</p>
+      </div>
+    </div>
+
+    <!-- سؤال 3 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>كيف أحصل على الشهادة الإلكترونية؟</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>عند دخولك إلى أي درس، اختر تبويب <strong>"الاختبار"</strong>، واكتب اسمك، وأجب عن جميع الأسئلة. بمجرد الضغط على "إنهاء الاختبار"، ستظهر شهادة إلكترونية باسمك ونتيجتك، يمكنك تصويرها وإرسالها للمعلم.</p>
+      </div>
+    </div>
+
+    <!-- سؤال 4 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>هل يمكنني حل الاختبار أكثر من مرة؟</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>بالتأكيد! يمكنك إعادة تحميل الصفحة وحل الاختبار مرة أخرى لتحسين نتيجتك وتثبيت المعلومات. المنصة تتيح لك المحاولة بقدر ما تريد.</p>
+      </div>
+    </div>
+
+    <!-- سؤال 5 -->
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>كيف أتواصل مع المعلم إذا واجهت مشكلة؟</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>يمكنك التواصل مع المعلم عبر رقم الواتساب الموجود في الصفحة الرئيسية للمنصة: <strong>0963988397780</strong>. لا تتردد في طرح أي سؤال أو استفسار.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>📚 منصة "نتعلم سوياً" – تكنولوجيا المعلومات والاتصالات – الصف السابع</p>
+    <p>إعداد: المعلم كنان سكيف</p>
+  </div>
+
+</div>
+
+<script>
+  // دالة فتح وإغلاق الأسئلة
+  function toggleFaq(element) {
+    const faqItem = element.parentElement;
+    
+    // إغلاق أي سؤال آخر مفتوح (اختياري: يمنع فتح أكثر من سؤال معاً)
+    document.querySelectorAll('.faq-item').forEach(item => {
+      if (item !== faqItem) {
+        item.classList.remove('active');
+      }
+    });
+
+    // تبديل حالة السؤال الحالي
+    faqItem.classList.toggle('active');
+  }
+</script>
+
+</body>
+</html>
